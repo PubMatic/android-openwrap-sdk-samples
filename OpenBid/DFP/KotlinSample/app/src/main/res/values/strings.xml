@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">OpenBidSample</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_interstitial">Interstitial</string>
+    <string name="title_activity_banner">Banner</string>
+    <string name="title_activity_home">KotlinSample</string>
+</resources>

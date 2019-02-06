@@ -1,0 +1,28 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <!-- Base application theme. -->
+    <style name="AppThemeLight" parent="@style/Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+    </style>
+
+    <!--Theme for Switch Button-->
+    <style name="PMSwitch" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/colorOnSwitch</item>
+        <item name="colorSwitchThumbNormal">@color/colorOffSwitchThumb</item>
+        <item name="android:colorForeground">@color/colorOffSwitch</item>
+    </style>
+
+</resources>
