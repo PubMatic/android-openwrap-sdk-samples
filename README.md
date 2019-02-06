@@ -1,8 +1,8 @@
+This repository consists of sample applications for PubMatic's OpenBid SDK integration. You may refer these applications to integrate PubMatic's OpenBid SDK.
+
 ## Sample Apps for OpenBid Android SDK
 
 Integrate PubMatic OpenBid SDK into your Android app to monetize your app inventory using PubMatic's robust platform. With the OpenBid SDK in your app, you can use the PubMatic platform to control, monitor, and optimize your ad inventory’s financial performance. It enables mobile app developers to maximize their monetization in native Android applications.
-
-This repository consist of open source sample applications for PubMatic's OpenBid SDK integration.
 
 ## Documentation
 
@@ -13,15 +13,15 @@ for documentation on using OpenBid SDK.
 
 | Language | Samples |
 | ------------- | ------------- |
-|   Java    | [Banner/Interstitial Samples](https://github.com/PubMatic/android-sdk-samples) |
-|   Kotlin    | [Banner/Interstitial Samples](https://github.com/PubMatic/android-sdk-samples) |
+|   Java    | [Banner/Interstitial Samples](./OpenBid/DFP/JavaSample/) |
+|   Kotlin    | [Banner/Interstitial Samples](./OpenBid/DFP/KotlinSample/) |
 
 
 ## Downloads
 
-Please check out [releases](https://github.com/PubMatic/android-sdk-samples)
+Please check out [releases](https://github.com/PubMatic/android-sdk-samples/releases)
 for the latest downloads of sample apps.
 
 ## License
 
-See the [LICENSE](https://github.com/PubMatic/android-sdk-samples/blob/master/LICENSE) file.
+See the [LICENSE](./LICENSE) file.
