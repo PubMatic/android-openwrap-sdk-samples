@@ -47,7 +47,7 @@ public class DFPBannerActivity extends AppCompatActivity {
 
     private static final String TAG = "DFPBannerActivity";
 
-    private static final String OPEN_BID_AD_UNIT_ID = "/15671365/pm_sdk/PMSDK-Demo-App-Banner";
+    private static final String OPENWRAP_AD_UNIT_ID = "/15671365/pm_sdk/PMSDK-Demo-App-Banner";
     private static final String PUB_ID = "156276";
     private static final int PROFILE_ID = 1165;
     private static final String DFP_AD_UNIT_ID = "/15671365/pm_sdk/PMSDK-Demo-App-Banner";
@@ -86,14 +86,14 @@ public class DFPBannerActivity extends AppCompatActivity {
         banner = findViewById(R.id.banner);
         banner.init(PUB_ID,
                 PROFILE_ID,
-                OPEN_BID_AD_UNIT_ID,
+                OPENWRAP_AD_UNIT_ID,
                 eventHandler);
 
 
         //optional listener to listen banner events
         banner.setListener(new POBBannerViewListener());
 
-        // Call loadAd() on PMWBannerView instance
+        // Call loadAd() on banner instance
         banner.loadAd();
     }
 

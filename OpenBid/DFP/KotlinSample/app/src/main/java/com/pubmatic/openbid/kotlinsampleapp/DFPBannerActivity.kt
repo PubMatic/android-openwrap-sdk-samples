@@ -17,7 +17,7 @@ import java.net.URL
 class DFPBannerActivity : AppCompatActivity() {
 
     val TAG = "DFPBannerActivity"
-    private val WRAPPER_AD_UNIT_ONE = "/15671365/pm_sdk/PMSDK-Demo-App-Banner"
+    private val OPENWRAP_AD_UNIT_ID = "/15671365/pm_sdk/PMSDK-Demo-App-Banner"
     private val PUB_ID = "156276"
     private val PROFILE_ID = 1165
     private val DFP_AD_UNIT_ID = "/15671365/pm_sdk/PMSDK-Demo-App-Banner"
@@ -49,13 +49,13 @@ class DFPBannerActivity : AppCompatActivity() {
         // Call init() to set tag information
         // For test IDs see - https://community.pubmatic.com/x/mQg5AQ#TestandDebugYourIntegration-TestWrapperProfile/Placement
         banner = findViewById(R.id.banner)
-        banner?.init(PUB_ID, PROFILE_ID, WRAPPER_AD_UNIT_ONE, eventHandler)
+        banner?.init(PUB_ID, PROFILE_ID, OPENWRAP_AD_UNIT_ID, eventHandler)
 
         //optional listener to listen banner events
         banner?.setListener(POBBannerViewListener())
 
 
-        // Call loadAd() on POBBannerView instance
+        // Call loadAd() on banner instance
         banner?.loadAd()
 
 

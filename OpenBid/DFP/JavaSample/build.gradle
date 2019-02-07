@@ -19,7 +19,7 @@ allprojects {
         google()
         jcenter()
         maven {
-            url 'http://repo.pubmatic.com/artifactory/public-repos'
+            url 'https://repo.pubmatic.com/artifactory/public-repos'
         }
     }
 }
