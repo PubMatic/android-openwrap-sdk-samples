@@ -31,16 +31,37 @@ import com.pubmatic.sdk.openbid.interstitial.POBInterstitialEventListener
 import com.pubmatic.sdk.webrendering.ui.POBInterstitialRendering
 import java.util.*
 
-class DFPInterstitialEventHandler(val context:Context, val adUnitId: String): AdListener(), POBInterstitialEvent, AppEventListener {
+class DFPInterstitialEventHandler(val context: Context, val adUnitId: String) : AdListener(), POBInterstitialEvent, AppEventListener {
 
 
     private val TAG = "DFPInstlEventHandler"
+
+    /**
+     * Interface to get the DFP Interstitial ad and it's request builder, to configure the
+     * properties.
+     */
+    interface DFPConfigListener {
+        /**
+         * This method is called before event handler makes ad request call to DFP SDK. It passes
+         * DFP ad & request builder which will be used to make ad request. Publisher can
+         * configure the ad request properties on the provided objects.
+         * @param ad DFP Interstitial ad object
+         * @param requestBuilder DFP Interstitial ad request builder
+         */
+        fun configure(ad: PublisherInterstitialAd,
+                      requestBuilder: PublisherAdRequest.Builder)
+    }
 
     /**
      * For every winning bid, a DFP SDK gives callback with below key via AppEventListener (from
      * DFP SDK). This key can be changed at DFP's line item.
      */
     private val PUBMATIC_WIN_KEY = "pubmaticdm"
+
+    /**
+     * Config listener to check if publisher want to config properties in DFP ad
+     */
+    private var dfpConfigListener: DFPConfigListener? = null
 
     /**
      * Flag to identify if PubMatic bid wins the current impression
@@ -56,18 +77,30 @@ class DFPInterstitialEventHandler(val context:Context, val adUnitId: String): Ad
     /**
      * DFP Banner ad view
      */
-    private var dfpAdView: PublisherInterstitialAd? = null
+    private var dfpInterstitialAd: PublisherInterstitialAd? = null
 
     /**
      * Interface to pass the DFP ad event to OpenBid SDK
      */
     private var eventListener: POBInterstitialEventListener? = null
 
-    private fun initializeDFP(){
-        dfpAdView = PublisherInterstitialAd(context)
-        dfpAdView?.adUnitId = adUnitId
-        dfpAdView?.adListener = this
-        dfpAdView?.appEventListener = this
+    private fun initializeDFP() {
+        dfpInterstitialAd = PublisherInterstitialAd(context)
+        dfpInterstitialAd?.adUnitId = adUnitId
+
+        // DO NOT REMOVE/OVERRIDE BELOW LISTENERS
+        dfpInterstitialAd?.adListener = this
+        dfpInterstitialAd?.appEventListener = this
+    }
+
+    /**
+     * Sets the Data listener object. Publisher should implement the DFPConfigListener and override
+     * its method only when publisher needs to set the targeting parameters over DFP ad.
+     *
+     * @param listener DFP data listener
+     */
+    fun setConfigListener(listener: DFPConfigListener) {
+        dfpConfigListener = listener
     }
 
     private fun resetDelay() {
@@ -111,6 +144,16 @@ class DFPInterstitialEventHandler(val context:Context, val adUnitId: String): Ad
 
         val requestBuilder = PublisherAdRequest.Builder()
 
+        initializeDFP()
+
+        // Check if publisher want to set any targeting data
+        dfpInterstitialAd?.let { dfpConfigListener?.configure(it, requestBuilder) }
+
+        // Warn publisher if he overrides the DFP listeners
+        if (dfpInterstitialAd?.getAdListener() !== this || dfpInterstitialAd?.getAppEventListener() !== this) {
+            Log.w(TAG, "Do not set DFP listeners. These are used by DFPInterstitialEventHandler internally.")
+        }
+
         if (null != bid) {
 
             // Logging details of bid objects for debug purpose.
@@ -135,11 +178,11 @@ class DFPInterstitialEventHandler(val context:Context, val adUnitId: String): Ad
 
         val adRequest = requestBuilder.build()
 
-        // Publisher/App developer can add extra targeting parameters to dfpAdView here.
+        // Publisher/App developer can add extra targeting parameters to dfpInterstitialAd here.
         notifiedBidWin = null
-        initializeDFP()
+
         // Load DFP ad request
-        dfpAdView?.loadAd(adRequest)
+        dfpInterstitialAd?.loadAd(adRequest)
 
     }
 
@@ -153,14 +196,15 @@ class DFPInterstitialEventHandler(val context:Context, val adUnitId: String): Ad
 
     override fun destroy() {
         resetDelay()
-        dfpAdView = null
+        dfpInterstitialAd = null
+        dfpConfigListener = null
         eventListener = null
     }
 
     override fun show() {
-        if(dfpAdView?.isLoaded == true){
-            dfpAdView?.show()
-        }else{
+        if (dfpInterstitialAd?.isLoaded == true) {
+            dfpInterstitialAd?.show()
+        } else {
             Log.e(TAG, "DFP SDK is not ready to show Interstitial Ad.")
             sendErrorToPOB(POBError(POBError.INTERSTITIAL_NOT_READY, "DFP SDK is not ready to show Interstitial Ad."))
         }

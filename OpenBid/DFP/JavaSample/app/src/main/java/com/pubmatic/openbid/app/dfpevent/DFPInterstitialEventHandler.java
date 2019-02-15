@@ -45,29 +45,28 @@ import java.util.TimerTask;
 public class DFPInterstitialEventHandler extends AdListener implements POBInterstitialEvent, AppEventListener {
 
     private static final String TAG = "DFPInstlEventHandler";
-
     /**
      * For every winning bid, a DFP SDK gives callback with below key via AppEventListener (from
      * DFP SDK). This key can be changed at DFP's line item.
      */
     private static final String PUBMATIC_WIN_KEY = "pubmaticdm";
-
+    /**
+     * Config listener to check if publisher want to config properties in DFP ad
+     */
+    private DFPConfigListener dfpConfigListener;
     /**
      * Flag to identify if PubMatic bid wins the current impression
      */
     private Boolean notifiedBidWin;
-
     private boolean isAppEventExpected;
     /**
      * Timer object to synchronize the onAppEvent() of DFP SDK with onAdLoaded()
      */
     private Timer timer;
-
     /**
      *
      */
     private Context context;
-
     /**
      *
      */
@@ -75,8 +74,7 @@ public class DFPInterstitialEventHandler extends AdListener implements POBInters
     /**
      * DFP Interstitial ad
      */
-    private PublisherInterstitialAd dfpAdView;
-
+    private PublisherInterstitialAd dfpInterstitialAd;
     /**
      * Interface to pass the DFP ad event to OpenBid SDK
      */
@@ -94,14 +92,26 @@ public class DFPInterstitialEventHandler extends AdListener implements POBInters
 
     }
 
+    /**
+     * Sets the Data listener object. Publisher should implement the DFPConfigListener and override
+     * its method only when publisher needs to set the targeting parameters over DFP ad.
+     *
+     * @param listener DFP data listener
+     */
+    public void setConfigListener(DFPConfigListener listener) {
+        dfpConfigListener = listener;
+    }
+
     private void initializeDFView() {
-        if (dfpAdView != null) {
-            dfpAdView = null;
+        if (dfpInterstitialAd != null) {
+            dfpInterstitialAd = null;
         }
-        dfpAdView = new PublisherInterstitialAd(context.getApplicationContext());
-        dfpAdView.setAdUnitId(adUnitId);
-        dfpAdView.setAdListener(this);
-        dfpAdView.setAppEventListener(this);
+        dfpInterstitialAd = new PublisherInterstitialAd(context.getApplicationContext());
+        dfpInterstitialAd.setAdUnitId(adUnitId);
+
+        // DO NOT REMOVE/OVERRIDE BELOW LISTENERS
+        dfpInterstitialAd.setAdListener(this);
+        dfpInterstitialAd.setAppEventListener(this);
     }
 
     private void resetDelay() {
@@ -149,6 +159,18 @@ public class DFPInterstitialEventHandler extends AdListener implements POBInters
 
         PublisherAdRequest.Builder requestBuilder = new PublisherAdRequest.Builder();
 
+        initializeDFView();
+
+        // Check if publisher want to set any targeting data
+        if (dfpConfigListener != null) {
+            dfpConfigListener.configure(dfpInterstitialAd, requestBuilder);
+        }
+
+        // Warn publisher if he overrides the DFP listeners
+        if (dfpInterstitialAd.getAdListener() != this || dfpInterstitialAd.getAppEventListener() != this) {
+            Log.w(TAG, "Do not set DFP listeners. These are used by DFPInterstitialEventHandler internally.");
+        }
+
         if (null != bid) {
 
             // Logging details of bid objects for debug purpose.
@@ -159,7 +181,7 @@ public class DFPInterstitialEventHandler extends AdListener implements POBInters
                 // using for-each loop for iteration over Map.entrySet()
                 for (Map.Entry<String, String> entry : targeting.entrySet()) {
                     requestBuilder.addCustomTargeting(entry.getKey(), entry.getValue());
-                    Log.d(TAG, "DFP custom param [" + entry.getKey() + "] = " + entry.getValue());
+                    Log.d(TAG, "Targeting param [" + entry.getKey() + "] = " + entry.getValue());
                 }
             }
 
@@ -173,12 +195,11 @@ public class DFPInterstitialEventHandler extends AdListener implements POBInters
 
         final PublisherAdRequest adRequest = requestBuilder.build();
 
-        // Publisher/App developer can add extra targeting parameters to dfpAdView here.
+        // Publisher/App developer can add extra targeting parameters to dfpInterstitialAd here.
         notifiedBidWin = null;
 
-        initializeDFView();
         // Load DFP ad request
-        dfpAdView.loadAd(adRequest);
+        dfpInterstitialAd.loadAd(adRequest);
     }
 
     @Override
@@ -195,15 +216,16 @@ public class DFPInterstitialEventHandler extends AdListener implements POBInters
     public void destroy() {
         //Do Final cleaup
         resetDelay();
-        dfpAdView = null;
+        dfpInterstitialAd = null;
+        dfpConfigListener = null;
         eventListener = null;
         context = null;
     }
 
     @Override
     public void show() {
-        if (null != dfpAdView && dfpAdView.isLoaded()) {
-            dfpAdView.show();
+        if (null != dfpInterstitialAd && dfpInterstitialAd.isLoaded()) {
+            dfpInterstitialAd.show();
         } else {
             Log.e(TAG, "DFP SDK is not ready to show Interstitial Ad.");
             if (null != eventListener) {
@@ -293,5 +315,22 @@ public class DFPInterstitialEventHandler extends AdListener implements POBInters
         if (eventListener != null) {
             eventListener.onAdLeftApplication();
         }
+    }
+
+    /**
+     * Interface to get the DFP Interstitial ad and it's request builder, to configure the
+     * properties.
+     */
+    public interface DFPConfigListener {
+        /**
+         * This method is called before event handler makes an ad request call to DFP SDK. It passes
+         * DFP ad & request builder which will be used to make ad request. Publisher can
+         * configure the ad request properties on the provided objects.
+         *
+         * @param ad             DFP Interstitial ad object
+         * @param requestBuilder DFP Interstitial ad request builder
+         */
+        void configure(PublisherInterstitialAd ad,
+                       PublisherAdRequest.Builder requestBuilder);
     }
 }

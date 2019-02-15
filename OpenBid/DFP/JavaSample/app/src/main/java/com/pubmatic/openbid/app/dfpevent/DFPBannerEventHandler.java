@@ -47,29 +47,28 @@ import java.util.TimerTask;
 public class DFPBannerEventHandler extends AdListener implements POBBannerEvent, AppEventListener {
 
     private static final String TAG = "DFPBannerEventHandler";
-
     /**
      * For every winning bid, a DFP SDK gives callback with below key via AppEventListener (from
      * DFP SDK). This key can be changed at DFP's line item.
      */
     private static final String PUBMATIC_WIN_KEY = "pubmaticdm";
-
+    /**
+     * Config listener to check if publisher want to config properties in DFP ad
+     */
+    private DFPConfigListener dfpConfigListener;
     /**
      * Flag to identify if PubMatic bid wins the current impression
      */
     private Boolean notifiedBidWin;
-
     private boolean isAppEventExpected;
     /**
      * Timer object to synchronize the onAppEvent() of DFP SDK with onAdLoaded()
      */
     private Timer timer;
-
     /**
      * DFP Banner ad view
      */
     private PublisherAdView dfpAdView;
-
     /**
      * Interface to pass the DFP ad event to OpenBid SDK
      */
@@ -86,8 +85,20 @@ public class DFPBannerEventHandler extends AdListener implements POBBannerEvent,
         dfpAdView = new PublisherAdView(context.getApplicationContext());
         dfpAdView.setAdUnitId(adUnitId);
         dfpAdView.setAdSizes(adSizes);
+
+        // DO NOT REMOVE/OVERRIDE BELOW LISTENERS
         dfpAdView.setAdListener(this);
         dfpAdView.setAppEventListener(this);
+    }
+
+    /**
+     * Sets the Data listener object. Publisher should implement the DFPConfigListener and override
+     * its method only when publisher needs to set the targeting parameters over DFP banner ad view.
+     *
+     * @param listener DFP data listener
+     */
+    public void setConfigListener(DFPConfigListener listener) {
+        dfpConfigListener = listener;
     }
 
     private void resetDelay() {
@@ -137,6 +148,16 @@ public class DFPBannerEventHandler extends AdListener implements POBBannerEvent,
 
         PublisherAdRequest.Builder requestBuilder = new PublisherAdRequest.Builder();
 
+        // Check if publisher want to set any targeting data
+        if (dfpConfigListener != null) {
+            dfpConfigListener.configure(dfpAdView, requestBuilder);
+        }
+
+        // Warn publisher if he overrides the DFP listeners
+        if (dfpAdView.getAdListener() != this || dfpAdView.getAppEventListener() != this) {
+            Log.w(TAG, "Do not set DFP listeners. These are used by DFPBannerEventHandler internally.");
+        }
+
         if (null != bid) {
 
             // Logging details of bid objects for debug purpose.
@@ -147,7 +168,7 @@ public class DFPBannerEventHandler extends AdListener implements POBBannerEvent,
                 // using for-each loop for iteration over Map.entrySet()
                 for (Map.Entry<String, String> entry : targeting.entrySet()) {
                     requestBuilder.addCustomTargeting(entry.getKey(), entry.getValue());
-                    Log.d(TAG, "DFP custom param [" + entry.getKey() + "] = " + entry.getValue());
+                    Log.d(TAG, "Targeting param [" + entry.getKey() + "] = " + entry.getValue());
                 }
             }
 
@@ -191,11 +212,11 @@ public class DFPBannerEventHandler extends AdListener implements POBBannerEvent,
     public POBAdSize[] requestedAdSizes() {
         POBAdSize[] adSizes = null;
 
-        if (dfpAdView!=null) {
+        if (dfpAdView != null) {
             AdSize[] dfpAdSizes = dfpAdView.getAdSizes();
-            if(dfpAdSizes!=null && dfpAdSizes.length>0) {
+            if (dfpAdSizes != null && dfpAdSizes.length > 0) {
                 adSizes = new POBAdSize[dfpAdSizes.length];
-                for (int index = 0; index< dfpAdSizes.length; index++) {
+                for (int index = 0; index < dfpAdSizes.length; index++) {
                     adSizes[index] = new POBAdSize(dfpAdSizes[index].getWidth(), dfpAdSizes[index].getHeight());
                 }
             }
@@ -224,13 +245,12 @@ public class DFPBannerEventHandler extends AdListener implements POBBannerEvent,
     @Override
     public void destroy() {
         resetDelay();
-        if(null != dfpAdView){
+        if (null != dfpAdView) {
             dfpAdView.destroy();
         }
         dfpAdView = null;
         eventListener = null;
     }
-
 
     //--- Override Methods from DFP Ad view's AdListener ------
     @Override
@@ -291,8 +311,24 @@ public class DFPBannerEventHandler extends AdListener implements POBBannerEvent,
     @Override
     public void onAdLeftApplication() {
         super.onAdLeftApplication();
-        if(eventListener !=null) {
+        if (eventListener != null) {
             eventListener.onAdLeftApplication();
         }
+    }
+
+    /**
+     * Interface to get the DFP view and it's request builder, to configure the properties.
+     */
+    public interface DFPConfigListener {
+        /**
+         * This method is called before event handler makes an ad request call to DFP SDK. It passes
+         * DFP ad view & request builder which will be used to make ad request. Publisher can
+         * configure the ad request properties on the provided objects.
+         *
+         * @param adView         DFP Banner ad view
+         * @param requestBuilder DFP Banner ad request builder
+         */
+        void configure(PublisherAdView adView,
+                       PublisherAdRequest.Builder requestBuilder);
     }
 }

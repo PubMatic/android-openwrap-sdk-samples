@@ -36,11 +36,33 @@ import java.util.*
 class DFPBannerEventHandler(val context: Context, val adUnitId: String, vararg adSizes: AdSize?) : AdListener(), POBBannerEvent, AppEventListener {
 
     val TAG = "DFPBannerEventHandler"
+
+    /**
+     * Interface to get the DFP view and it's request builder, to configure the
+     * properties.
+     */
+    interface DFPConfigListener {
+        /**
+         * This method is called before event handler makes ad request call to DFP SDK. It passes
+         * DFP ad view & request builder which will be used to make an ad request. Publisher can
+         * configure the ad request properties on the provided objects.
+         * @param adView DFP Banner ad view
+         * @param requestBuilder DFP Banner ad request builder
+         */
+        fun configure(adView: PublisherAdView,
+                      requestBuilder: PublisherAdRequest.Builder)
+    }
+
     /**
      * For every winning bid, a DFP SDK gives callback with below key via AppEventListener (from
      * DFP SDK). This key can be changed at DFP's line item.
      */
     private val PUBMATIC_WIN_KEY = "pubmaticdm"
+
+    /**
+     * Config listener to check if publisher want to config properties in DFP ad
+     */
+    private var dfpConfigListener: DFPConfigListener? = null
 
     /**
      * Flag to identify if PubMatic bid wins the current impression
@@ -64,12 +86,24 @@ class DFPBannerEventHandler(val context: Context, val adUnitId: String, vararg a
      */
     private var eventListener: POBBannerEventListener? = null
 
-    init{
+    init {
         dfpAdView = PublisherAdView(context)
         dfpAdView.adUnitId = adUnitId
         dfpAdView.setAdSizes(*adSizes)
+
+        // DO NOT REMOVE/OVERRIDE BELOW LISTENERS
         dfpAdView.adListener = this
         dfpAdView.appEventListener = this
+    }
+
+    /**
+     * Sets the Data listener object. Publisher should implement the DFPConfigListener and override
+     * its method only when publisher needs to set the targeting parameters over DFP banner ad view.
+     *
+     * @param listener DFP data listener
+     */
+    fun setConfigListener(listener: DFPConfigListener) {
+        dfpConfigListener = listener
     }
 
     private fun resetDelay() {
@@ -104,11 +138,20 @@ class DFPBannerEventHandler(val context: Context, val adUnitId: String, vararg a
             eventListener?.onFailed(error)
         }
     }
+
     override fun requestAd(bid: POBBid?) {
         // Reset the flag
         isAppEventExpected = false
 
         val requestBuilder = PublisherAdRequest.Builder()
+
+        // Check if publisher want to set any targeting data
+        dfpConfigListener?.configure(dfpAdView, requestBuilder)
+
+        // Warn publisher if he overrides the DFP listeners
+        if (dfpAdView.adListener !== this || dfpAdView.appEventListener !== this) {
+            Log.w(TAG, "Do not set DFP listeners. These are used by DFPBannerEventHandler internally.")
+        }
 
         if (null != bid) {
 
