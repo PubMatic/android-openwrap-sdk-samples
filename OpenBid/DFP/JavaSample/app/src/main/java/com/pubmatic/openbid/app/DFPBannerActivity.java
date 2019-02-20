@@ -26,17 +26,14 @@
  */
 package com.pubmatic.openbid.app;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.google.android.gms.ads.AdSize;
 import com.pubmatic.openbid.app.dfpevent.DFPBannerEventHandler;
-import com.pubmatic.sdk.common.POBError;
 import com.pubmatic.sdk.common.OpenBidSDK;
+import com.pubmatic.sdk.common.POBError;
 import com.pubmatic.sdk.common.models.POBApplicationInfo;
 import com.pubmatic.sdk.openbid.banner.POBBannerView;
 
@@ -58,12 +55,6 @@ public class DFPBannerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dfp_wrapper);
-        //Change the Status Bar color
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getResources().getColor(R.color.colorStatusBar));
-        }
 
         // A valid Play Store Url of an Android application is required.
         POBApplicationInfo appInfo = new POBApplicationInfo();

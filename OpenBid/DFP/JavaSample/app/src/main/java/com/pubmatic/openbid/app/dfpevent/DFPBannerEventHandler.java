@@ -269,9 +269,11 @@ public class DFPBannerEventHandler extends AdListener implements POBBannerEvent,
                     eventListener.onFailed(new POBError(POBError.NO_ADS_AVAILABLE, "DFP SDK gives no fill error"));
                     break;
                 default:
-                    eventListener.onFailed(new POBError(POBError.INTERNAL_ERROR, "DFP SDK gives internal error"));
+                    eventListener.onFailed(new POBError(POBError.INTERNAL_ERROR, "DFP SDK failed with error code:"+errCode));
                     break;
             }
+        }else {
+            Log.e(TAG, "Can not call failure callback, POBBannerEventListener reference null. DFP error:"+errCode);
         }
     }
 

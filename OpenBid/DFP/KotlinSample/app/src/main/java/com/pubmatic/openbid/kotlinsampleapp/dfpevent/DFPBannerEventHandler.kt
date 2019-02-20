@@ -236,11 +236,15 @@ class DFPBannerEventHandler(val context: Context, val adUnitId: String, vararg a
 
     override fun onAdFailedToLoad(errCode: Int) {
         Log.d(TAG, "onAdFailedToLoad()")
-        when (errCode) {
-            PublisherAdRequest.ERROR_CODE_INVALID_REQUEST -> eventListener?.onFailed(POBError(POBError.INVALID_REQUEST, "DFP SDK gives invalid request error"))
-            PublisherAdRequest.ERROR_CODE_NETWORK_ERROR -> eventListener?.onFailed(POBError(POBError.NETWORK_ERROR, "DFP SDK gives network error"))
-            PublisherAdRequest.ERROR_CODE_NO_FILL -> eventListener?.onFailed(POBError(POBError.NO_ADS_AVAILABLE, "DFP SDK gives no fill error"))
-            else -> eventListener?.onFailed(POBError(POBError.INTERNAL_ERROR, "DFP SDK gives internal error"))
+        if (eventListener != null) {
+            when (errCode) {
+                PublisherAdRequest.ERROR_CODE_INVALID_REQUEST -> eventListener?.onFailed(POBError(POBError.INVALID_REQUEST, "DFP SDK gives invalid request error"))
+                PublisherAdRequest.ERROR_CODE_NETWORK_ERROR -> eventListener?.onFailed(POBError(POBError.NETWORK_ERROR, "DFP SDK gives network error"))
+                PublisherAdRequest.ERROR_CODE_NO_FILL -> eventListener?.onFailed(POBError(POBError.NO_ADS_AVAILABLE, "DFP SDK gives no fill error"))
+                else -> eventListener?.onFailed(POBError(POBError.INTERNAL_ERROR, "DFP SDK failed with error code:"+errCode))
+            }
+        }else{
+            Log.e(TAG, "Can not call failure callback, POBBannerEventListener reference null. DFP error:$errCode")
         }
     }
 
