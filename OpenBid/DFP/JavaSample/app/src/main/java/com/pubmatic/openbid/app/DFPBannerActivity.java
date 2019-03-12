@@ -99,7 +99,7 @@ public class DFPBannerActivity extends AppCompatActivity {
     }
 
 
-    class POBBannerViewListener implements POBBannerView.POBBannerViewListener {
+    class POBBannerViewListener extends POBBannerView.POBBannerViewListener {
         private final String TAG = "POBBannerViewListener";
 
         // Callback method Notifies that an ad has been successfully loaded and rendered.

@@ -100,7 +100,7 @@ public class DFPInterstitialActivity extends AppCompatActivity {
     }
 
     // Interstitial Ad listener callbacks
-    class POBInterstitialListener implements POBInterstitial.POBInterstitialListener {
+    class POBInterstitialListener extends POBInterstitial.POBInterstitialListener {
         private final String TAG = "POBInterstitialListener";
         // Callback method notifies that an ad has been received successfully.
         @Override

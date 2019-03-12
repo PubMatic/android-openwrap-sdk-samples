@@ -205,8 +205,9 @@ class DFPInterstitialEventHandler(val context: Context, val adUnitId: String) : 
         if (dfpInterstitialAd?.isLoaded == true) {
             dfpInterstitialAd?.show()
         } else {
-            Log.e(TAG, "DFP SDK is not ready to show Interstitial Ad.")
-            sendErrorToPOB(POBError(POBError.INTERSTITIAL_NOT_READY, "DFP SDK is not ready to show Interstitial Ad."))
+            val errMsg = "DFP SDK is not ready to show Interstitial Ad."
+            sendErrorToPOB(POBError(POBError.INTERSTITIAL_NOT_READY, errMsg))
+            Log.e(TAG, errMsg)
         }
     }
 
@@ -269,6 +270,9 @@ class DFPInterstitialEventHandler(val context: Context, val adUnitId: String) : 
 
     override fun onAdLeftApplication() {
         super.onAdLeftApplication()
+        //DFP interstitial does not provide onAdClick event, event handler
+        // intercepts DFP's onAdLeftApplication and provide both callbacks onAdClick as well as onAdLeftApplication sequentially
+        eventListener?.onAdClick()
         eventListener?.onAdLeftApplication()
     }
 }

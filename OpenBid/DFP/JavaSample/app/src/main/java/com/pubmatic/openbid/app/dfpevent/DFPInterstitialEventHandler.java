@@ -227,10 +227,11 @@ public class DFPInterstitialEventHandler extends AdListener implements POBInters
         if (null != dfpInterstitialAd && dfpInterstitialAd.isLoaded()) {
             dfpInterstitialAd.show();
         } else {
-            Log.e(TAG, "DFP SDK is not ready to show Interstitial Ad.");
+            String errMsg = "DFP SDK is not ready to show Interstitial Ad.";
             if (null != eventListener) {
-                sendErrorToPOB(new POBError(POBError.INTERSTITIAL_NOT_READY, "DFP SDK is not ready to show Interstitial Ad."));
+                sendErrorToPOB(new POBError(POBError.INTERSTITIAL_NOT_READY, errMsg));
             }
+            Log.e(TAG, errMsg);
         }
     }
 
@@ -314,7 +315,10 @@ public class DFPInterstitialEventHandler extends AdListener implements POBInters
     @Override
     public void onAdLeftApplication() {
         super.onAdLeftApplication();
+        //DFP interstitial does not provide onAdClick event, event handler
+        // intercepts DFP's onAdLeftApplication and provide both callbacks onAdClick as well as onAdLeftApplication sequentially
         if (eventListener != null) {
+            eventListener.onAdClick();
             eventListener.onAdLeftApplication();
         }
     }

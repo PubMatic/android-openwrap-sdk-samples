@@ -62,7 +62,7 @@ class DFPBannerActivity : AppCompatActivity() {
     }
 
     // POBBannerViewListener listener
-    class POBBannerViewListener : POBBannerView.POBBannerViewListener{
+    class POBBannerViewListener : POBBannerView.POBBannerViewListener(){
         val TAG = "POBInterstitialListener"
 
         // Callback method Notifies that an  banner ad has been successfully loaded and rendered.

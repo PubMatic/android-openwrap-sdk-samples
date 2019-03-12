@@ -85,7 +85,7 @@ class DFPInterstitialActivity : AppCompatActivity() {
     }
 
     // POBInterstitialAdListener listener
-    inner class POBInterstitialListener : POBInterstitial.POBInterstitialListener {
+    inner class POBInterstitialListener : POBInterstitial.POBInterstitialListener() {
         val TAG = "POBInterstitialListener"
 
 
