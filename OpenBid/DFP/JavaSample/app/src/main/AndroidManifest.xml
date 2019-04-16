@@ -31,6 +31,10 @@
         <meta-data
             android:name="com.google.android.gms.ads.AD_MANAGER_APP"
             android:value="true"/>
+
+        <!-- OpenBid SDK's Video Player activity for MRAID video -->
+        <activity android:name="com.pubmatic.sdk.webrendering.mraid.POBVideoPlayerActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
     </application>
 
 </manifest>

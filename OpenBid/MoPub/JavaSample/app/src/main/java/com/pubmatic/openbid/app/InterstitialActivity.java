@@ -114,7 +114,7 @@ public class InterstitialActivity extends AppCompatActivity {
         // Callback method notifies an error encountered while loading or rendering an ad.
         @Override
         public void onAdFailed(POBInterstitial ad, POBError error) {
-            Log.d(TAG, "onAdFailed :" + error.toString());
+            Log.e(TAG, "onAdFailed : Ad failed with error -" + error.toString());
             //Method gets called when loadAd fails to load ad
             //Here, you can put logger and see why ad failed to load
         }

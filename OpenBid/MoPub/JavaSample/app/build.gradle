@@ -43,5 +43,5 @@ dependencies {
         transitive = true
     }
     //To integrate PubMatic SDK
-    implementation 'com.pubmatic.sdk:openbid:1.1.0'
+    implementation 'com.pubmatic.sdk:openbid:1.2.0'
 }

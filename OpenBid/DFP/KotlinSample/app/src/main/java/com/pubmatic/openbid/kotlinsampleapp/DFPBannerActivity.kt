@@ -73,7 +73,7 @@ class DFPBannerActivity : AppCompatActivity() {
 
         // Callback method Notifies an error encountered while loading or rendering an ad.
         override fun onAdFailed(view: POBBannerView?, error: POBError?) {
-            Log.d(TAG, "onAdFailed")
+            Log.e(TAG, "onAdFailed : Ad failed with error - " + error.toString())
         }
 
 

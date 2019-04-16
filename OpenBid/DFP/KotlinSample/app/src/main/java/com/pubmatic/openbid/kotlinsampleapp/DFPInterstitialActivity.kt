@@ -99,7 +99,7 @@ class DFPInterstitialActivity : AppCompatActivity() {
 
         // Callback method notifies an error encountered while loading or rendering an ad.
         override fun onAdFailed(ad: POBInterstitial?, error: POBError?) {
-            Log.d(TAG, "onAdFailed")
+            Log.e(TAG, "onAdFailed : Ad failed with error - " + error.toString())
             //Method gets called when loadAd fails to load ad
             //Here, you can put logger and see why ad failed to load
         }
