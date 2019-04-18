@@ -11,10 +11,12 @@ for documentation on using OpenBid SDK.
 
 ## Sample Applications
 
-| Language | Samples |
+| Ad Server | Samples |
 | ------------- | ------------- |
-|   Java    | [Banner/Interstitial Samples](./OpenBid/DFP/JavaSample/) |
-|   Kotlin    | [Banner/Interstitial Samples](./OpenBid/DFP/KotlinSample/) |
+|   DFP    | [Banner/Interstitial Samples](./OpenBid/DFP/) |
+|   MoPub    | [Banner/Interstitial Samples](./OpenBid/MoPub/) |
+|   OpenWrap(Programmatic Only)    | [Banner/Interstitial Samples](./OpenBid/OpenWrap/) |
+|   Other Ad Server    | [Banner/Interstitial Samples](./OpenBid/OtherAdServer/) |
 
 
 ## Downloads
