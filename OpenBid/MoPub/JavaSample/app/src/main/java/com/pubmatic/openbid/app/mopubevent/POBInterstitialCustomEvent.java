@@ -76,6 +76,9 @@ public class POBInterstitialCustomEvent extends CustomEventInterstitial {
     protected void onInvalidate() {
         this.context = null;
         this.mopubCustomEventInterstitial = null;
+        if (this.renderer != null){
+            this.renderer.destroy();
+        }
         this.renderer = null;
     }
     //</editor-fold>

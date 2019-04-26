@@ -69,6 +69,7 @@ open class POBInterstitialCustomEvent : CustomEventInterstitial() {
     override fun onInvalidate() {
         this.context = null
         this.mopubCustomEventInterstitial = null
+        this.renderer?.destroy();
         this.renderer = null
     }
     //</editor-fold>
