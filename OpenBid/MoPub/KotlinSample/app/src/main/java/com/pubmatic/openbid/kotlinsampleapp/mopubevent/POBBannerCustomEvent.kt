@@ -13,22 +13,24 @@ import com.pubmatic.sdk.common.utility.POBUtils
 import com.pubmatic.sdk.openbid.core.POBRenderer
 import com.pubmatic.sdk.openbid.core.POBBid
 import com.pubmatic.sdk.webrendering.mraid.POBWebRenderer
+import com.pubmatic.sdk.webrendering.ui.POBBannerRendering
 
 class POBBannerCustomEvent : CustomEventBanner() {
 
     private val TAG = "POBBannerCustomEvent"
     private var customEventBannerListener: CustomEventBannerListener? = null
     private var bid: POBBid? = null
+    private var renderer: POBBannerRendering? = null
 
     protected override fun loadBanner(context: Context, customEventBannerListener: CustomEventBannerListener, localExtras: Map<String, Any>, serverExtras: Map<String, String>) {
         this.customEventBannerListener = customEventBannerListener
         Log.d(TAG, "loadBanner")
         bid = localExtras[BID_KEY] as POBBid?
         if (null != bid) {
-            val renderer = POBRenderer.getBannerRenderer(context)
-            (renderer as POBWebRenderer).setRefreshTimeoutInSec(bid!!.refreshInterval)
-            renderer.setAdRendererListener(AdRendererListenerImp())
-            renderer.renderAd(bid)
+            renderer = POBRenderer.getBannerRenderer(context)
+            (renderer as? POBWebRenderer)?.setRefreshTimeoutInSec(bid?.refreshInterval ?: 0)
+            renderer?.setAdRendererListener(AdRendererListenerImp())
+            renderer?.renderAd(bid)
         } else {
             handlerFailure(POBError(POBError.NO_ADS_AVAILABLE, "Pubmatic Ads not available!"))
         }
@@ -37,6 +39,9 @@ class POBBannerCustomEvent : CustomEventBanner() {
 
     protected override fun onInvalidate() {
         customEventBannerListener = null
+        if (renderer != null) {
+            (renderer as? POBWebRenderer)?.destroy()
+        }
         bid = null
     }
 

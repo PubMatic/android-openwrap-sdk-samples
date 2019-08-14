@@ -25,6 +25,7 @@ public class POBBannerCustomEvent extends CustomEventBanner {
     static final String BID_KEY = "pubmatic_bid";
     private CustomEventBannerListener customEventBannerListener;
     private POBBid bid;
+    private POBBannerRendering renderer;
 
     @Override
     protected void loadBanner(Context context, CustomEventBannerListener customEventBannerListener, Map<String, Object> localExtras, Map<String, String> serverExtras) {
@@ -32,7 +33,7 @@ public class POBBannerCustomEvent extends CustomEventBanner {
         Log.d(TAG, "loadBanner");
         bid = (POBBid) localExtras.get(BID_KEY);
         if(null != bid){
-            POBBannerRendering renderer = POBRenderer.getBannerRenderer(context);
+            renderer = POBRenderer.getBannerRenderer(context);
             ((POBWebRenderer)renderer).setRefreshTimeoutInSec(bid.getRefreshInterval());
             renderer.setAdRendererListener(new AdRendererListenerImp());
             renderer.renderAd(bid);
@@ -45,12 +46,11 @@ public class POBBannerCustomEvent extends CustomEventBanner {
 
     @Override
     protected void onInvalidate() {
-        if(null != customEventBannerListener){
-            customEventBannerListener = null;
+        customEventBannerListener = null;
+        if (renderer != null) {
+            ((POBWebRenderer)renderer).destroy();
         }
-        if(null != bid){
-            bid = null;
-        }
+        bid = null;
     }
 
     private void handlerFailure(POBError error){

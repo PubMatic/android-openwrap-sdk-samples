@@ -37,5 +37,5 @@ dependencies {
     implementation 'com.google.android.gms:play-services-ads:17.1.2'
 
     //To integrate PubMatic SDK
-    implementation 'com.pubmatic.sdk:openbid:1.2.2'
+    implementation 'com.pubmatic.sdk:openbid:1.3.0'
 }
