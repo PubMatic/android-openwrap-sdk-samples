@@ -28,6 +28,10 @@
             android:label="Interstitial"
             android:configChanges="orientation|screenSize">
         </activity>
+        <activity android:name="com.pubmatic.openbid.app.DFPVideoInterstitialActivity"
+            android:label="Video Interstitial"
+            android:configChanges="orientation|screenSize">
+        </activity>
         <meta-data
             android:name="com.google.android.gms.ads.AD_MANAGER_APP"
             android:value="true"/>

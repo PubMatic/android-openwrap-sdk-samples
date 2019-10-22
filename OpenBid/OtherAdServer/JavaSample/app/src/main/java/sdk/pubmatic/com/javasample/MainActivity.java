@@ -99,7 +99,8 @@ public class MainActivity extends AppCompatActivity {
 
     enum AdType{
         BANNER(BannerActivity.class, "Banner"),
-        INTERSTITIAL(InterstitialActivity.class, "Interstitial");
+        INTERSTITIAL(InterstitialActivity.class, "Interstitial"),
+        VIDEO_INTERSTITIAL(VideoInterstitialActivity.class, "Video Interstitial");
 
         private Class activity;
         private String displayName;

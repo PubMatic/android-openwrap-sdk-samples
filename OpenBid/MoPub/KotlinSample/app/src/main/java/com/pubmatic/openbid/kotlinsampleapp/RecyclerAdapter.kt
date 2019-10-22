@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 
-class RecyclerAdapter(val list: ArrayList<String>?, val itemClickListener: OnItemClickListener) :  RecyclerView.Adapter<RecyclerAdapter.AdViewHolder>(){
+class RecyclerAdapter(val list: ArrayList<MainActivity.AdType>?, val itemClickListener: OnItemClickListener) :  RecyclerView.Adapter<RecyclerAdapter.AdViewHolder>(){
 
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): AdViewHolder {
@@ -24,7 +24,7 @@ class RecyclerAdapter(val list: ArrayList<String>?, val itemClickListener: OnIte
     }
 
     override fun onBindViewHolder(holder: AdViewHolder, position: Int) {
-        holder.aditem.text = list?.get(position)
+        holder.aditem.text = list?.get(position)?.displayName
     }
 
 

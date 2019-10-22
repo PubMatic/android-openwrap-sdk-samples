@@ -7,10 +7,10 @@ import android.view.View;
 
 import com.pubmatic.sdk.common.POBAdSize;
 import com.pubmatic.sdk.common.POBError;
+import com.pubmatic.sdk.common.ui.POBBannerRendering;
 import com.pubmatic.sdk.openbid.banner.POBBannerEvent;
 import com.pubmatic.sdk.openbid.banner.POBBannerEventListener;
 import com.pubmatic.sdk.openbid.core.POBBid;
-import com.pubmatic.sdk.webrendering.ui.POBBannerRendering;
 
 import sdk.pubmatic.com.javasample.dummyadserver.DummyAdServerSDK;
 

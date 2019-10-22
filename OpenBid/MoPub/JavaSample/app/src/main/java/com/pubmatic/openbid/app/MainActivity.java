@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -21,6 +23,7 @@ import com.mopub.common.SdkInitializationListener;
 import com.pubmatic.sdk.common.OpenBidSDK;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -47,9 +50,7 @@ public class MainActivity extends AppCompatActivity {
         adList.setHasFixedSize(true);
         adList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
-        final List<String> itemList = new ArrayList<>();
-        itemList.add("Banner");
-        itemList.add("Interstitial");
+        final List<AD_TYPE> itemList = new ArrayList<>(Arrays.asList(AD_TYPE.values()));
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         adList.setLayoutManager(layoutManager);
@@ -58,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         adListAdapter.setItemClickListener(new AdListAdapter.OnItemClickListener() {
             @Override
             public void onClick(View view, int position) {
-                loadAdScreen(itemList.get(position));
+                loadAdScreen(itemList.get(position).getActivity());
             }
         });
         adList.setAdapter(adListAdapter);
@@ -107,13 +108,30 @@ public class MainActivity extends AppCompatActivity {
         };
     }
 
-    public void loadAdScreen(String adType) {
-        Intent intent;
-        if(adType.equalsIgnoreCase("Banner"))
-            intent = new Intent(MainActivity.this, BannerActivity.class);
-        else  {
-            intent = new Intent(MainActivity.this, InterstitialActivity.class);
-        }
+    public void loadAdScreen(@NonNull Class activity) {
+        Intent intent = new Intent(MainActivity.this, activity);
         startActivity(intent);
+    }
+
+    enum AD_TYPE {
+        BANNER(BannerActivity.class, "Banner"),
+        INTERSTITIAL(InterstitialActivity.class, "Interstitial"),
+        VIDEO_INTERSTITIAL(VideoInterstitialActivity.class, "Video Interstitial");
+
+        private Class activity;
+        private String displayText;
+
+        AD_TYPE(@Nullable Class activity, @NonNull String text) {
+            this.activity = activity;
+            this.displayText = text;
+        }
+
+        public Class getActivity() {
+            return activity;
+        }
+
+        public String getDisplayText() {
+            return displayText;
+        }
     }
 }

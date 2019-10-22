@@ -10,10 +10,10 @@ import com.mopub.mobileads.MoPubErrorCode
 import com.mopub.mobileads.MoPubView
 import com.pubmatic.sdk.common.POBAdSize
 import com.pubmatic.sdk.common.POBError
+import com.pubmatic.sdk.common.ui.POBBannerRendering
 import com.pubmatic.sdk.openbid.banner.POBBannerEvent
 import com.pubmatic.sdk.openbid.banner.POBBannerEventListener
 import com.pubmatic.sdk.openbid.core.POBBid
-import com.pubmatic.sdk.webrendering.ui.POBBannerRendering
 import java.util.*
 
 /**
@@ -96,8 +96,15 @@ class MoPubBannerEventHandler
 
         // Check if publisher want to set any targeting data
         moPubView?.let { mopubConfigListener?.configure(it) }
+
+        // NOTE: Please do not remove this code. Need to reset MoPub banner listener to
+        // MoPubBannerEventHandler as these are used by MoPubBannerEventHandler internally.
+        // Changing the mopub delegate to other instance may break the callback mechanism and may
+        // hamper the banner refresh mechanism.
         if (moPubView?.bannerAdListener != this) {
-            Log.w(TAG, "Do not set MoPub listener. This is used by MoPubBannerEventHandler internally.")
+            moPubView?.setBannerAdListener(this)
+            Log.w(TAG, "Resetting MoPub banner listener to MoPubBannerEventHandler as these are" +
+                    " used by MoPubBannerEventHandler internally.")
         }
         
         if (null != bid) {

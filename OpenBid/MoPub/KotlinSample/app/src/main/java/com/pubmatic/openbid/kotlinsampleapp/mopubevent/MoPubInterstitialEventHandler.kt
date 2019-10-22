@@ -10,10 +10,10 @@ import android.util.Log
 import com.mopub.mobileads.MoPubErrorCode
 import com.mopub.mobileads.MoPubInterstitial
 import com.pubmatic.sdk.common.POBError
+import com.pubmatic.sdk.common.ui.POBInterstitialRendering
 import com.pubmatic.sdk.openbid.core.POBBid
 import com.pubmatic.sdk.openbid.interstitial.POBInterstitialEvent
 import com.pubmatic.sdk.openbid.interstitial.POBInterstitialEventListener
-import com.pubmatic.sdk.webrendering.ui.POBInterstitialRendering
 
 /**
  * This class implements the communication between the OpenBid SDK and the MoPub SDK for a given ad
@@ -104,8 +104,12 @@ open class MoPubInterstitialEventHandler(
         // Check if publisher want to set any targeting data
         moPubInterstitial?.let { mopubConfigListener?.configure(it) }
 
+        // NOTE: Please do not remove this code. Need to reset MoPub interstitial listener to
+        // MoPubInterstitialEventHandler as these are used by MoPubInterstitialEventHandler internally.
         if (moPubInterstitial?.interstitialAdListener != this) {
-            Log.w(TAG, "Do not set MoPub listener. This is used by MoPubInterstitialEventHandler internally.")
+            moPubInterstitial?.setInterstitialAdListener(this)
+            Log.w(TAG, "Resetting MoPub interstitial interstitial to MoPubInterstitialEventHandler" +
+                    " as these are used by MoPubInterstitialEventHandler internally.")
         }
 
         if (null != bid) {

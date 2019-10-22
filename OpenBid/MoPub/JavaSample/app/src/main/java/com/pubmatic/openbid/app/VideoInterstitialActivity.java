@@ -5,21 +5,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
-import com.pubmatic.openbid.app.dfpevent.DFPInterstitialEventHandler;
-import com.pubmatic.sdk.common.POBError;
+import com.pubmatic.openbid.app.mopubevent.MoPubInterstitialEventHandler;
 import com.pubmatic.sdk.common.OpenBidSDK;
+import com.pubmatic.sdk.common.POBError;
 import com.pubmatic.sdk.common.models.POBApplicationInfo;
 import com.pubmatic.sdk.openbid.interstitial.POBInterstitial;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class DFPInterstitialActivity extends AppCompatActivity {
+public class VideoInterstitialActivity extends AppCompatActivity {
 
-    private static final String OPENWRAP_AD_UNIT_ONE = "/15671365/pm_sdk/PMSDK-Demo-App-Interstitial";
+    private static final String OPENWRAP_AD_UNIT_ONE = "f3ec24b50d6248b9a003d518675fe47b";
     private static final String PUB_ID = "156276";
-    private static final int PROFILE_ID = 1165;
-    private static final String DFP_AD_UNIT_ID = "/15671365/pm_sdk/PMSDK-Demo-App-Interstitial";
+    private static final int PROFILE_ID = 1758;
+    private static final String MOPUB_AD_UNIT_ID = "f3ec24b50d6248b9a003d518675fe47b";
 
     private POBInterstitial interstitial;
 
@@ -42,8 +42,8 @@ public class DFPInterstitialActivity extends AppCompatActivity {
 
         // Create an interstitial custom event handler for your ad server. Make sure
         // you use separate event handler objects to create each interstitial ad instance.
-        // For example, The code below creates an event handler for DFP ad server.
-        DFPInterstitialEventHandler eventHandler = new DFPInterstitialEventHandler(this, DFP_AD_UNIT_ID);
+        // For example, The code below creates an event handler for MoPub ad server.
+        MoPubInterstitialEventHandler eventHandler = new MoPubInterstitialEventHandler(this, MOPUB_AD_UNIT_ID);
 
         // Create  interstitial instance by passing activity context and
         interstitial = new POBInterstitial(this, PUB_ID,
@@ -52,7 +52,7 @@ public class DFPInterstitialActivity extends AppCompatActivity {
                 eventHandler);
 
         // Set Optional listener
-        interstitial.setListener(new POBInterstitialListener());
+        interstitial.setListener(new VideoInterstitialActivity.POBInterstitialListener());
 
 
         // Load Ad button
@@ -112,15 +112,9 @@ public class DFPInterstitialActivity extends AppCompatActivity {
         // Callback method notifies an error encountered while loading or rendering an ad.
         @Override
         public void onAdFailed(POBInterstitial ad, POBError error) {
-            Log.e(TAG, "onAdFailed : Ad failed with error - " + error.toString());
+            Log.e(TAG, "onAdFailed : Ad failed with error -" + error.toString());
             //Method gets called when loadAd fails to load ad
             //Here, you can put logger and see why ad failed to load
-        }
-
-        // Callback method notifies that a user interaction will open another app (for example, App Store), leaving the current app.
-        @Override
-        public void onAppLeaving(POBInterstitial ad) {
-            Log.d(TAG, "onAppLeaving");
         }
 
         // Callback method notifies that the interstitial ad will be presented as a modal on top of the current view controller
@@ -141,6 +135,4 @@ public class DFPInterstitialActivity extends AppCompatActivity {
             Log.d(TAG, "onAdClicked");
         }
     }
-
-
 }

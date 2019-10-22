@@ -11,11 +11,11 @@ import com.mopub.mobileads.MoPubErrorCode;
 import com.pubmatic.sdk.common.POBError;
 import com.pubmatic.sdk.common.base.POBAdDescriptor;
 import com.pubmatic.sdk.common.base.POBAdRendererListener;
+import com.pubmatic.sdk.common.ui.POBBannerRendering;
 import com.pubmatic.sdk.common.utility.POBUtils;
 import com.pubmatic.sdk.openbid.core.POBBid;
 import com.pubmatic.sdk.openbid.core.POBRenderer;
 import com.pubmatic.sdk.webrendering.mraid.POBWebRenderer;
-import com.pubmatic.sdk.webrendering.ui.POBBannerRendering;
 
 import java.util.Map;
 

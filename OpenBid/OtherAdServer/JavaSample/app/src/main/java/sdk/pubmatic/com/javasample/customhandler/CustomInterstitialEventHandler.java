@@ -5,10 +5,10 @@ import android.content.Context;
 import android.util.Log;
 
 import com.pubmatic.sdk.common.POBError;
+import com.pubmatic.sdk.common.ui.POBInterstitialRendering;
 import com.pubmatic.sdk.openbid.core.POBBid;
 import com.pubmatic.sdk.openbid.interstitial.POBInterstitialEvent;
 import com.pubmatic.sdk.openbid.interstitial.POBInterstitialEventListener;
-import com.pubmatic.sdk.webrendering.ui.POBInterstitialRendering;
 
 import sdk.pubmatic.com.javasample.dummyadserver.DummyAdServerSDK;
 

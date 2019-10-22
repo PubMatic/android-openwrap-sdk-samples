@@ -6,19 +6,19 @@ import android.util.Log;
 import android.view.View;
 
 import com.pubmatic.openbid.app.dfpevent.DFPInterstitialEventHandler;
-import com.pubmatic.sdk.common.POBError;
 import com.pubmatic.sdk.common.OpenBidSDK;
+import com.pubmatic.sdk.common.POBError;
 import com.pubmatic.sdk.common.models.POBApplicationInfo;
 import com.pubmatic.sdk.openbid.interstitial.POBInterstitial;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class DFPInterstitialActivity extends AppCompatActivity {
-
+public class DFPVideoInterstitialActivity extends AppCompatActivity {
+    
     private static final String OPENWRAP_AD_UNIT_ONE = "/15671365/pm_sdk/PMSDK-Demo-App-Interstitial";
     private static final String PUB_ID = "156276";
-    private static final int PROFILE_ID = 1165;
+    private static final int PROFILE_ID = 1757;
     private static final String DFP_AD_UNIT_ID = "/15671365/pm_sdk/PMSDK-Demo-App-Interstitial";
 
     private POBInterstitial interstitial;
@@ -52,7 +52,7 @@ public class DFPInterstitialActivity extends AppCompatActivity {
                 eventHandler);
 
         // Set Optional listener
-        interstitial.setListener(new POBInterstitialListener());
+        interstitial.setListener(new DFPVideoInterstitialActivity.POBInterstitialListener());
 
 
         // Load Ad button
@@ -141,6 +141,5 @@ public class DFPInterstitialActivity extends AppCompatActivity {
             Log.d(TAG, "onAdClicked");
         }
     }
-
 
 }

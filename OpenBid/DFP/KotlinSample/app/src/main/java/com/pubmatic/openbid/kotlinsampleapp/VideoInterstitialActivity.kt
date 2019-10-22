@@ -5,21 +5,24 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Button
 import com.pubmatic.openbid.kotlinsampleapp.dfpevent.DFPInterstitialEventHandler
-import com.pubmatic.sdk.common.POBError
 import com.pubmatic.sdk.common.OpenBidSDK
+import com.pubmatic.sdk.common.POBError
 import com.pubmatic.sdk.common.models.POBApplicationInfo
-import com.pubmatic.sdk.openbid.core.POBRequest
 import com.pubmatic.sdk.openbid.interstitial.POBInterstitial
 import kotlinx.android.synthetic.main.activity_interstitial.*
 import java.net.MalformedURLException
 import java.net.URL
 
-class DFPInterstitialActivity : AppCompatActivity() {
+/**
+ * Activity to show Interstitial Implementation
+ */
+class VideoInterstitialActivity : AppCompatActivity() {
 
     private val OPENWRAP_AD_UNIT_ID = "/15671365/pm_sdk/PMSDK-Demo-App-Interstitial"
     private val PUB_ID = "156276"
-    private val PROFILE_ID = 1165
+    private val PROFILE_ID = 1757
     private val DFP_AD_UNIT = "/15671365/pm_sdk/PMSDK-Demo-App-Interstitial"
+
     private var interstitial : POBInterstitial? = null
     private var loadAd: Button? = null
     private var showAd: Button? = null
@@ -53,14 +56,10 @@ class DFPInterstitialActivity : AppCompatActivity() {
         // Set optional listener
         interstitial?.setListener(POBInterstitialListener())
 
-        var request: POBRequest? = interstitial?.getAdRequest()
-        request?.enableDebugState(true)
-
-
         loadAd = findViewById(R.id.load_ad)
         loadAd?.setOnClickListener {
-                // Call loadAd on interstitial
-                 interstitial?.loadAd()
+            // Call loadAd on interstitial
+            interstitial?.loadAd()
 
         }
 
@@ -73,9 +72,7 @@ class DFPInterstitialActivity : AppCompatActivity() {
         }
 
     }
-    /**
-     * To show interstitial ad call this method
-     **/
+
     private fun showInterstitialAd(){
         // check if the interstitial is ready
         if(interstitial?.isReady == true){
@@ -84,7 +81,9 @@ class DFPInterstitialActivity : AppCompatActivity() {
         }
     }
 
-    // POBInterstitialAdListener listener
+    /**
+     * Implementation class to receive Interstitial ad interaction
+     */
     inner class POBInterstitialListener : POBInterstitial.POBInterstitialListener() {
         val TAG = "POBInterstitialListener"
 
@@ -104,11 +103,6 @@ class DFPInterstitialActivity : AppCompatActivity() {
             //Here, you can put logger and see why ad failed to load
         }
 
-        // Callback method notifies that a user interaction will open another app (for example, App Store), leaving the current app.
-        override fun onAppLeaving(ad: POBInterstitial?) {
-            Log.d(TAG, "onAppLeaving")
-        }
-
         // Callback method notifies that the interstitial ad will be presented as a modal on top of the current view.
         override fun onAdOpened(ad: POBInterstitial?) {
             Log.d(TAG, "onAdOpened")
@@ -124,7 +118,9 @@ class DFPInterstitialActivity : AppCompatActivity() {
             Log.d(TAG, "onAdClicked")
         }
 
-
+        override fun onAppLeaving(ad: POBInterstitial?) {
+            Log.d(TAG, "Interstitial : App Leaving")
+        }
     }
 
 

@@ -5,10 +5,10 @@ import android.content.Context
 import android.util.Log
 import com.pubmatic.openbid.kotlinsampleapp.dummyadserver.DummyAdServerSDK
 import com.pubmatic.sdk.common.POBError
+import com.pubmatic.sdk.common.ui.POBInterstitialRendering
 import com.pubmatic.sdk.openbid.core.POBBid
 import com.pubmatic.sdk.openbid.interstitial.POBInterstitialEvent
 import com.pubmatic.sdk.openbid.interstitial.POBInterstitialEventListener
-import com.pubmatic.sdk.webrendering.ui.POBInterstitialRendering
 
 /**
  * This class is responsible for communication between OpenBid interstitial and interstitial ad from your ad server SDK(in this case DummyAdServerSDK).

@@ -13,10 +13,10 @@ import java.util.List;
 public class AdListAdapter extends RecyclerView.Adapter<AdListAdapter.AdViewHolder>{
 
     private final String TAG = "AdListAdapter";
-    private final List<String> itemList;
+    private final List<MainActivity.AD_TYPE> itemList;
     private OnItemClickListener itemClickListener;
 
-    AdListAdapter(@NonNull List<String> list){
+    AdListAdapter(@NonNull List<MainActivity.AD_TYPE> list){
         itemList = list;
     }
 
@@ -44,7 +44,7 @@ public class AdListAdapter extends RecyclerView.Adapter<AdListAdapter.AdViewHold
     }
 
     private String getItem(int position){
-        return itemList.get(position);
+        return itemList.get(position).getDisplayText();
     }
 
 

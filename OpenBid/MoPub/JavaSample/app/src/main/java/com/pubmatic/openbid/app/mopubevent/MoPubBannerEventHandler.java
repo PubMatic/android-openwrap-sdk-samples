@@ -12,10 +12,10 @@ import com.mopub.mobileads.MoPubErrorCode;
 import com.mopub.mobileads.MoPubView;
 import com.pubmatic.sdk.common.POBAdSize;
 import com.pubmatic.sdk.common.POBError;
+import com.pubmatic.sdk.common.ui.POBBannerRendering;
 import com.pubmatic.sdk.openbid.banner.POBBannerEvent;
 import com.pubmatic.sdk.openbid.banner.POBBannerEventListener;
 import com.pubmatic.sdk.openbid.core.POBBid;
-import com.pubmatic.sdk.webrendering.ui.POBBannerRendering;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -100,8 +100,13 @@ public class MoPubBannerEventHandler implements POBBannerEvent, MoPubView.Banner
             mopubConfigListener.configure(moPubView);
         }
 
+        // NOTE: Please do not remove this code. Need to reset MoPub banner listener to
+        // MoPubBannerEventHandler as these are used by MoPubBannerEventHandler internally.
+        // Changing the mopub listener to other instance may break the callbacks and the banner refresh mechanism.
         if (moPubView.getBannerAdListener() != this) {
-            Log.w(TAG, "Do not set MoPub listener. This is used by MoPubBannerEventHandler internally.");
+            Log.w(TAG, "Resetting MoPub banner listener to MoPubBannerEventHandler as these " +
+                    "are used by MoPubBannerEventHandler internally.");
+            moPubView.setBannerAdListener(this);
         }
 
         if (null != bid) {

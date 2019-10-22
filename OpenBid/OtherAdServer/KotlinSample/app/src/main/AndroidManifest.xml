@@ -28,19 +28,14 @@
             android:configChanges="orientation|screenSize"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity
-            android:name="com.pubmatic.openbid.kotlinsampleapp.NoASBannerActivity"
-            android:label="@string/title_activity_banner"
-            android:configChanges="orientation|screenSize"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
 
         <activity
-            android:name="com.pubmatic.openbid.kotlinsampleapp.NoASInterstitialActivity"
-            android:label="@string/title_activity_interstitial"
+            android:name="com.pubmatic.openbid.kotlinsampleapp.VideoInterstitialActivity"
+            android:label="@string/title_activity_video_interstitial"
             android:configChanges="orientation|screenSize"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+
         <activity
             android:name="com.pubmatic.openbid.kotlinsampleapp.MainActivity"
             android:label="@string/title_activity_home"

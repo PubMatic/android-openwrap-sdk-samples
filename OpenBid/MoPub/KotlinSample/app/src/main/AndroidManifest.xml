@@ -29,6 +29,12 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
+            android:name="com.pubmatic.openbid.kotlinsampleapp.VideoInterstitialActivity"
+            android:label="@string/title_activity_video_interstitial"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
             android:name="com.pubmatic.openbid.kotlinsampleapp.MainActivity"
             android:label="@string/title_activity_home"
             android:configChanges="orientation|screenSize"

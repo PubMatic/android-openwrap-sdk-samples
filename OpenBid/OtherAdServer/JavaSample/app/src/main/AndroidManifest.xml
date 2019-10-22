@@ -29,6 +29,10 @@
             android:label="Interstitial"
             android:configChanges="orientation|screenSize">
         </activity>
+        <activity android:name="sdk.pubmatic.com.javasample.VideoInterstitialActivity"
+            android:label="Video Interstitial"
+            android:configChanges="orientation|screenSize">
+        </activity>
     </application>
 
 </manifest>

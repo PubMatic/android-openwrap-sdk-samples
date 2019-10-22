@@ -7,12 +7,12 @@ import com.mopub.mobileads.CustomEventInterstitial;
 import com.mopub.mobileads.MoPubErrorCode;
 import com.pubmatic.sdk.common.POBError;
 import com.pubmatic.sdk.common.base.POBAdDescriptor;
+import com.pubmatic.sdk.common.ui.POBInterstitialRendererListener;
+import com.pubmatic.sdk.common.ui.POBInterstitialRendering;
 import com.pubmatic.sdk.common.utility.POBUtils;
 import com.pubmatic.sdk.openbid.core.POBRenderer;
 import com.pubmatic.sdk.openbid.core.POBBid;
 import com.pubmatic.sdk.openbid.interstitial.POBInterstitial;
-import com.pubmatic.sdk.webrendering.ui.POBInterstitialRendererListener;
-import com.pubmatic.sdk.webrendering.ui.POBInterstitialRendering;
 
 import java.util.Map;
 

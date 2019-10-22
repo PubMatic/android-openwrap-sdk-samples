@@ -12,10 +12,10 @@ import android.util.Log;
 import com.mopub.mobileads.MoPubErrorCode;
 import com.mopub.mobileads.MoPubInterstitial;
 import com.pubmatic.sdk.common.POBError;
+import com.pubmatic.sdk.common.ui.POBInterstitialRendering;
 import com.pubmatic.sdk.openbid.core.POBBid;
 import com.pubmatic.sdk.openbid.interstitial.POBInterstitialEvent;
 import com.pubmatic.sdk.openbid.interstitial.POBInterstitialEventListener;
-import com.pubmatic.sdk.webrendering.ui.POBInterstitialRendering;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -111,8 +111,12 @@ public class MoPubInterstitialEventHandler implements POBInterstitialEvent, MoPu
             mopubConfigListener.configure(moPubInterstitial);
         }
 
+        /// NOTE: Please do not remove this code. Need to reset MoPub interstitial listener to
+        // MoPubInterstitialEventHandler as these are used by MoPubInterstitialEventHandler internally.
         if (moPubInterstitial.getInterstitialAdListener() != this) {
-            Log.w(TAG, "Do not set MoPub listener. This is used by MoPubInterstitialEventHandler internally.");
+            moPubInterstitial.setInterstitialAdListener(this);
+            Log.w(TAG, "Resetting MoPub interstitial listener to MoPubInterstitialEventHandler" +
+                    " as these are used by MoPubInterstitialEventHandler internally.");
         }
 
         if (null != bid) {

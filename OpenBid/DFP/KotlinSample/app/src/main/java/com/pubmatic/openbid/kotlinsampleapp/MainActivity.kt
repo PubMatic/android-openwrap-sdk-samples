@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.activity_home.*
 class MainActivity : AppCompatActivity()  {
 
     var recycler: RecyclerView ? = null
-    var list: ArrayList<String> ? = null
+    var list: ArrayList<AdType> ? = null
 
     companion object {
 
@@ -45,9 +45,9 @@ class MainActivity : AppCompatActivity()  {
         recycler?.layoutManager = LinearLayoutManager(this)
         recycler?.setHasFixedSize(true)
 
-        list = ArrayList<String>()
-        list?.add("Banner")
-        list?.add("Interstitial")
+        list = java.util.ArrayList()
+        list?.addAll(AdType.values())
+
         val recyclerAdapter = RecyclerAdapter(list, RecyclerItemListener())
         recycler?.adapter = recyclerAdapter
 
@@ -59,14 +59,14 @@ class MainActivity : AppCompatActivity()  {
 
     }
 
+    /**
+     * Navigates respective Activity from list info
+     */
     fun displayActivity(position: Int){
-        val intent :Intent
-        if(position == 0){
-            intent = Intent(this, DFPBannerActivity::class.java)
-        }else{
-            intent = Intent(this, DFPInterstitialActivity::class.java)
+        if(null != list?.get(position)?.activity){
+            val intent = Intent(this, list?.get(position)?.activity)
+            startActivity(intent)
         }
-        startActivity(intent)
     }
 
 
@@ -77,10 +77,14 @@ class MainActivity : AppCompatActivity()  {
 
     }
 
-
-
-
-
+    /**
+     * Constant to represents AdType
+     */
+    enum class AdType constructor(val activity: Class<*>?, val displayName: String) {
+        BANNER(DFPBannerActivity::class.java, "Banner"),
+        INTERSTITIAL(DFPInterstitialActivity::class.java, "Interstitial"),
+        VIDEO_INTERSTITIAL(VideoInterstitialActivity::class.java, "Video Interstitial"),
+    }
 
 
 }

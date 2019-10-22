@@ -8,10 +8,10 @@ import com.google.android.gms.ads.doubleclick.AppEventListener
 import com.google.android.gms.ads.doubleclick.PublisherAdRequest
 import com.google.android.gms.ads.doubleclick.PublisherInterstitialAd
 import com.pubmatic.sdk.common.POBError
+import com.pubmatic.sdk.common.ui.POBInterstitialRendering
 import com.pubmatic.sdk.openbid.core.POBBid
 import com.pubmatic.sdk.openbid.interstitial.POBInterstitialEvent
 import com.pubmatic.sdk.openbid.interstitial.POBInterstitialEventListener
-import com.pubmatic.sdk.webrendering.ui.POBInterstitialRendering
 import java.util.*
 
 class DFPInterstitialEventHandler(val context: Context, val adUnitId: String) : AdListener(), POBInterstitialEvent, AppEventListener {

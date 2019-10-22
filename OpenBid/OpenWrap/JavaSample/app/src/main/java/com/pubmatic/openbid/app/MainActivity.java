@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -54,7 +55,10 @@ public class MainActivity extends AppCompatActivity {
         adListAdapter.setItemClickListener(new AdListAdapter.OnItemClickListener() {
             @Override
             public void onClick(View view, int position) {
-                loadAdScreen(itemList.get(position));
+                Class activityClass = itemList.get(position).getActivity();
+                if (activityClass != null) {
+                    loadAdScreen(activityClass);
+                }
             }
         });
         adList.setAdapter(adListAdapter);
@@ -87,17 +91,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void loadAdScreen(AdType adType) {
-        if (adType.getActivity() != null) {
-            Intent intent = new Intent(this, adType.getActivity());
-            startActivity(intent);
-        }
+    public void loadAdScreen(@NonNull Class activityClass) {
+        Intent intent = new Intent(this, activityClass);
+        startActivity(intent);
     }
 
 
     enum AdType {
         BANNER(BannerActivity.class, "Banner"),
-        INTERSTITIAL(InterstitialActivity.class, "Interstitial");
+        INTERSTITIAL(InterstitialActivity.class, "Interstitial"),
+        VIDEO_INTERSTITIAL(VideoInterstitialActivity.class, "Video Interstitial");
 
         private Class activity;
         private String displayName;
