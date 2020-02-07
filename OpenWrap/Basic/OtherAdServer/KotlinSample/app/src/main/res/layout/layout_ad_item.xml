@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="2dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="5dp"
+        app:cardCornerRadius="2dp"
+        >
+        <TextView
+            android:id="@+id/ad_item"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Title"
+            android:layout_margin="1dp"
+            android:gravity="center_vertical"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
