@@ -6,18 +6,21 @@ Integrate PubMatic OpenWrap SDK into your Android app to monetize your app inven
 
 ## Documentation
 
-Refer [PubMatic community pages](https://community.pubmatic.com/display/AS/About+Android+OpenWrap+SDK)
+Refer [PubMatic community pages](https://community.pubmatic.com/display/AS)
 for documentation on using OpenWrap SDK.
 
 ## Sample Applications
 
+### Basic
 | Ad Server | Samples |
 | ------------- | ------------- |
 |   DFP    | [Banner/Interstitial Samples](./OpenWrap/Basic/DFP/) |
 |   MoPub    | [Banner/Interstitial Samples](./OpenWrap/Basic/MoPub/) |
-|   OpenWrap(Programmatic Only)    | [Banner/Interstitial Samples](./OpenWrap/Basic/OpenWrap/) |
-|   Other Ad Server    | [Banner/Interstitial Samples](./OpenWrap/Basic/OtherAdServer/) |
+|   No Ad Server(Programmatic Only)    | [Banner/Interstitial Samples](./OpenWrap/Basic/OpenWrap/) |
+|   Custom Ad Server    | [Banner/Interstitial Samples](./OpenWrap/Basic/OtherAdServer/) |
 
+### Advance
+1. [RecyclerView App](./OpenWrap/Advance/ListApp)
 
 ## Downloads
 
