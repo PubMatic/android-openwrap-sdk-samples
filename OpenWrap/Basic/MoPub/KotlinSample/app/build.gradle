@@ -45,6 +45,6 @@ dependencies {
         transitive = true
     }
     //To integrate PubMatic SDK
-    implementation 'com.pubmatic.sdk:openwrap:1.5.0'
+    implementation 'com.pubmatic.sdk:openwrap:1.5.1'
 
 }
