@@ -17,10 +17,10 @@ import java.net.URL
 class InBannerVideoActivity : AppCompatActivity() {
 
     val TAG = "BannerActivity"
-    private val OPENWRAP_AD_UNIT_ID = "22031886e60d488db2529bbdb536993e"
+    private val OPENWRAP_AD_UNIT_ID = "7c9ca845b7914b2abc8b0286b6392ec9"
     private val PUB_ID = "156276"
     private val PROFILE_ID = 1758
-    private val MOPUB_AD_UNIT_ID = "22031886e60d488db2529bbdb536993e"
+    private val MOPUB_AD_UNIT_ID = "7c9ca845b7914b2abc8b0286b6392ec9"
 
     private var banner: POBBannerView ? = null
     override fun onCreate(savedInstanceState: Bundle?) {

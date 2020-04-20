@@ -17,10 +17,10 @@ import java.net.URL
 class BannerActivity : AppCompatActivity() {
 
     val TAG = "BannerActivity"
-    private val OPENWRAP_AD_UNIT_ID = "4f3b504fcdea4b6295ca940048e9bdbe"
+    private val OPENWRAP_AD_UNIT_ID = "625ca5d499ab435fa55c98065cc9b3c2"
     private val PUB_ID = "156276"
     private val PROFILE_ID = 1302
-    private val MOPUB_AD_UNIT_ID = "4f3b504fcdea4b6295ca940048e9bdbe"
+    private val MOPUB_AD_UNIT_ID = "625ca5d499ab435fa55c98065cc9b3c2"
 
     private var banner: POBBannerView ? = null
     override fun onCreate(savedInstanceState: Bundle?) {
