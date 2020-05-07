@@ -1,14 +1,14 @@
 package com.pubmatic.openwrap.kotlinsampleapp
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
-import com.pubmatic.openwrap.kotlinsampleapp.mopubevent.MoPubBannerEventHandler
+import androidx.appcompat.app.AppCompatActivity
 import com.pubmatic.sdk.common.OpenWrapSDK
 import com.pubmatic.sdk.common.POBAdSize
 import com.pubmatic.sdk.common.POBError
 import com.pubmatic.sdk.common.models.POBApplicationInfo
 import com.pubmatic.sdk.openwrap.banner.POBBannerView
+import com.pubmatic.sdk.openwrap.eventhandler.mopub.MoPubBannerEventHandler
 import kotlinx.android.synthetic.main.activity_banner.*
 import java.net.MalformedURLException
 import java.net.URL
@@ -17,10 +17,10 @@ import java.net.URL
 class InBannerVideoActivity : AppCompatActivity() {
 
     val TAG = "BannerActivity"
-    private val OPENWRAP_AD_UNIT_ID = "7c9ca845b7914b2abc8b0286b6392ec9"
+    private val OPENWRAP_AD_UNIT_ID = "7d621db8e6384d12be935244bf0920f7"
     private val PUB_ID = "156276"
     private val PROFILE_ID = 1758
-    private val MOPUB_AD_UNIT_ID = "7c9ca845b7914b2abc8b0286b6392ec9"
+    private val MOPUB_AD_UNIT_ID = "7d621db8e6384d12be935244bf0920f7"
 
     private var banner: POBBannerView ? = null
     override fun onCreate(savedInstanceState: Bundle?) {

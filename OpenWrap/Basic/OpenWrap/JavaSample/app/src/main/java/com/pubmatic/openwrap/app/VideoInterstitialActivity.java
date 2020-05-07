@@ -47,6 +47,8 @@ public class VideoInterstitialActivity extends AppCompatActivity {
         // Set Optional listener
         interstitial.setListener(new VideoInterstitialActivity.POBInterstitialListener());
 
+        // Set the optional listener to get the video events
+        interstitial.setVideoListener(new POBInterstitialVideoListener());
 
         // Load Ad button
         findViewById(R.id.loadAdBtn).setOnClickListener(new View.OnClickListener() {
@@ -86,6 +88,20 @@ public class VideoInterstitialActivity extends AppCompatActivity {
         super.onDestroy();
         if (null != interstitial) {
             interstitial.destroy();
+        }
+
+    }
+
+    /**
+     * Implementation class to receive the callback of VAST based video from Interstitial ad
+     */
+    class POBInterstitialVideoListener extends POBInterstitial.POBVideoListener {
+        private final String TAG = "POBVideoListener";
+
+        // Callback method notifies that playback of the VAST video has been completed
+        @Override
+        public void onVideoPlaybackCompleted(POBInterstitial ad) {
+            Log.d(TAG, "onVideoPlaybackCompleted");
         }
 
     }

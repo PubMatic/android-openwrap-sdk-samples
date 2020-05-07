@@ -1,13 +1,13 @@
 package com.pubmatic.openwrap.kotlinsampleapp
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.widget.Button
-import com.pubmatic.openwrap.kotlinsampleapp.mopubevent.MoPubInterstitialEventHandler
+import androidx.appcompat.app.AppCompatActivity
 import com.pubmatic.sdk.common.OpenWrapSDK
 import com.pubmatic.sdk.common.POBError
 import com.pubmatic.sdk.common.models.POBApplicationInfo
+import com.pubmatic.sdk.openwrap.eventhandler.mopub.MoPubInterstitialEventHandler
 import com.pubmatic.sdk.openwrap.interstitial.POBInterstitial
 import kotlinx.android.synthetic.main.activity_interstitial.*
 import java.net.MalformedURLException
@@ -18,10 +18,10 @@ import java.net.URL
  */
 class VideoInterstitialActivity : AppCompatActivity() {
 
-    private val OPENWRAP_AD_UNIT_ID = "d1cd0bb997894b1f9cbfc2d048ff535e"
+    private val OPENWRAP_AD_UNIT_ID = "2b5c583ad21c4e32ba5e00e70185bfc9"
     private val PUB_ID = "156276"
     private val PROFILE_ID = 1758
-    private val MOPUB_AD_UNIT = "d1cd0bb997894b1f9cbfc2d048ff535e"
+    private val MOPUB_AD_UNIT = "2b5c583ad21c4e32ba5e00e70185bfc9"
 
     private var interstitial : POBInterstitial? = null
     private var loadAd: Button? = null
@@ -56,6 +56,9 @@ class VideoInterstitialActivity : AppCompatActivity() {
         // Set optional listener
         interstitial?.setListener(POBInterstitialListener())
 
+        // Set the optional listener to get the video events
+        interstitial?.setVideoListener(POBInterstitialVideoListener())
+
         loadAd = findViewById(R.id.load_ad)
         loadAd?.setOnClickListener {
             // Call loadAd on interstitial
@@ -81,6 +84,19 @@ class VideoInterstitialActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Implementation class to receive the callback of VAST based video from Interstitial ad
+     */
+    inner class POBInterstitialVideoListener : POBInterstitial.POBVideoListener() {
+        val TAG = "POBVideoListener"
+
+        // Callback method notifies that playback of the VAST video has been completed
+        override fun onVideoPlaybackCompleted(ad: POBInterstitial) {
+            Log.d(TAG, "onVideoPlaybackCompleted")
+        }
+
+    }
+    
     /**
      * Implementation class to receive Interstitial ad interaction
      */

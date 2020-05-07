@@ -1,7 +1,6 @@
 package sdk.pubmatic.com.javasample;
 
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
@@ -13,6 +12,7 @@ import com.pubmatic.sdk.openwrap.interstitial.POBInterstitial;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import androidx.appcompat.app.AppCompatActivity;
 import sdk.pubmatic.com.javasample.customhandler.CustomInterstitialEventHandler;
 
 public class VideoInterstitialActivity extends AppCompatActivity {
@@ -55,6 +55,8 @@ public class VideoInterstitialActivity extends AppCompatActivity {
         // Set Optional listener
         interstitial.setListener(new VideoInterstitialActivity.POBInterstitialListener());
 
+        // Set the optional listener to get the video events
+        interstitial.setVideoListener(new POBInterstitialVideoListener());
 
         // Load Ad button
         findViewById(R.id.loadAdBtn).setOnClickListener(new View.OnClickListener() {
@@ -94,6 +96,20 @@ public class VideoInterstitialActivity extends AppCompatActivity {
         super.onDestroy();
         if (null != interstitial) {
             interstitial.destroy();
+        }
+
+    }
+
+    /**
+     * Implementation class to receive the callback of VAST based video from Interstitial ad
+     */
+    class POBInterstitialVideoListener extends POBInterstitial.POBVideoListener {
+        private final String TAG = "POBVideoListener";
+
+        // Callback method notifies that playback of the VAST video has been completed
+        @Override
+        public void onVideoPlaybackCompleted(POBInterstitial ad) {
+            Log.d(TAG, "onVideoPlaybackCompleted");
         }
 
     }

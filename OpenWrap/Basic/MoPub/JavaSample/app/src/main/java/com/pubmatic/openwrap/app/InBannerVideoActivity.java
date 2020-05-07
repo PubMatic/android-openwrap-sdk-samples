@@ -3,13 +3,12 @@ package com.pubmatic.openwrap.app;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.pubmatic.openwrap.app.R;
-import com.pubmatic.openwrap.app.mopubevent.MoPubBannerEventHandler;
 import com.pubmatic.sdk.common.OpenWrapSDK;
 import com.pubmatic.sdk.common.POBAdSize;
 import com.pubmatic.sdk.common.POBError;
 import com.pubmatic.sdk.common.models.POBApplicationInfo;
 import com.pubmatic.sdk.openwrap.banner.POBBannerView;
+import com.pubmatic.sdk.openwrap.eventhandler.mopub.MoPubBannerEventHandler;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -18,10 +17,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class InBannerVideoActivity extends AppCompatActivity {
 
-    private static final String OPENWRAP_AD_UNIT_ID = "22031886e60d488db2529bbdb536993e";
+    private static final String OPENWRAP_AD_UNIT_ID = "7d621db8e6384d12be935244bf0920f7";
     private static final String PUB_ID = "156276";
     private static final int PROFILE_ID = 1758;
-    private static final String MOPUB_AD_UNIT_ID = "22031886e60d488db2529bbdb536993e";
+    private static final String MOPUB_AD_UNIT_ID = "7d621db8e6384d12be935244bf0920f7";
 
     private POBBannerView banner;
 

@@ -43,5 +43,8 @@ dependencies {
         transitive = true
     }
     //To integrate PubMatic SDK
-    implementation 'com.pubmatic.sdk:openwrap:1.5.1'
+    implementation 'com.pubmatic.sdk:openwrap:1.6.0'
+
+    //To integrate MoPub Event Handler
+    implementation 'com.pubmatic.sdk:openwrap-eventhandler-mopub:1.0.0'
 }

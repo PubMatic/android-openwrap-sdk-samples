@@ -1,25 +1,26 @@
 package com.pubmatic.openwrap.app;
 
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
-import com.pubmatic.openwrap.app.mopubevent.MoPubInterstitialEventHandler;
 import com.pubmatic.sdk.common.OpenWrapSDK;
 import com.pubmatic.sdk.common.POBError;
 import com.pubmatic.sdk.common.models.POBApplicationInfo;
+import com.pubmatic.sdk.openwrap.eventhandler.mopub.MoPubInterstitialEventHandler;
 import com.pubmatic.sdk.openwrap.interstitial.POBInterstitial;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 public class VideoInterstitialActivity extends AppCompatActivity {
 
-    private static final String OPENWRAP_AD_UNIT_ONE = "d1cd0bb997894b1f9cbfc2d048ff535e";
+    private static final String OPENWRAP_AD_UNIT_ONE = "2b5c583ad21c4e32ba5e00e70185bfc9";
     private static final String PUB_ID = "156276";
     private static final int PROFILE_ID = 1758;
-    private static final String MOPUB_AD_UNIT_ID = "d1cd0bb997894b1f9cbfc2d048ff535e";
+    private static final String MOPUB_AD_UNIT_ID = "2b5c583ad21c4e32ba5e00e70185bfc9";
 
     private POBInterstitial interstitial;
 
@@ -54,6 +55,8 @@ public class VideoInterstitialActivity extends AppCompatActivity {
         // Set Optional listener
         interstitial.setListener(new VideoInterstitialActivity.POBInterstitialListener());
 
+        // Set the optional listener to get the video events
+        interstitial.setVideoListener(new POBInterstitialVideoListener());
 
         // Load Ad button
         findViewById(R.id.loadAdBtn).setOnClickListener(new View.OnClickListener() {
@@ -93,6 +96,20 @@ public class VideoInterstitialActivity extends AppCompatActivity {
         super.onDestroy();
         if (null != interstitial) {
             interstitial.destroy();
+        }
+
+    }
+
+    /**
+     * Implementation class to receive the callback of VAST based video from Interstitial ad
+     */
+    class POBInterstitialVideoListener extends POBInterstitial.POBVideoListener {
+        private final String TAG = "POBVideoListener";
+
+        // Callback method notifies that playback of the VAST video has been completed
+        @Override
+        public void onVideoPlaybackCompleted(POBInterstitial ad) {
+            Log.d(TAG, "onVideoPlaybackCompleted");
         }
 
     }

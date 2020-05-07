@@ -1,14 +1,14 @@
 package com.pubmatic.openwrap.kotlinsampleapp
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.ads.AdSize
-import com.pubmatic.openwrap.kotlinsampleapp.dfpevent.DFPBannerEventHandler
-import com.pubmatic.sdk.common.POBError
 import com.pubmatic.sdk.common.OpenWrapSDK
+import com.pubmatic.sdk.common.POBError
 import com.pubmatic.sdk.common.models.POBApplicationInfo
 import com.pubmatic.sdk.openwrap.banner.POBBannerView
+import com.pubmatic.sdk.openwrap.eventhandler.dfp.DFPBannerEventHandler
 import kotlinx.android.synthetic.main.activity_banner.*
 import java.net.MalformedURLException
 import java.net.URL

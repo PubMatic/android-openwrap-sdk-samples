@@ -1,14 +1,14 @@
 package com.pubmatic.openwrap.kotlinsampleapp
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.widget.Button
-import com.pubmatic.openwrap.kotlinsampleapp.dfpevent.DFPInterstitialEventHandler
-import com.pubmatic.sdk.common.POBError
+import androidx.appcompat.app.AppCompatActivity
 import com.pubmatic.sdk.common.OpenWrapSDK
+import com.pubmatic.sdk.common.POBError
 import com.pubmatic.sdk.common.models.POBApplicationInfo
 import com.pubmatic.sdk.openwrap.core.POBRequest
+import com.pubmatic.sdk.openwrap.eventhandler.dfp.DFPInterstitialEventHandler
 import com.pubmatic.sdk.openwrap.interstitial.POBInterstitial
 import kotlinx.android.synthetic.main.activity_interstitial.*
 import java.net.MalformedURLException

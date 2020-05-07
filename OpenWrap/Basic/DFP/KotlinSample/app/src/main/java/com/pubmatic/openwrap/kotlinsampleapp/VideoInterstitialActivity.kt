@@ -1,13 +1,13 @@
 package com.pubmatic.openwrap.kotlinsampleapp
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.widget.Button
-import com.pubmatic.openwrap.kotlinsampleapp.dfpevent.DFPInterstitialEventHandler
+import androidx.appcompat.app.AppCompatActivity
 import com.pubmatic.sdk.common.OpenWrapSDK
 import com.pubmatic.sdk.common.POBError
 import com.pubmatic.sdk.common.models.POBApplicationInfo
+import com.pubmatic.sdk.openwrap.eventhandler.dfp.DFPInterstitialEventHandler
 import com.pubmatic.sdk.openwrap.interstitial.POBInterstitial
 import kotlinx.android.synthetic.main.activity_interstitial.*
 import java.net.MalformedURLException
@@ -53,8 +53,11 @@ class VideoInterstitialActivity : AppCompatActivity() {
         // Initialise interstitial ad
         interstitial = POBInterstitial(this, PUB_ID, PROFILE_ID, OPENWRAP_AD_UNIT_ID, eventHandler)
 
-        // Set optional listener
+        // Set the optional listener
         interstitial?.setListener(POBInterstitialListener())
+
+        // Set the optional listener to get the video events
+        interstitial?.setVideoListener(POBInterstitialVideoListener())
 
         loadAd = findViewById(R.id.load_ad)
         loadAd?.setOnClickListener {
@@ -79,6 +82,19 @@ class VideoInterstitialActivity : AppCompatActivity() {
             // Call show on interstitial
             interstitial?.show()
         }
+    }
+
+    /**
+     * Implementation class to receive the callback of VAST based video from Interstitial ad
+     */
+    inner class POBInterstitialVideoListener : POBInterstitial.POBVideoListener() {
+        val TAG = "POBVideoListener"
+
+        // Callback method notifies that playback of the VAST video has been completed
+        override fun onVideoPlaybackCompleted(ad: POBInterstitial) {
+            Log.d(TAG, "onVideoPlaybackCompleted")
+        }
+
     }
 
     /**

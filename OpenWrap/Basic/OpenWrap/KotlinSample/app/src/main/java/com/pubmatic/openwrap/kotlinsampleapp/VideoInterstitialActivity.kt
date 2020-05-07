@@ -49,6 +49,9 @@ class VideoInterstitialActivity : AppCompatActivity() {
         // Set optional listener
         interstitial?.setListener(POBInterstitialListener())
 
+        // Set the optional listener to get the video events
+        interstitial?.setVideoListener(POBInterstitialVideoListener())
+
         loadAd = findViewById(R.id.load_ad)
         loadAd?.setOnClickListener {
             // Call loadAd on interstitial
@@ -72,6 +75,19 @@ class VideoInterstitialActivity : AppCompatActivity() {
             // Call show on interstitial
             interstitial?.show()
         }
+    }
+
+    /**
+     * Implementation class to receive the callback of VAST based video from Interstitial ad
+     */
+    inner class POBInterstitialVideoListener : POBInterstitial.POBVideoListener() {
+        val TAG = "POBVideoListener"
+
+        // Callback method notifies that playback of the VAST video has been completed
+        override fun onVideoPlaybackCompleted(ad: POBInterstitial) {
+            Log.d(TAG, "onVideoPlaybackCompleted")
+        }
+
     }
 
     /**

@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import com.mopub.common.MoPub;
 import com.mopub.common.SdkConfiguration;
 import com.mopub.common.SdkInitializationListener;
+import com.mopub.common.logging.MoPubLog;
 import com.pubmatic.sdk.common.OpenWrapSDK;
 
 import java.util.ArrayList;
@@ -92,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initMoPub(){
-        SdkConfiguration sdkConfiguration = new SdkConfiguration.Builder("1a4a0c6b94ad4217af017c932c3c898e")
+        SdkConfiguration sdkConfiguration = new SdkConfiguration.Builder("1a4a0c6b94ad4217af017c932c3c898e").withLogLevel(MoPubLog.LogLevel.DEBUG)
                 .build();
 
         MoPub.initializeSdk(this, sdkConfiguration, initSdkListener());
