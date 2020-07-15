@@ -29,9 +29,8 @@ import com.pubmatic.sdk.openwrap.banner.POBBannerEventListener
 import com.pubmatic.sdk.openwrap.core.POBBid
 
 /**
- * This class is compatible with OpenWrap SDK v1.5.0.
  * This class is responsible for communication between OpenWrap banner view and banner view from your ad server SDK(in this case DummyAdServerSDK).
- * It implements the POBBannerEvent protocol. it notifies event back to OpenWrap SDK using POBBannerEventListener methods
+ * It implements the POBBannerEvent protocol. It notifies event back to OpenWrap SDK using POBBannerEventListener methods
  */
 @SuppressLint("LongLogTag")
 class CustomBannerEventHandler
@@ -62,6 +61,13 @@ class CustomBannerEventHandler
         eventListener = listener
     }
 
+    /**
+     * Optional method to receive instruction to track the impression.
+     */
+    override fun trackImpression() {
+        // No action required
+    }
+
     override fun getRenderer(partnerName: String): POBBannerRendering? {
         return null
     }
@@ -71,6 +77,13 @@ class CustomBannerEventHandler
      */
     override fun getAdSize(): POBAdSize {
         return adsize
+    }
+
+    /**
+     * Optional method to receive instruction to track the ad click.
+     */
+    override fun trackClick() {
+        // No action required
     }
 
     /**

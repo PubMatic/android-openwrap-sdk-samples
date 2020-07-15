@@ -27,9 +27,8 @@ import com.pubmatic.sdk.openwrap.interstitial.POBInterstitialEvent
 import com.pubmatic.sdk.openwrap.interstitial.POBInterstitialEventListener
 
 /**
- * This class is compatible with OpenWrap SDK v1.5.0.
  * This class is responsible for communication between OpenWrap interstitial and interstitial ad from your ad server SDK(in this case DummyAdServerSDK).
- * It implements the POBInterstitialEvent protocol. it notifies event back to OpenWrap SDK using POBInterstitialEventListener methods
+ * It implements the POBInterstitialEvent protocol. It notifies event back to OpenWrap SDK using POBInterstitialEventListener methods
  */
 @SuppressLint("LongLogTag")
 class CustomInterstitialEventHandler
@@ -61,6 +60,13 @@ class CustomInterstitialEventHandler
      */
     override fun setEventListener(listener: POBInterstitialEventListener) {
         eventListener = listener
+    }
+
+    /**
+     * Optional method to receive instruction to track the impression.
+     */
+    override fun trackImpression() {
+        // No action required
     }
 
     /**
@@ -101,6 +107,13 @@ class CustomInterstitialEventHandler
      */
     override fun show() {
         adServer.showInterstitialAd()
+    }
+
+    /**
+     * Optional method to receive instruction to track the ad click.
+     */
+    override fun trackClick() {
+        // No action required
     }
 
     /**

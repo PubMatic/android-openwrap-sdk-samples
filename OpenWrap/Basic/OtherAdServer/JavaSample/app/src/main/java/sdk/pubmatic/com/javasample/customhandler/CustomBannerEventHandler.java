@@ -31,7 +31,6 @@ import com.pubmatic.sdk.openwrap.core.POBBid;
 import sdk.pubmatic.com.javasample.dummyadserver.DummyAdServerSDK;
 
 /**
- * This class is compatible with OpenWrap SDK v1.5.0.
  * This class is responsible for communication between OpenWrap banner view and banner view from your ad server SDK(in this case DummyAdServerSDK).
  * It implements the POBBannerEvent protocol. it notifies event back to OpenWrap SDK using POBBannerEventListener methods
  */
@@ -155,6 +154,22 @@ public class CustomBannerEventHandler extends DummyAdServerSDK.DummyAdServerEven
     public void destroy() {
         adServerSDK.destroy();
         eventListener = null;
+    }
+
+    /**
+     * Optional method to receive instruction to track the impression.
+     */
+    @Override
+    public void trackImpression() {
+        // No action required
+    }
+
+    /**
+     * Optional method to receive instruction to track the ad click.
+     */
+    @Override
+    public void trackClick() {
+        // No action required
     }
 
 }
