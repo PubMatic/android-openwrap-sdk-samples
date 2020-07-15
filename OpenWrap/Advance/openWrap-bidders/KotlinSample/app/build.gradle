@@ -36,10 +36,10 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
 
     //To integrate OpenWrap SDK
-    implementation 'com.pubmatic.sdk:openwrap:1.6.1'
+    implementation 'com.pubmatic.sdk:openwrap:1.6.2'
 
     //To integrate OpenWrap FanBidder SDK
-    implementation 'com.pubmatic.sdk:openwrap-fanbidder:1.0.0'
+    implementation 'com.pubmatic.sdk:openwrap-fanbidder:1.0.1'
 
     //To integrate facebook audience sdk
     implementation 'com.facebook.android:audience-network-sdk:5.7.1'
