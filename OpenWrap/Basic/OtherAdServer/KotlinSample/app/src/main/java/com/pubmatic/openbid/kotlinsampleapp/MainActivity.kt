@@ -22,8 +22,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import androidx.core.app.ActivityCompat
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_home.*
@@ -38,13 +38,8 @@ class MainActivity : AppCompatActivity()  {
     private var list: ArrayList<AdType>? = null
 
     companion object {
-
-        private val PERMISSIONS = Array<String>(3){Manifest.permission.ACCESS_FINE_LOCATION; Manifest.permission.ACCESS_COARSE_LOCATION;
-            Manifest.permission.WRITE_EXTERNAL_STORAGE}
-
-
-        private fun hasPermissions(context: Context?, permissions: Array<String>): Boolean {
-            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null) {
+        private fun hasPermissions(context: Context, permissions: Array<String>): Boolean {
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 for (permission in permissions) {
                     if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
                         return false
@@ -74,6 +69,16 @@ class MainActivity : AppCompatActivity()  {
         recycler?.adapter = recyclerAdapter
 
         // Ask permission from user for location and write external storage
+        val permissionList: MutableList<String> = ArrayList()
+        permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION)
+        permissionList.add(Manifest.permission.ACCESS_COARSE_LOCATION)
+        permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        // Ask permission from user for READ_PHONE_STATE permission if api level 30 and above
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            permissionList.add(Manifest.permission.READ_PHONE_STATE)
+        }
+
+        val PERMISSIONS: Array<String> = permissionList.toTypedArray()
         if (!hasPermissions(this, PERMISSIONS)) {
             val MULTIPLE_PERMISSIONS_REQUEST_CODE = 123
             ActivityCompat.requestPermissions(this, PERMISSIONS, MULTIPLE_PERMISSIONS_REQUEST_CODE)

@@ -16,8 +16,6 @@
  */
 package com.pubmatic.openwrap.app;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +25,9 @@ import android.widget.TextView;
 import com.pubmatic.sdk.common.utility.POBUtils;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class AdListAdapter extends RecyclerView.Adapter<AdListAdapter.AdViewHolder>{
 

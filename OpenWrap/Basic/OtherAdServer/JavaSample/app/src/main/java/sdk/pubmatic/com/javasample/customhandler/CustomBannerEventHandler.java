@@ -28,6 +28,8 @@ import com.pubmatic.sdk.openwrap.banner.POBBannerEvent;
 import com.pubmatic.sdk.openwrap.banner.POBBannerEventListener;
 import com.pubmatic.sdk.openwrap.core.POBBid;
 
+import java.util.Map;
+
 import sdk.pubmatic.com.javasample.dummyadserver.DummyAdServerSDK;
 
 /**
@@ -69,7 +71,10 @@ public class CustomBannerEventHandler extends DummyAdServerSDK.DummyAdServerEven
         // If bid is valid, add bid related custom targeting on the ad request
         if (null != bid) {
             Log.d(TAG, bid.toString());
-            adServerSDK.setCustomTargetting(bid.getTargetingInfo().toString());
+            Map<String, String> targetingInfo = bid.getTargetingInfo();
+            if(targetingInfo != null && !targetingInfo.isEmpty()){
+                adServerSDK.setCustomTargetting(targetingInfo.toString());
+            }
         }
         // Load ad from the Ad server
         adServerSDK.loadBannerAd();

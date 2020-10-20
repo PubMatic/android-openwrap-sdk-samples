@@ -29,7 +29,10 @@ import kotlinx.android.synthetic.main.activity_banner.*
 import java.net.MalformedURLException
 import java.net.URL
 
-
+/**
+ * This class demonstrate the Banner Ad workflow via OW SDK where MoPub SDK is integrated as a
+ * primary ad SDK.
+ */
 class BannerActivity : AppCompatActivity() {
 
     val TAG = "BannerActivity"
@@ -72,11 +75,11 @@ class BannerActivity : AppCompatActivity() {
 
         // Call loadAd() on banner instance
         banner?.loadAd()
-
-
     }
 
-    // POBBannerViewListener listener
+    /**
+     * POBBannerViewListener instance for getting the ad workflow callcback from OW SDK
+     */
     class POBBannerViewListener : POBBannerView.POBBannerViewListener(){
         val TAG = "POBBannerViewListener"
 
@@ -99,9 +102,7 @@ class BannerActivity : AppCompatActivity() {
         override fun onAdClosed(view: POBBannerView?) {
             Log.d(TAG, "onAdClosed")
         }
-
     }
-
 
     override fun onDestroy() {
         // destroy banner before onDestroy of Activity lifeCycle

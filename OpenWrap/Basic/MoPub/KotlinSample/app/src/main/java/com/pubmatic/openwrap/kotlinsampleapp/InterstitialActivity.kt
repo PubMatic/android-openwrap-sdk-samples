@@ -29,6 +29,10 @@ import kotlinx.android.synthetic.main.activity_interstitial.*
 import java.net.MalformedURLException
 import java.net.URL
 
+/**
+ * This class demonstrate the Interstitial Ad workflow via OW SDK where MoPub SDK is integrated
+ * as a primary ad SDK.
+ */
 class InterstitialActivity : AppCompatActivity() {
 
     private val OPENWRAP_AD_UNIT_ID = "2b5c583ad21c4e32ba5e00e70185bfc9"
@@ -96,7 +100,9 @@ class InterstitialActivity : AppCompatActivity() {
         }
     }
 
-    // POBInterstitialAdListener listener
+    /**
+     * POBInterstitialAdListener instance for getting the ad workflow callcback from OW SDK
+     */
     inner class POBInterstitialListener : POBInterstitial.POBInterstitialListener() {
         val TAG = "POBInterstitialListener"
 
@@ -130,10 +136,7 @@ class InterstitialActivity : AppCompatActivity() {
         override fun onAdClicked(ad: POBInterstitial?) {
             Log.d(TAG, "onAdClicked")
         }
-
-
     }
-
 
     override fun onDestroy() {
         super.onDestroy()

@@ -22,13 +22,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -43,12 +36,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-    private static final String[] PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
     private static boolean hasPermissions(Context context, String... permissions) {
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
@@ -61,9 +59,9 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    private  void initListView() {
+    private void initListView() {
 
-        RecyclerView adList =  findViewById(R.id.ad_list);
+        RecyclerView adList = findViewById(R.id.ad_list);
         adList.setHasFixedSize(true);
         adList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
@@ -82,13 +80,14 @@ public class MainActivity extends AppCompatActivity {
         adList.setAdapter(adListAdapter);
 
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         initMoPub();
-        if(BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
             OpenWrapSDK.setLogLevel(OpenWrapSDK.LogLevel.Debug);
         }
 
@@ -100,6 +99,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Ask permission from user for location and write external storage
+        List<String> permissionList = new ArrayList<>();
+        permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        permissionList.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+        permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        // Ask permission from user for READ_PHONE_STATE permission if api level 30 and above
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            permissionList.add(Manifest.permission.READ_PHONE_STATE);
+        }
+        String[] PERMISSIONS = new String[permissionList.size()];
+        permissionList.toArray(PERMISSIONS);
         if (!hasPermissions(MainActivity.this, PERMISSIONS)) {
             int MULTIPLE_PERMISSIONS_REQUEST_CODE = 123;
             ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS, MULTIPLE_PERMISSIONS_REQUEST_CODE);
@@ -108,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         initListView();
     }
 
-    private void initMoPub(){
+    private void initMoPub() {
         SdkConfiguration sdkConfiguration = new SdkConfiguration.Builder("1a4a0c6b94ad4217af017c932c3c898e").withLogLevel(MoPubLog.LogLevel.DEBUG)
                 .build();
 

@@ -26,6 +26,8 @@ import com.pubmatic.sdk.openwrap.core.POBBid;
 import com.pubmatic.sdk.openwrap.interstitial.POBInterstitialEvent;
 import com.pubmatic.sdk.openwrap.interstitial.POBInterstitialEventListener;
 
+import java.util.Map;
+
 import sdk.pubmatic.com.javasample.dummyadserver.DummyAdServerSDK;
 
 /**
@@ -62,7 +64,10 @@ public class CustomInterstitialEventHandler extends DummyAdServerSDK.DummyAdServ
         // If bid is valid, add bid related custom targeting on the ad request
         if (null != bid) {
             Log.d(TAG, bid.toString());
-            adServerSDK.setCustomTargetting(bid.getTargetingInfo().toString());
+            Map<String, String> targetingInfo = bid.getTargetingInfo();
+            if(targetingInfo != null && !targetingInfo.isEmpty()){
+                adServerSDK.setCustomTargetting(targetingInfo.toString());
+            }
         }
         // Load ad from the ad server
         adServerSDK.loadInterstitialAd();

@@ -17,30 +17,25 @@
 package com.pubmatic.openwrap.app;
 
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
 import com.pubmatic.sdk.common.OpenWrapSDK;
-import com.pubmatic.sdk.common.POBAdSize;
 import com.pubmatic.sdk.common.POBError;
 import com.pubmatic.sdk.common.models.POBApplicationInfo;
-import com.pubmatic.sdk.fanbidder.POBFANBidderConstants;
+import com.pubmatic.sdk.openwrap.core.POBRequest;
 import com.pubmatic.sdk.openwrap.interstitial.POBInterstitial;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class InterstitialActivity extends AppCompatActivity {
 
     private static final String OPENWRAP_AD_UNIT_ONE = "OpenWrapInterstitialAdUnit";
     private static final String PUB_ID = "156276";
-    private static final int PROFILE_ID = 1165;
-
-    private static final String appId = "2526468451010379";
-    private static final String placementId = "IMG_16_9_APP_INSTALL#2526468451010379_2529646540692570";
+    private static final int PROFILE_ID = 2941;
 
     private POBInterstitial interstitial;
 
@@ -68,7 +63,12 @@ public class InterstitialActivity extends AppCompatActivity {
 
         // Set Optional listener
         interstitial.setListener(new InterstitialActivity.POBInterstitialListener());
-        interstitial.getAdRequest().enableTestMode(true);
+
+        // Enable test mode
+        POBRequest request = interstitial.getAdRequest();
+        if(request != null){
+            request.enableTestMode(true);
+        }
 
 
         // Load Ad button
@@ -81,13 +81,6 @@ public class InterstitialActivity extends AppCompatActivity {
             }
         });
 
-        //Create slot info map of facebook ad details like app id and placement id
-        Map<String, Object> slotInfo = new HashMap<>();
-        slotInfo.put(POBFANBidderConstants.POB_BIDDER_KEY_FB_APP_ID, appId);
-        slotInfo.put(POBFANBidderConstants.POB_BIDDER_KEY_FB_PLACEMENT_ID, placementId);
-
-        // Pass slot info to interstitial instance
-        interstitial.addBidderSlotInfo(POBFANBidderConstants.POB_FAN_BIDDER_ID_FAN, slotInfo);
 
         // Show button
         findViewById(R.id.showAdBtn).setOnClickListener(new View.OnClickListener() {

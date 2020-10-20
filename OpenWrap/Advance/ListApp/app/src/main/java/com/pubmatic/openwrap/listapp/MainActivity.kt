@@ -36,13 +36,6 @@ import com.pubmatic.sdk.openwrap.banner.POBBannerView
  */
 class MainActivity : AppCompatActivity() {
 
-    // Array of permission required by app to load banner
-    private val PERMISSIONS = arrayOf(
-        Manifest.permission.ACCESS_FINE_LOCATION,
-        Manifest.permission.ACCESS_COARSE_LOCATION,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE
-    )
-
     // Banner Ad Units
     private val OPENWRAP_AD_UNIT_ID = "OpenWrapBannerAdUnit"
     private val PUB_ID = "156276"
@@ -55,7 +48,7 @@ class MainActivity : AppCompatActivity() {
     private var recyclerView: RecyclerView? = null
 
     // To check app already has the requested permission.
-    private fun hasPermissions(context: Context?, permissions: Array<String>): Boolean {
+    private fun hasPermissions(context: Context, permissions: Array<String>): Boolean {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null) {
             for (permission in permissions) {
                 if (ActivityCompat.checkSelfPermission(context, permission)
@@ -96,6 +89,16 @@ class MainActivity : AppCompatActivity() {
         recyclerView?.adapter = adapter
 
         // Ask permission from user for location and write external storage
+        val permissionList: MutableList<String> = ArrayList()
+        permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION)
+        permissionList.add(Manifest.permission.ACCESS_COARSE_LOCATION)
+        permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        // Ask permission from user for READ_PHONE_STATE permission if api level 30 and above
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            permissionList.add(Manifest.permission.READ_PHONE_STATE)
+        }
+        val PERMISSIONS: Array<String> = permissionList.toTypedArray()
+
         if (!hasPermissions(this, PERMISSIONS)) {
             val MULTIPLE_PERMISSIONS_REQUEST_CODE = 123
             ActivityCompat.requestPermissions(this, PERMISSIONS,

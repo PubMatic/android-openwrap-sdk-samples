@@ -17,18 +17,16 @@
 package com.pubmatic.openwrap.kotlinsampleapp
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.pubmatic.sdk.common.OpenWrapSDK
 import com.pubmatic.sdk.common.POBAdSize
 import com.pubmatic.sdk.common.POBError
 import com.pubmatic.sdk.common.models.POBApplicationInfo
-import com.pubmatic.sdk.fanbidder.POBFANBidderConstants
 import com.pubmatic.sdk.openwrap.banner.POBBannerView
 import kotlinx.android.synthetic.main.activity_banner.*
 import java.net.MalformedURLException
 import java.net.URL
-import java.util.HashMap
 
 /**
  * Activity to show Banner Implementation
@@ -37,10 +35,7 @@ class BannerActivity : AppCompatActivity() {
 
     private val OPENWRAP_AD_UNIT_ID = "OpenWrapBannerAdUnit"
     private val PUB_ID = "156276"
-    private val PROFILE_ID = 1165
-
-    private val appId = "2526468451010379"
-    private val placementId = "IMG_16_9_APP_INSTALL#2526468451010379_2529643057359585"
+    private val PROFILE_ID = 2941
 
     private var banner: POBBannerView ? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,19 +63,9 @@ class BannerActivity : AppCompatActivity() {
 
         //optional listener to listen banner events
         banner?.setListener(POBBannerViewListener())
+
+        // Enable test mode
         banner?.adRequest?.enableTestMode(true)
-
-        //Create slot info map of facebook ad details like app id, placementid and size.
-        val slotInfo = HashMap<String, Any>()
-        slotInfo[POBFANBidderConstants.POB_BIDDER_KEY_FB_APP_ID] = appId
-        slotInfo[POBFANBidderConstants.POB_BIDDER_KEY_FB_PLACEMENT_ID] = placementId
-
-        //Pass required POBAdsize instance
-        slotInfo[POBFANBidderConstants.POB_BIDDER_KEY_FB_BANNER_AD_SIZE] = POBAdSize.BANNER_SIZE_320x50
-
-        // Pass slot info to banner instance
-        banner?.addBidderSlotInfo(POBFANBidderConstants.POB_FAN_BIDDER_ID_FAN, slotInfo)
-
         // Call loadAd() on banner instance
         banner?.loadAd()
 

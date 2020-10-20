@@ -29,10 +29,13 @@ import kotlinx.android.synthetic.main.activity_banner.*
 import java.net.MalformedURLException
 import java.net.URL
 
-
+/**
+ * This class demonstrate the InBannerVideo Ad workflow via OW SDK where MoPub SDK is integrated
+ * as a primary ad SDK.
+ */
 class InBannerVideoActivity : AppCompatActivity() {
 
-    val TAG = "BannerActivity"
+    val TAG = "InBannerVideoActivity"
     private val OPENWRAP_AD_UNIT_ID = "7d621db8e6384d12be935244bf0920f7"
     private val PUB_ID = "156276"
     private val PROFILE_ID = 1758
@@ -76,7 +79,9 @@ class InBannerVideoActivity : AppCompatActivity() {
 
     }
 
-    // POBBannerViewListener listener
+    /**
+     * POBBannerViewListener instance for getting the ad workflow callcback from OW SDK
+     */
     class POBBannerViewListener : POBBannerView.POBBannerViewListener(){
         val TAG = "POBBannerViewListener"
 
@@ -99,9 +104,7 @@ class InBannerVideoActivity : AppCompatActivity() {
         override fun onAdClosed(view: POBBannerView?) {
             Log.d(TAG, "onAdClosed")
         }
-
     }
-
 
     override fun onDestroy() {
         // destroy banner before onDestroy of Activity lifeCycle

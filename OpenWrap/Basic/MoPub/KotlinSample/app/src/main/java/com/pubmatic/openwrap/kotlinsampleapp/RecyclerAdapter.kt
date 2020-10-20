@@ -22,8 +22,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 
+/**
+ * Recycler adapter used for List Adapter implementation. This class shows the entry for the Ad
+ * types for demonstrating the respective features.
+ */
 class RecyclerAdapter(val list: ArrayList<MainActivity.AdType>?, val itemClickListener: OnItemClickListener) :  RecyclerView.Adapter<RecyclerAdapter.AdViewHolder>(){
-
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): AdViewHolder {
         val view = LayoutInflater.from(parent.context).inflate( R.layout.layout_ad_item, parent, false)
@@ -43,9 +46,9 @@ class RecyclerAdapter(val list: ArrayList<MainActivity.AdType>?, val itemClickLi
         holder.aditem.text = list?.get(position)?.displayName
     }
 
-
-
-
+    /**
+     * Holder class having the text for the ad types
+     */
     class AdViewHolder(val view: View, val itemClickListener: OnItemClickListener): RecyclerView.ViewHolder(view){
 
         val aditem: TextView
@@ -57,12 +60,15 @@ class RecyclerAdapter(val list: ArrayList<MainActivity.AdType>?, val itemClickLi
 
 
         }
-
-
-
     }
 
+    /**
+     * Interface for providing the click notification callback to MainActivity
+     */
     interface OnItemClickListener{
+        /**
+         * This method gets called from adapter when user clicks on any list items
+         */
         fun onItemClick(position: Int)
     }
 

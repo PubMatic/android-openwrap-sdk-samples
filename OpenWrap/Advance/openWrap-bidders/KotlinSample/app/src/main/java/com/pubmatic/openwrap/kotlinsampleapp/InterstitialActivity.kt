@@ -17,19 +17,16 @@
 package com.pubmatic.openwrap.kotlinsampleapp
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import com.pubmatic.sdk.common.OpenWrapSDK
-import com.pubmatic.sdk.common.POBAdSize
 import com.pubmatic.sdk.common.POBError
 import com.pubmatic.sdk.common.models.POBApplicationInfo
-import com.pubmatic.sdk.fanbidder.POBFANBidderConstants
 import com.pubmatic.sdk.openwrap.interstitial.POBInterstitial
 import kotlinx.android.synthetic.main.activity_interstitial.*
 import java.net.MalformedURLException
 import java.net.URL
-import java.util.HashMap
 
 /**
  * Activity to show Interstitial Implementation
@@ -38,10 +35,7 @@ class InterstitialActivity : AppCompatActivity() {
 
     private val OPENWRAP_AD_UNIT_ID = "OpenWrapInterstitialAdUnit"
     private val PUB_ID = "156276"
-    private val PROFILE_ID = 1165
-
-    private val appId = "2526468451010379"
-    private val placementId = "IMG_16_9_APP_INSTALL#2526468451010379_2529646540692570"
+    private val PROFILE_ID = 2941
 
     private var interstitial : POBInterstitial? = null
     private var loadAd: Button? = null;
@@ -70,15 +64,9 @@ class InterstitialActivity : AppCompatActivity() {
 
         // Set optional listener
         interstitial?.setListener(POBInterstitialListener())
+
+        // Enable Test mode
         interstitial?.adRequest?.enableTestMode(true)
-
-        //Create slot info map of facebook ad details like app id and placement id
-        val slotInfo = HashMap<String, Any>()
-        slotInfo[POBFANBidderConstants.POB_BIDDER_KEY_FB_APP_ID] = appId
-        slotInfo[POBFANBidderConstants.POB_BIDDER_KEY_FB_PLACEMENT_ID] = placementId
-
-        // Pass slot info to interstitial instance
-        interstitial?.addBidderSlotInfo(POBFANBidderConstants.POB_FAN_BIDDER_ID_FAN, slotInfo)
 
         loadAd = findViewById(R.id.load_ad)
         loadAd?.setOnClickListener {

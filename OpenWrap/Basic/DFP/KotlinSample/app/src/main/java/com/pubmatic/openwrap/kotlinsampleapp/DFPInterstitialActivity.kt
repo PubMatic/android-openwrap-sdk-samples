@@ -30,6 +30,10 @@ import kotlinx.android.synthetic.main.activity_interstitial.*
 import java.net.MalformedURLException
 import java.net.URL
 
+/**
+ * This class demonstrate the Interstitial Ad workflow via OW SDK where DFP / GAM SDK is integrated
+ * as a primary ad SDK.
+ */
 class DFPInterstitialActivity : AppCompatActivity() {
 
     private val OPENWRAP_AD_UNIT_ID = "/15671365/pm_sdk/PMSDK-Demo-App-Interstitial"
@@ -100,7 +104,9 @@ class DFPInterstitialActivity : AppCompatActivity() {
         }
     }
 
-    // POBInterstitialAdListener listener
+    /**
+     * POBInterstitialAdListener instance for getting the ad workflow callcback from OW SDK
+     */
     inner class POBInterstitialListener : POBInterstitial.POBInterstitialListener() {
         val TAG = "POBInterstitialListener"
 
@@ -139,10 +145,7 @@ class DFPInterstitialActivity : AppCompatActivity() {
         override fun onAdClicked(ad: POBInterstitial?) {
             Log.d(TAG, "onAdClicked")
         }
-
-
     }
-
 
     override fun onDestroy() {
         super.onDestroy()

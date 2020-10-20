@@ -22,12 +22,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -38,11 +32,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-    private static final String[] PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE};
+public class MainActivity extends AppCompatActivity {
 
     private static boolean hasPermissions(Context context, String... permissions) {
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
@@ -62,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
         adList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         final List<AdType> itemList = new ArrayList<>(Arrays.asList(AdType.values()));
-
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         adList.setLayoutManager(layoutManager);
@@ -98,6 +94,17 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Ask permission from user for location and write external storage
+        List<String> permissionList = new ArrayList<>();
+        permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        permissionList.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+        permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        // Ask permission from user for READ_PHONE_STATE permission if api level 30 and above
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            permissionList.add(Manifest.permission.READ_PHONE_STATE);
+        }
+
+        final String[] PERMISSIONS = new String[permissionList.size()];
+        permissionList.toArray(PERMISSIONS);
         if (!hasPermissions(MainActivity.this, PERMISSIONS)) {
             int MULTIPLE_PERMISSIONS_REQUEST_CODE = 123;
             ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS, MULTIPLE_PERMISSIONS_REQUEST_CODE);

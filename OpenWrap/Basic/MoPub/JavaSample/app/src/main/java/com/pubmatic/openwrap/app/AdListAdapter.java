@@ -26,6 +26,10 @@ import android.widget.TextView;
 
 import java.util.List;
 
+/**
+ * Recycler adapter used for List Adapter implementation. This class shows the entry for the Ad
+ * types for demonstrating the respective features.
+ */
 public class AdListAdapter extends RecyclerView.Adapter<AdListAdapter.AdViewHolder>{
 
     private final String TAG = "AdListAdapter";
@@ -63,7 +67,9 @@ public class AdListAdapter extends RecyclerView.Adapter<AdListAdapter.AdViewHold
         return itemList.get(position).getDisplayText();
     }
 
-
+    /**
+     * Holder class having the text for the ad types
+     */
     class AdViewHolder extends RecyclerView.ViewHolder{
         private final TextView title;
         AdViewHolder(View view){
@@ -83,7 +89,13 @@ public class AdListAdapter extends RecyclerView.Adapter<AdListAdapter.AdViewHold
 
     }
 
+    /**
+     * Interface for providing the click notification callback to MainActivity
+     */
     interface OnItemClickListener{
+        /**
+         * This method gets called from adapter when user clicks on any list items
+         */
         void onClick(View view, int position);
     }
 }

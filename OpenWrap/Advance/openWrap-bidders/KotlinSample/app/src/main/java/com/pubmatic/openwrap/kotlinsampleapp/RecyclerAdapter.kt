@@ -25,10 +25,10 @@ import com.pubmatic.sdk.common.utility.POBUtils
 import java.util.*
 
 /**
- * Recycler adapter used for List Adapter implementation
+ * Recycler adapter used for List Adapter implementation. This class shows the entry for the Ad
+ * types for demonstrating the respective features.
  */
 class RecyclerAdapter(val list: ArrayList<MainActivity.AdType>?, val itemClickListener: OnItemClickListener) :  RecyclerView.Adapter<RecyclerAdapter.AdViewHolder>(){
-
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): AdViewHolder {
         val view = LayoutInflater.from(parent.context).inflate( R.layout.layout_ad_item, parent, false)

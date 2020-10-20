@@ -29,7 +29,10 @@ import kotlinx.android.synthetic.main.activity_banner.*
 import java.net.MalformedURLException
 import java.net.URL
 
-
+/**
+ * This class demonstrate the InBannerVideo Ad workflow via OW SDK where DFP / GAM SDK is integrated
+ * as a primary ad SDK.
+ */
 class DFPInBannerVideoActivity : AppCompatActivity() {
 
     val TAG = "DFPBannerActivity"
@@ -77,7 +80,9 @@ class DFPInBannerVideoActivity : AppCompatActivity() {
 
     }
 
-    // POBBannerViewListener listener
+    /**
+     * POBBannerViewListener instance for getting the ad workflow callcback from OW SDK
+     */
     class POBBannerViewListener : POBBannerView.POBBannerViewListener(){
         val TAG = "POBInterstitialListener"
 

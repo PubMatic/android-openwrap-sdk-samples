@@ -17,29 +17,25 @@
 package com.pubmatic.openwrap.app;
 
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 
 import com.pubmatic.sdk.common.OpenWrapSDK;
 import com.pubmatic.sdk.common.POBAdSize;
 import com.pubmatic.sdk.common.POBError;
 import com.pubmatic.sdk.common.models.POBApplicationInfo;
-import com.pubmatic.sdk.fanbidder.POBFANBidderConstants;
 import com.pubmatic.sdk.openwrap.banner.POBBannerView;
+import com.pubmatic.sdk.openwrap.core.POBRequest;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class BannerActivity extends AppCompatActivity {
 
     private static final String OPENWRAP_AD_UNIT_ID = "OpenWrapBannerAdUnit";
     private static final String PUB_ID = "156276";
-    private static final int PROFILE_ID = 1165;
-
-    private static final String appId = "2526468451010379";
-    private static final String placementId = "IMG_16_9_APP_INSTALL#2526468451010379_2529643057359585";
+    private static final int PROFILE_ID = 2941;
 
     private POBBannerView banner;
 
@@ -68,18 +64,12 @@ public class BannerActivity extends AppCompatActivity {
 
         //optional listener to listen banner events
         banner.setListener(new BannerActivity.POBBannerViewListener());
-        banner.getAdRequest().enableTestMode(true);
 
-        //Add facebook ad details like app id, placementid and size.
-        Map<String, Object> slotInfo = new HashMap<>();
-        slotInfo.put(POBFANBidderConstants.POB_BIDDER_KEY_FB_APP_ID, appId);
-        slotInfo.put(POBFANBidderConstants.POB_BIDDER_KEY_FB_PLACEMENT_ID, placementId);
-
-        //Pass required POBAdsize instance
-        slotInfo.put(POBFANBidderConstants.POB_BIDDER_KEY_FB_BANNER_AD_SIZE, POBAdSize.BANNER_SIZE_320x50);
-
-        // Pass slot info to banner instance
-        banner.addBidderSlotInfo(POBFANBidderConstants.POB_FAN_BIDDER_ID_FAN, slotInfo);
+        // Enable test mode
+        POBRequest request = banner.getAdRequest();
+        if(request != null){
+            request.enableTestMode(true);
+        }
 
         // Call loadAd() on banner instance
         banner.loadAd();

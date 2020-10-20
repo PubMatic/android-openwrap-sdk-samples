@@ -22,27 +22,27 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import androidx.core.app.ActivityCompat
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
 import kotlinx.android.synthetic.main.activity_home.*
 
-
-class MainActivity : AppCompatActivity()  {
+/**
+ * This class host the list view to show the entry for the Ad types for demonstrating the respective
+ * features.
+ */
+class MainActivity : AppCompatActivity() {
 
     var recycler: RecyclerView? = null
-    var list: ArrayList<AdType> ? = null
+    var list: ArrayList<AdType>? = null
 
     companion object {
 
-        private val PERMISSIONS = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-
-        private fun hasPermissions(context: Context?, vararg permissions: String): Boolean {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
-                for (permission in permissions) {
-                    if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+        private fun hasPermissions(context: Context, permissions: Array<String>): Boolean {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                permissions.forEach {
+                    if (ActivityCompat.checkSelfPermission(context, it) != PackageManager.PERMISSION_GRANTED) {
                         return false
                     }
                 }
@@ -67,7 +67,18 @@ class MainActivity : AppCompatActivity()  {
         recycler?.adapter = recyclerAdapter
 
         // Ask permission from user for location and write external storage
-        if (!hasPermissions(this@MainActivity, *PERMISSIONS)) {
+        val permissionList: MutableList<String> = ArrayList()
+        permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION)
+        permissionList.add(Manifest.permission.ACCESS_COARSE_LOCATION)
+        permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        // Access READ_PHONE_STATE permission if api level 30 and above
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            permissionList.add(Manifest.permission.READ_PHONE_STATE)
+        }
+
+        val PERMISSIONS = permissionList.toTypedArray();
+
+        if (!hasPermissions(this@MainActivity, PERMISSIONS)) {
             val MULTIPLE_PERMISSIONS_REQUEST_CODE = 123
             ActivityCompat.requestPermissions(this@MainActivity, PERMISSIONS, MULTIPLE_PERMISSIONS_REQUEST_CODE)
         }
@@ -77,15 +88,17 @@ class MainActivity : AppCompatActivity()  {
     /**
      * Navigates respective Activity from list info
      */
-    fun displayActivity(position: Int){
-        if(null != list?.get(position)?.activity){
+    fun displayActivity(position: Int) {
+        if (null != list?.get(position)?.activity) {
             val intent = Intent(this, list?.get(position)?.activity)
             startActivity(intent)
         }
     }
 
-
-    inner class RecyclerItemListener : RecyclerAdapter.OnItemClickListener{
+    /**
+     * Handling the list item click
+     */
+    inner class RecyclerItemListener : RecyclerAdapter.OnItemClickListener {
         override fun onItemClick(position: Int) {
             displayActivity(position)
         }
