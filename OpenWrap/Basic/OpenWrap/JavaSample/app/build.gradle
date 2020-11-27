@@ -34,5 +34,5 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
 
     //To integrate PubMatic SDK
-    implementation 'com.pubmatic.sdk:openwrap:1.7.0'
+    implementation 'com.pubmatic.sdk:openwrap:1.7.1'
 }
