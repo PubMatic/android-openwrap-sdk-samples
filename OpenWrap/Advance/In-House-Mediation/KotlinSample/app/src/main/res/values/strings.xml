@@ -2,6 +2,7 @@
     <string name="app_name">OpenWrapSample</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_interstitial">Interstitial</string>
+    <string name="title_activity_rewarded">Rewarded</string>
     <string name="title_activity_banner">Banner</string>
     <string name="title_activity_home">KotlinSample</string>
 </resources>

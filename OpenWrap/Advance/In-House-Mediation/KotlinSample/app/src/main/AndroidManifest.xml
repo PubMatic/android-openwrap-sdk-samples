@@ -30,6 +30,12 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
+            android:name="com.pubmatic.openwrap.kotlinsampleapp.RewardedActivity"
+            android:label="@string/title_activity_rewarded"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
             android:name="com.pubmatic.openwrap.kotlinsampleapp.MainActivity"
             android:label="@string/title_activity_home"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"

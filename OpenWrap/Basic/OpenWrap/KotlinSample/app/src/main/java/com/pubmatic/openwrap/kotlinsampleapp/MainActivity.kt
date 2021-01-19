@@ -103,7 +103,8 @@ class MainActivity : AppCompatActivity()  {
         BANNER(BannerActivity::class.java, "Banner"),
         INTERSTITIAL(InterstitialActivity::class.java, "Interstitial"),
         VIDEO_INTERSTITIAL(VideoInterstitialActivity::class.java, "Video Interstitial"),
-        IN_BANNER_VIDEO(InBannerVideoActivity::class.java, "In-Banner Video")
+        IN_BANNER_VIDEO(InBannerVideoActivity::class.java, "In-Banner Video"),
+        REWARDED(RewardedActivity::class.java, "Rewarded")
     }
 
     /**

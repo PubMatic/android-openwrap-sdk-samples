@@ -123,7 +123,8 @@ public class MainActivity extends AppCompatActivity {
         BANNER(BannerActivity.class, "Banner"),
         INTERSTITIAL(InterstitialActivity.class, "Interstitial"),
         VIDEO_INTERSTITIAL(VideoInterstitialActivity.class, "Video Interstitial"),
-        IN_BANNER_VIDEO(InBannerVideoActivity.class, "In-Banner Video");
+        IN_BANNER_VIDEO(InBannerVideoActivity.class, "In-Banner Video"),
+        REWARDED(RewardedActivity.class, "Rewarded");
 
         private Class activity;
         private String displayName;

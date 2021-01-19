@@ -15,29 +15,34 @@
         android:roundIcon="@drawable/icon_app"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.pubmatic.openwrap.app.MainActivity"
+        <activity
+            android:name="com.pubmatic.openwrap.app.MainActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.pubmatic.openwrap.app.BannerActivity"
-            android:label="Banner"
-            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout">
-        </activity>
-        <activity android:name="com.pubmatic.openwrap.app.InterstitialActivity"
-            android:label="Interstitial"
-            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout">
-        </activity>
-        <activity android:name="com.pubmatic.openwrap.app.VideoInterstitialActivity"
-            android:label="Video Interstitial"
-            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout">
-        </activity>
-        <activity android:name="com.pubmatic.openwrap.app.InBannerVideoActivity"
-        android:label="In-Banner Video"
-        android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout">
-    </activity>
+        <activity
+            android:name="com.pubmatic.openwrap.app.BannerActivity"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
+            android:label="Banner"></activity>
+        <activity
+            android:name="com.pubmatic.openwrap.app.InterstitialActivity"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
+            android:label="Interstitial"></activity>
+        <activity
+            android:name="com.pubmatic.openwrap.app.VideoInterstitialActivity"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
+            android:label="Video Interstitial"></activity>
+        <activity
+            android:name="com.pubmatic.openwrap.app.InBannerVideoActivity"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
+            android:label="In-Banner Video"></activity>
+        <activity
+            android:name="com.pubmatic.openwrap.app.RewardedActivity"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
+            android:label="Rewarded"></activity>
 
     </application>
 

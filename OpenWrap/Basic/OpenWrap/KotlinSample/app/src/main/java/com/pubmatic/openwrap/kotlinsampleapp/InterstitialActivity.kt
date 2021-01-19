@@ -100,8 +100,8 @@ class InterstitialActivity : AppCompatActivity() {
         // Callback method notifies that an ad has been received successfully.
         override fun onAdReceived(ad: POBInterstitial?) {
             Log.d(TAG, "onAdReceived")
-            //Method gets called when ad gets loaded in container
-            //Here, you can show interstitial ad to user
+            // Method gets called when ad gets loaded in container
+            // Here, you can show interstitial ad to user
             showAd?.setEnabled(true)
         }
 

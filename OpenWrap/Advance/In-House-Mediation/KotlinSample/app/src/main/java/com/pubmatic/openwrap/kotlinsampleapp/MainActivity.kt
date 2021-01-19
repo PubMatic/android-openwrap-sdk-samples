@@ -103,6 +103,7 @@ class MainActivity : AppCompatActivity()  {
     enum class AdType constructor(val activity: Class<*>?, val displayName: String) {
         BANNER(BannerActivity::class.java, "Banner"),
         INTERSTITIAL(InterstitialActivity::class.java, "Interstitial"),
+        REWARDED(RewardedActivity::class.java, "Rewarded")
     }
 
     /**

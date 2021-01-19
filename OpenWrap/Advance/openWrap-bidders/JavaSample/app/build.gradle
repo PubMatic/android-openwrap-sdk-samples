@@ -34,7 +34,7 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
 
     //To integrate OpenWrap SDK
-    implementation 'com.pubmatic.sdk:openwrap:1.7.2'
+    implementation 'com.pubmatic.sdk:openwrap:1.8.0'
     
     //To integrate OpenWrap FanBidder SDK
     implementation 'com.pubmatic.sdk:openwrap-fanbidder:1.1.0'
