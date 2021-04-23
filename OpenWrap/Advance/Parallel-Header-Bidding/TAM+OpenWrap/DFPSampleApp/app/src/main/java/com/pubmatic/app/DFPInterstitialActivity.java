@@ -19,9 +19,6 @@ package com.pubmatic.app;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 
 import com.amazon.device.ads.DTBAdSize;
@@ -42,6 +39,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Activity to display interstitial ad.
@@ -191,7 +192,7 @@ public class DFPInterstitialActivity extends AppCompatActivity implements POBBid
      */
     @SuppressLint("LongLogTag")
     private void setConfigListener() {
-        eventHandler.setConfigListener((publisherInterstitialAd, builder, pobBid) -> {
+        eventHandler.setConfigListener((builder, pobBid) -> {
             if (partnerTargeting != null && partnerTargeting.size() > 0) {
                 // Iterate partnerTargeting map for all the key-value pairs
                 for (String partnerName : partnerTargeting.keySet()) {

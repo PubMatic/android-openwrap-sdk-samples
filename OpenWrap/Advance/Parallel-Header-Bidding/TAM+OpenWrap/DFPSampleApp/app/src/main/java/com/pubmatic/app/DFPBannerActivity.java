@@ -163,7 +163,7 @@ public class DFPBannerActivity extends AppCompatActivity implements POBBidEventL
      */
     @SuppressLint("LongLogTag")
     private void setConfigListener() {
-        eventHandler.setConfigListener((publisherAdView, builder, pobBid) -> {
+        eventHandler.setConfigListener((dfpAdView, builder, pobBid) -> {
             if (partnerTargeting != null && partnerTargeting.size() > 0) {
                 // Iterate partnerTargeting map for all the key-value pairs
                 for (String partnerName : partnerTargeting.keySet()) {
