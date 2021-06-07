@@ -1,6 +1,6 @@
 /*
  * PubMatic Inc. ("PubMatic") CONFIDENTIAL
- * Unpublished Copyright (c) 2006-2020 PubMatic, All Rights Reserved.
+ * Unpublished Copyright (c) 2006-2021 PubMatic, All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains the property of PubMatic. The intellectual and technical concepts contained
  * herein are proprietary to PubMatic and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret or copyright law.
@@ -72,8 +72,6 @@ class RecyclerAdapter(val list: ArrayList<MainActivity.AdType>?, val itemClickLi
             }
         }
 
-
-
     }
 
     /**
@@ -83,7 +81,7 @@ class RecyclerAdapter(val list: ArrayList<MainActivity.AdType>?, val itemClickLi
         /**
          * Listener method to provide item click callback
          */
-        fun onItemClick(adType: Int)
+        fun onItemClick(position: Int)
     }
 
 }

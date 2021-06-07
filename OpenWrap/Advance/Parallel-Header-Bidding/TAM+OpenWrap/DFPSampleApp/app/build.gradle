@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 30
 
     compileOptions {
         sourceCompatibility 1.8
@@ -11,7 +11,7 @@ android {
     defaultConfig {
         applicationId "com.pubmatic.appapp"
         minSdkVersion 19
-        targetSdkVersion 28
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
 
@@ -41,11 +41,10 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
 
     //To integrate PubMatic SDK
-    implementation 'com.pubmatic.sdk:openwrap:1.8.3'
-
+    implementation 'com.pubmatic.sdk:openwrap:2.0.0'
     //To integrate DFP Event Handler
-    implementation 'com.pubmatic.sdk:openwrap-eventhandler-dfp:2.0.0'
+    implementation 'com.pubmatic.sdk:openwrap-eventhandler-dfp:2.1.0'
 
     // To integrate Amazon A9 SDK
-    implementation 'com.amazon.android:aps-sdk:8.2.1@aar'
+    implementation 'com.amazon.android:aps-sdk:8.4.3@aar'
 }

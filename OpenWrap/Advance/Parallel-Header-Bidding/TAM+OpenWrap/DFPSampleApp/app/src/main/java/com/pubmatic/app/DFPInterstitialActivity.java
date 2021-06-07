@@ -299,18 +299,20 @@ public class DFPInterstitialActivity extends AppCompatActivity implements POBBid
             findViewById(R.id.showAdBtn).setEnabled(true);
         }
 
-        /**
-         * Callback method notifies an error encountered while loading or
-         * rendering an ad.
-         *
-         * @param ad        Instance of POBInterstitial
-         * @param error     Details of error occurred
-         */
+        // Callback method notifies an error encountered while loading an ad.
         @Override
-        public void onAdFailed(POBInterstitial ad, POBError error) {
-            // Method gets called when loadAd fails to load ad
-            // Here, you can put logger and see why ad failed to load
-            Log.d(TAG, "onAdFailed :" + error.toString());
+        public void onAdFailedToLoad(@NonNull POBInterstitial ad, @NonNull POBError error) {
+            Log.d(TAG, "Failed to load from with Error: " + error.toString());
+            //Method gets called when loadAd fails to load ad
+            //Here, you can put logger and see why ad failed to load
+        }
+
+        // Callback method notifies an error encountered while showing an ad.
+        @Override
+        public void onAdFailedToShow(@NonNull POBInterstitial ad, @NonNull POBError error) {
+            Log.e(TAG, "onAdFailedToShow : Ad failed to show with error -" + error.toString());
+            //Method gets called when show fails to show ad
+            //Here, you can put logger and see why ad failed to show
         }
 
         /**

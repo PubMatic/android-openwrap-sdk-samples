@@ -1,6 +1,6 @@
 /*
  * PubMatic Inc. ("PubMatic") CONFIDENTIAL
- * Unpublished Copyright (c) 2006-2020 PubMatic, All Rights Reserved.
+ * Unpublished Copyright (c) 2006-2021 PubMatic, All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains the property of PubMatic. The intellectual and technical concepts contained
  * herein are proprietary to PubMatic and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret or copyright law.
@@ -63,8 +63,8 @@ class RewardedActivity : AppCompatActivity() {
         // Need not set this for every ad request(of any ad type)
         OpenWrapSDK.setApplicationInfo(appInfo)
 
-        // Initialise Rewarded ad
-        rewardedAd = POBRewardedAd(this, PUB_ID, PROFILE_ID, OPENWRAP_AD_UNIT_ID)
+        // Create rewarded ad instance by passing activity context and Publisher Credentials
+        rewardedAd = POBRewardedAd.getRewardedAd(this, PUB_ID, PROFILE_ID, OPENWRAP_AD_UNIT_ID)
 
         // Set optional listener
         rewardedAd?.setListener(RewardedAdListener())
@@ -115,7 +115,7 @@ class RewardedActivity : AppCompatActivity() {
         }
 
         // Callback method notifies an error encountered while loading or rendering an ad.
-        override fun onAdFailed(rewardedAd: POBRewardedAd, error: POBError) {
+        override fun onAdFailedToLoad(rewardedAd: POBRewardedAd, error: POBError) {
             Log.e(TAG, "Rewarded Ad : Ad failed with error - " + error.toString())
         }
 
@@ -148,6 +148,11 @@ class RewardedActivity : AppCompatActivity() {
         // Callback method notifies user will be rewarded once the ad is completely viewed
         override fun onReceiveReward(rewardedAd: POBRewardedAd, reward: POBReward) {
             Log.d(TAG, "Rewarded Ad : Ad should reward - ${reward.amount}(${reward.currencyType})")
+        }
+
+        // Callback method notifies that error encountered while rendering an ad
+        override fun onAdFailedToShow(rewardedAd: POBRewardedAd, error: POBError) {
+            Log.d(TAG, "Rewarded Ad : Ad failed with error $error")
         }
     }
 

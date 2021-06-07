@@ -1,6 +1,6 @@
 /*
  * PubMatic Inc. ("PubMatic") CONFIDENTIAL
- * Unpublished Copyright (c) 2006-2020 PubMatic, All Rights Reserved.
+ * Unpublished Copyright (c) 2006-2021 PubMatic, All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains the property of PubMatic. The intellectual and technical concepts contained
  * herein are proprietary to PubMatic and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret or copyright law.
@@ -23,11 +23,13 @@ import android.util.Log;
 import com.pubmatic.sdk.common.POBError;
 import com.pubmatic.sdk.common.ui.POBInterstitialRendering;
 import com.pubmatic.sdk.openwrap.core.POBBid;
+import com.pubmatic.sdk.openwrap.core.POBFullScreenAdInteractionListener;
 import com.pubmatic.sdk.openwrap.interstitial.POBInterstitialEvent;
 import com.pubmatic.sdk.openwrap.interstitial.POBInterstitialEventListener;
 
 import java.util.Map;
 
+import androidx.annotation.Nullable;
 import sdk.pubmatic.com.javasample.dummyadserver.DummyAdServerSDK;
 
 /**
@@ -96,6 +98,12 @@ public class CustomInterstitialEventHandler extends DummyAdServerSDK.DummyAdServ
         adServerSDK.showInterstitialAd();
     }
 
+    @Nullable
+    @Override
+    public POBFullScreenAdInteractionListener getAdInteractionListener() {
+        return null;
+    }
+
     /**
      * A dummy custom event triggered based on targeting information sent in the request.
      * This sample uses this event to determine if the partner ad should be served.
@@ -104,9 +112,9 @@ public class CustomInterstitialEventHandler extends DummyAdServerSDK.DummyAdServ
      */
     @Override
     public void onCustomEventReceived(String event) {
-        // Identify if the ad from OpenWrap partner is to be served and, if so, call 'openBidPartnerDidWin'
+        // Identify if the ad from OpenWrap partner is to be served and, if so, call 'onOpenWrapPartnerWin(BidId)'
         if ("SomeCustomEvent".equals(event) && null != eventListener) {
-            eventListener.onOpenWrapPartnerWin();
+            eventListener.onOpenWrapPartnerWin(null);
         }
     }
 
@@ -115,6 +123,7 @@ public class CustomInterstitialEventHandler extends DummyAdServerSDK.DummyAdServ
      */
     @Override
     public void onInterstitialReceived() {
+
         if (null != eventListener) {
             eventListener.onAdServerWin();
         }
@@ -142,22 +151,6 @@ public class CustomInterstitialEventHandler extends DummyAdServerSDK.DummyAdServ
     public void destroy() {
         adServerSDK.destroy();
         eventListener = null;
-    }
-
-    /**
-     * Optional method to receive instruction to track the impression.
-     */
-    @Override
-    public void trackImpression() {
-        // No action required
-    }
-
-    /**
-     * Optional method to receive instruction to track the ad click.
-     */
-    @Override
-    public void trackClick() {
-        // No action required
     }
 
 }

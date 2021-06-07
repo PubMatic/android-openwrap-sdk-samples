@@ -1,6 +1,6 @@
 /*
  * PubMatic Inc. ("PubMatic") CONFIDENTIAL
- * Unpublished Copyright (c) 2006-2020 PubMatic, All Rights Reserved.
+ * Unpublished Copyright (c) 2006-2021 PubMatic, All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains the property of PubMatic. The intellectual and technical concepts contained
  * herein are proprietary to PubMatic and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret or copyright law.
@@ -23,6 +23,7 @@ import com.pubmatic.openwrap.kotlinsampleapp.dummyadserver.DummyAdServerSDK
 import com.pubmatic.sdk.common.POBError
 import com.pubmatic.sdk.common.ui.POBInterstitialRendering
 import com.pubmatic.sdk.openwrap.core.POBBid
+import com.pubmatic.sdk.openwrap.core.POBFullScreenAdInteractionListener
 import com.pubmatic.sdk.openwrap.interstitial.POBInterstitialEvent
 import com.pubmatic.sdk.openwrap.interstitial.POBInterstitialEventListener
 
@@ -63,21 +64,14 @@ class CustomInterstitialEventHandler
     }
 
     /**
-     * Optional method to receive instruction to track the impression.
-     */
-    override fun trackImpression() {
-        // No action required
-    }
-
-    /**
      * A dummy custom event triggered based on targeting information sent in the request.
      * This sample uses this event to determine if the partner ad should be served.
      * @param event event value
      */
     override fun onCustomEventReceived(event: String) {
-        // Identify if the ad from OpenWrap partner is to be served and, if so, call 'OpenWrapPartnerDidWin'
+        // Identify if the ad from OpenWrap partner is to be served and, if so, call 'onOpenWrapPartnerWin(bidId)'
         if(event.equals("SomeCustomEvent")){
-            eventListener?.onOpenWrapPartnerWin()
+            eventListener?.onOpenWrapPartnerWin(null)
         }
     }
 
@@ -109,11 +103,8 @@ class CustomInterstitialEventHandler
         adServer.showInterstitialAd()
     }
 
-    /**
-     * Optional method to receive instruction to track the ad click.
-     */
-    override fun trackClick() {
-        // No action required
+    override fun getAdInteractionListener(): POBFullScreenAdInteractionListener? {
+        return null
     }
 
     /**

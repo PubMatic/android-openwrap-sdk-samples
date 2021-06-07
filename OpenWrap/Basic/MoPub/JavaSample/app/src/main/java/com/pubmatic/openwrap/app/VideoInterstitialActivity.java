@@ -1,6 +1,6 @@
 /*
  * PubMatic Inc. ("PubMatic") CONFIDENTIAL
- * Unpublished Copyright (c) 2006-2020 PubMatic, All Rights Reserved.
+ * Unpublished Copyright (c) 2006-2021 PubMatic, All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains the property of PubMatic. The intellectual and technical concepts contained
  * herein are proprietary to PubMatic and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret or copyright law.
@@ -29,6 +29,7 @@ import com.pubmatic.sdk.openwrap.interstitial.POBInterstitial;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class VideoInterstitialActivity extends AppCompatActivity {
@@ -62,7 +63,7 @@ public class VideoInterstitialActivity extends AppCompatActivity {
         // For example, The code below creates an event handler for MoPub ad server.
         MoPubInterstitialEventHandler eventHandler = new MoPubInterstitialEventHandler(this, MOPUB_AD_UNIT_ID);
 
-        // Create  interstitial instance by passing activity context and
+        // Create interstitial instance by passing activity context and tag params
         interstitial = new POBInterstitial(this, PUB_ID,
                 PROFILE_ID,
                 OPENWRAP_AD_UNIT_ONE,
@@ -142,12 +143,20 @@ public class VideoInterstitialActivity extends AppCompatActivity {
             findViewById(R.id.showAdBtn).setEnabled(true);
         }
 
-        // Callback method notifies an error encountered while loading or rendering an ad.
+        // Callback method notifies an error encountered while loading an ad.
         @Override
-        public void onAdFailed(POBInterstitial ad, POBError error) {
-            Log.e(TAG, "onAdFailed : Ad failed with error -" + error.toString());
+        public void onAdFailedToLoad(@NonNull POBInterstitial ad, @NonNull POBError error) {
+            Log.e(TAG, "onAdFailedToLoad : Ad failed to load with error -" + error.toString());
             //Method gets called when loadAd fails to load ad
             //Here, you can put logger and see why ad failed to load
+        }
+
+        // Callback method notifies an error encountered while showing an ad.
+        @Override
+        public void onAdFailedToShow(@NonNull POBInterstitial ad, @NonNull POBError error) {
+            Log.e(TAG, "onAdFailedToShow : Ad failed to show with error -" + error.toString());
+            //Method gets called when loadAd fails to show ad
+            //Here, you can put logger and see why ad failed to show
         }
 
         // Callback method notifies that the interstitial ad will be presented as a modal on top of the current view controller

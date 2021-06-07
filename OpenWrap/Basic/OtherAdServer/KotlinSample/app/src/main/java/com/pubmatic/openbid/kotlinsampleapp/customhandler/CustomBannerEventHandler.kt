@@ -1,6 +1,6 @@
 /*
  * PubMatic Inc. ("PubMatic") CONFIDENTIAL
- * Unpublished Copyright (c) 2006-2020 PubMatic, All Rights Reserved.
+ * Unpublished Copyright (c) 2006-2021 PubMatic, All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains the property of PubMatic. The intellectual and technical concepts contained
  * herein are proprietary to PubMatic and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret or copyright law.
@@ -26,6 +26,7 @@ import com.pubmatic.sdk.common.POBError
 import com.pubmatic.sdk.common.ui.POBBannerRendering
 import com.pubmatic.sdk.openwrap.banner.POBBannerEvent
 import com.pubmatic.sdk.openwrap.banner.POBBannerEventListener
+import com.pubmatic.sdk.openwrap.core.POBBaseAdInteractionListener
 import com.pubmatic.sdk.openwrap.core.POBBid
 
 /**
@@ -61,13 +62,6 @@ class CustomBannerEventHandler
         eventListener = listener
     }
 
-    /**
-     * Optional method to receive instruction to track the impression.
-     */
-    override fun trackImpression() {
-        // No action required
-    }
-
     override fun getRenderer(partnerName: String): POBBannerRendering? {
         return null
     }
@@ -79,11 +73,8 @@ class CustomBannerEventHandler
         return adsize
     }
 
-    /**
-     * Optional method to receive instruction to track the ad click.
-     */
-    override fun trackClick() {
-        // No action required
+    override fun getAdInteractionListener(): POBBaseAdInteractionListener? {
+        return null
     }
 
     /**
@@ -101,8 +92,9 @@ class CustomBannerEventHandler
      * @param event string value
      */
     override fun onCustomEventReceived(event: String) {
+        // Identify if the ad from OpenWrap partner is to be served and, if so, call 'onOpenWrapPartnerWin(bidId)'
         if(event.equals("SomeCustomEvent") == true){
-            eventListener?.onOpenWrapPartnerWin()
+            eventListener?.onOpenWrapPartnerWin(null)
         }
     }
 

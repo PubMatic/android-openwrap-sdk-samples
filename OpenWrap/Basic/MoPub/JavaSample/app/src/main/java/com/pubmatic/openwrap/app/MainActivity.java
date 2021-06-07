@@ -1,6 +1,6 @@
 /*
  * PubMatic Inc. ("PubMatic") CONFIDENTIAL
- * Unpublished Copyright (c) 2006-2020 PubMatic, All Rights Reserved.
+ * Unpublished Copyright (c) 2006-2021 PubMatic, All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains the property of PubMatic. The intellectual and technical concepts contained
  * herein are proprietary to PubMatic and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret or copyright law.
@@ -143,7 +143,8 @@ public class MainActivity extends AppCompatActivity {
         BANNER(BannerActivity.class, "Banner"),
         INTERSTITIAL(InterstitialActivity.class, "Interstitial"),
         VIDEO_INTERSTITIAL(VideoInterstitialActivity.class, "Video Interstitial"),
-        IN_BANNER_VIDEO(InBannerVideoActivity.class, "In-Banner Video");
+        IN_BANNER_VIDEO(InBannerVideoActivity.class, "In-Banner Video"),
+        REWARDED_AD(RewardedAdActivity.class, "Rewarded Ad");
 
         private Class activity;
         private String displayText;

@@ -1,6 +1,6 @@
 /*
  * PubMatic Inc. ("PubMatic") CONFIDENTIAL
- * Unpublished Copyright (c) 2006-2020 PubMatic, All Rights Reserved.
+ * Unpublished Copyright (c) 2006-2021 PubMatic, All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains the property of PubMatic. The intellectual and technical concepts contained
  * herein are proprietary to PubMatic and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret or copyright law.
@@ -104,11 +104,18 @@ class InterstitialActivity : AppCompatActivity() {
             showAd?.setEnabled(true)
         }
 
-        // Callback method notifies an error encountered while loading or rendering an ad.
-        override fun onAdFailed(ad: POBInterstitial?, error: POBError?) {
-            Log.d(TAG, "onAdFailed")
-            //Method gets called when loadAd fails to load ad
+        // Callback method notifies an error encountered while loading an ad.
+        override fun onAdFailedToLoad(ad: POBInterstitial, error: POBError) {
+            Log.e(TAG, "Interstitial : Ad failed to load with error - " + error.toString())
+            //Method gets called when it fails to load ad
             //Here, you can put logger and see why ad failed to load
+        }
+
+        // Callback method notifies an error encountered while showing an ad.
+        override fun onAdFailedToShow(ad: POBInterstitial, error: POBError) {
+            Log.e(TAG, "Interstitial : Ad failed to show with error - " + error.toString())
+            //Method gets called when it fails to show ad
+            //Here, you can put logger and see why ad failed to show
         }
 
         // Callback method notifies that the interstitial ad will be presented as a modal on top of the current view.

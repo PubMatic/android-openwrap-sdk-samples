@@ -19,9 +19,6 @@ package com.pubmatic.app;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 
 import com.amazon.device.ads.DTBAdSize;
@@ -43,6 +40,10 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Activity to display interstitial ad.
@@ -322,18 +323,31 @@ public class MoPubInterstitialActivity extends AppCompatActivity implements POBB
         }
 
         /**
-         * Callback method notifies an error encountered while loading or
-         * rendering an ad.
+         * Callback method notifies an error encountered while loading an ad.
          *
          * @param ad        Instance of POBInterstitial
          * @param error     Details of error occurred
          */
         @Override
-        public void onAdFailed(POBInterstitial ad, POBError error) {
-            // Method gets called when loadAd fails to load ad
-            // Here, you can put logger and see why ad failed to load
-            Log.d(TAG, "onAdFailed :" + error.toString());
+        public void onAdFailedToLoad(@NonNull POBInterstitial ad, @NonNull POBError error) {
+            Log.e(TAG, "onAdFailedToLoad : Ad failed to show with error -" + error.toString());
+            //Method gets called when loadAd fails to show ad
+            //Here, you can put logger and see why ad failed to show
         }
+
+        /**
+         * Callback method notifies an error encountered while showing an ad.
+         *
+         * @param ad        Instance of POBInterstitial
+         * @param error     Details of error occurred
+         */
+        @Override
+        public void onAdFailedToShow(@NonNull POBInterstitial ad, @NonNull POBError error) {
+            Log.e(TAG, "onAdFailedToShow : Ad failed to show with error -" + error.toString());
+            //Method gets called when loadAd fails to show ad
+            //Here, you can put logger and see why ad failed to show
+        }
+
 
         /**
          * Callback method notifies that a user interaction will open another

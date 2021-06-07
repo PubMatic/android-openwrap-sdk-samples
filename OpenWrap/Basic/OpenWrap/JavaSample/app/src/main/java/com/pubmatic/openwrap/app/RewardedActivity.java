@@ -61,20 +61,25 @@ public class RewardedActivity extends AppCompatActivity {
         // Need not set this for every ad request(of any ad type)
         OpenWrapSDK.setApplicationInfo(appInfo);
 
-        // Create rewarded instance by passing activity context and
-        rewardedAd = new POBRewardedAd(this, PUB_ID,
+        // Create rewarded ad instance by passing activity context and tag params
+        rewardedAd = POBRewardedAd.getRewardedAd(this, PUB_ID,
                 PROFILE_ID,
                 OPENWRAP_AD_UNIT_ONE);
 
-        // Set Optional listener
-        rewardedAd.setListener(new RewardedAdListenenr());
+        //Check if rewarded ad instance is null
+        if(rewardedAd != null){
+            // Set Optional listener
+            rewardedAd.setListener(new RewardedAdListener());
+        }
 
         // Load Ad button
         findViewById(R.id.loadAdBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 findViewById(R.id.showAdBtn).setEnabled(false);
-                rewardedAd.loadAd();
+                if(rewardedAd != null) {
+                    rewardedAd.loadAd();
+                }
             }
         });
 
@@ -111,7 +116,7 @@ public class RewardedActivity extends AppCompatActivity {
     /**
      * Implementation class to receive Rewarded ad events
      */
-    class RewardedAdListenenr extends POBRewardedAd.POBRewardedAdListener {
+    class RewardedAdListener extends POBRewardedAd.POBRewardedAdListener {
 
         // Callback method notifies that an ad has been received successfully.
         @Override
@@ -124,7 +129,7 @@ public class RewardedActivity extends AppCompatActivity {
 
         // Callback method notifies an error encountered while loading or rendering an ad.
         @Override
-        public void onAdFailed(@NonNull POBRewardedAd rewardedAd, @NonNull POBError error) {
+        public void onAdFailedToLoad(@NonNull POBRewardedAd rewardedAd, @NonNull POBError error) {
             Log.e(TAG, "Rewarded Ad : Ad failed with error - " + error);
         }
 
@@ -162,6 +167,12 @@ public class RewardedActivity extends AppCompatActivity {
         @Override
         public void onReceiveReward(@NonNull POBRewardedAd rewardedAd, @NonNull POBReward reward) {
             Log.d(TAG, "Rewarded Ad : Ad should reward - "+ reward.getAmount()+ "(" + reward.getCurrencyType()+ ")");
+        }
+
+        // Callback method notifies that error is encountered while rendering an ad
+        @Override
+        public void onAdFailedToShow(@NonNull POBRewardedAd rewardedAd, @NonNull POBError error) {
+            Log.d(TAG,"Rewarded Ad: Ad failed with error" + error.toString());
         }
     }
 }

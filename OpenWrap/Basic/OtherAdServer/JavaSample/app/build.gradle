@@ -9,6 +9,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+
     }
     buildTypes {
         release {
@@ -30,5 +32,8 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
 
     //To integrate PubMatic SDK
-    implementation 'com.pubmatic.sdk:openwrap:1.8.3'
+    implementation 'com.pubmatic.sdk:openwrap:2.0.0'
+
+    //To integrate Multidex
+    implementation 'androidx.multidex:multidex:2.0.1'
 }

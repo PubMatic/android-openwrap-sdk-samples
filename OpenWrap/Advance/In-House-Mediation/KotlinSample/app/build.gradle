@@ -4,8 +4,6 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 30
 
-
-
     defaultConfig {
         applicationId "com.pubmatic.openwrap.kotlinsampleapp"
         minSdkVersion 19
@@ -35,5 +33,5 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
     //To integrate PubMatic SDK
-    implementation 'com.pubmatic.sdk:openwrap:1.8.3'
+    implementation 'com.pubmatic.sdk:openwrap:2.0.0'
 }

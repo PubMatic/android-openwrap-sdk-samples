@@ -1,7 +1,6 @@
 # Built application files
 *.apk
 *.ap_
-*.aab
 
 # Files for the ART/Dalvik VM
 *.dex
@@ -33,30 +32,17 @@ proguard/
 # Android Studio captures folder
 captures/
 
-# IntelliJ
+# Intellij
 *.iml
 .idea/workspace.xml
-.idea/tasks.xml
-.idea/gradle.xml
-.idea/assetWizardSettings.xml
-.idea/dictionaries
-.idea/libraries
-.idea/caches
-*./idea
-# Android Studio 3 in .gitignore file.
-.idea/caches/build_file_checksums.ser
-.idea/modules.xml
-OpenBid/DFP/JavaSample/.idea/*
-OpenBid/DFP/KotlinSample/.idea/*
 
 # Keystore files
-# Uncomment the following lines if you do not want to check your keystore files in.
-#*.jks
-#*.keystore
+*.jks
+PubMaticSDK/CoverageReports
 
-# External native build folder generated in Android Studio 2.2 and later
-.externalNativeBuild
+# Ignor idea folder
+**/.idea/**
 
-
-# Version control
-vcs.xml
+# Ignore .DS_Store
+.DS_Store
+*.exec

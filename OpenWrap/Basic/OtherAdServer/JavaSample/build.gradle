@@ -21,7 +21,7 @@ allprojects {
 
         // PubMatic repo dependency
         maven {
-            url 'http://repo.pubmatic.com/artifactory/public-repos'
+            url 'https://repo.pubmatic.com/artifactory/public-repos'
         }
     }
 }
