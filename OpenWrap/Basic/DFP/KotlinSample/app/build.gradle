@@ -34,10 +34,10 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
-    implementation 'com.google.android.gms:play-services-ads:20.0.0'
+    implementation 'com.google.android.gms:play-services-ads:20.1.0'
 
     //To integrate PubMatic SDK
     implementation 'com.pubmatic.sdk:openwrap:2.0.0'
     //To integrate DFP Event Handler
-    implementation 'com.pubmatic.sdk:openwrap-eventhandler-dfp:2.1.0'
+    implementation 'com.pubmatic.sdk:openwrap-eventhandler-dfp:2.2.0'
 }

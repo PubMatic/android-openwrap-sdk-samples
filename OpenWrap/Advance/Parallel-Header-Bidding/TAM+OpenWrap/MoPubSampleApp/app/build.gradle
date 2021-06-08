@@ -40,12 +40,12 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
 
     // MoPub For banners
-    implementation('com.mopub:mopub-sdk-banner:5.15.0@aar') {
+    implementation('com.mopub:mopub-sdk-banner:5.16.4@aar') {
         transitive = true
     }
 
     // MoPubFor interstitials
-    implementation('com.mopub:mopub-sdk-fullscreen:5.15.0@aar') {
+    implementation('com.mopub:mopub-sdk-fullscreen:5.16.4@aar') {
         transitive = true
     }
 
@@ -53,7 +53,7 @@ dependencies {
     implementation 'com.pubmatic.sdk:openwrap:2.0.0'
 
     //To integrate MoPub Event Handler
-    implementation 'com.pubmatic.sdk:openwrap-eventhandler-mopub:2.1.0'
+    implementation 'com.pubmatic.sdk:openwrap-eventhandler-mopub:2.2.0'
 
     // To integrate Amazon A9 SDK
     implementation 'com.amazon.android:aps-sdk:8.4.3@aar'

@@ -40,12 +40,12 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
 
     // MoPub For banners
-    implementation('com.mopub:mopub-sdk-banner:5.15.0@aar') {
+    implementation('com.mopub:mopub-sdk-banner:5.16.4@aar') {
         transitive = true
     }
 
     // MoPubFor interstitials
-    implementation('com.mopub:mopub-sdk-fullscreen:5.15.0@aar') {
+    implementation('com.mopub:mopub-sdk-fullscreen:5.16.4@aar') {
         transitive = true
     }
     //To integrate PubMatic SDK
@@ -55,5 +55,5 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
 
     //To integrate MoPub Event Handler
-    implementation 'com.pubmatic.sdk:openwrap-eventhandler-mopub:2.1.0'
+    implementation 'com.pubmatic.sdk:openwrap-eventhandler-mopub:2.2.0'
 }
