@@ -41,7 +41,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
 
     //To integrate PubMatic SDK
-    implementation 'com.pubmatic.sdk:openwrap:2.0.0'
+    implementation 'com.pubmatic.sdk:openwrap:2.0.1'
     //To integrate DFP Event Handler
     implementation 'com.pubmatic.sdk:openwrap-eventhandler-dfp:2.2.0'
 
