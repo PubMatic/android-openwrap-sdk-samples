@@ -49,11 +49,11 @@ dependencies {
         transitive = true
     }
     //To integrate PubMatic SDK
-    implementation 'com.pubmatic.sdk:openwrap:2.0.1'
+    implementation 'com.pubmatic.sdk:openwrap:2.1.0'
    
     //Enable Multidex
     implementation 'androidx.multidex:multidex:2.0.1'
 
     //To integrate MoPub Event Handler
-    implementation 'com.pubmatic.sdk:openwrap-eventhandler-mopub:2.2.0'
+    implementation 'com.pubmatic.sdk:openwrap-eventhandler-mopub:2.3.0'
 }
