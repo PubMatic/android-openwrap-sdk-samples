@@ -28,6 +28,7 @@ import com.pubmatic.sdk.openwrap.banner.POBBannerView;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class InBannerVideoActivity extends AppCompatActivity {
@@ -84,30 +85,30 @@ public class InBannerVideoActivity extends AppCompatActivity {
 
         // Callback method Notifies that an ad has been successfully loaded and rendered.
         @Override
-        public void onAdReceived(POBBannerView view) {
+        public void onAdReceived(@NonNull POBBannerView view) {
             Log.d(TAG, "Ad Received");
         }
 
         // Callback method Notifies an error encountered while loading or rendering an ad.
         @Override
-        public void onAdFailed(POBBannerView view, POBError error) {
+        public void onAdFailed(@NonNull POBBannerView view, @NonNull POBError error) {
             Log.e(TAG, error.toString());
         }
 
         // Callback method Notifies that the banner ad view will launch a dialog on top of the current view
         @Override
-        public void onAdOpened(POBBannerView view) {
+        public void onAdOpened(@NonNull POBBannerView view) {
             Log.d(TAG, "Ad Opened");
         }
 
         // Callback method Notifies that the banner ad view has dismissed the modal on top of the current view
         @Override
-        public void onAdClosed(POBBannerView view) {
+        public void onAdClosed(@NonNull POBBannerView view) {
             Log.d(TAG, "Ad Closed");
         }
 
         @Override
-        public void onAppLeaving(POBBannerView view) {
+        public void onAppLeaving(@NonNull POBBannerView view) {
             // Implement your custom logic
             Log.d(TAG, "Banner : App Leaving");
         }

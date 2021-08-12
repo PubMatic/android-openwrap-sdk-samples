@@ -17,6 +17,9 @@
 package com.pubmatic.openwrap.app;
 
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
@@ -118,7 +121,7 @@ public class VideoInterstitialActivity extends AppCompatActivity {
 
         // Callback method notifies that playback of the VAST video has been completed
         @Override
-        public void onVideoPlaybackCompleted(POBInterstitial ad) {
+        public void onVideoPlaybackCompleted(@NonNull POBInterstitial ad) {
             Log.d(TAG, "onVideoPlaybackCompleted");
         }
 
@@ -129,7 +132,7 @@ public class VideoInterstitialActivity extends AppCompatActivity {
         private final String TAG = "POBInterstitialListener";
         // Callback method notifies that an ad has been received successfully.
         @Override
-        public void onAdReceived(POBInterstitial ad) {
+        public void onAdReceived(@NonNull POBInterstitial ad) {
             Log.d(TAG, "onAdReceived");
             //Method gets called when ad gets loaded in container
             //Here, you can show interstitial ad to user
@@ -154,26 +157,32 @@ public class VideoInterstitialActivity extends AppCompatActivity {
 
         // Callback method notifies that the interstitial ad will be presented as a modal on top of the current view controller
         @Override
-        public void onAdOpened(POBInterstitial ad) {
+        public void onAdOpened(@NonNull POBInterstitial ad) {
             Log.d(TAG, "onAdOpened");
         }
 
         // Callback method notifies that the interstitial ad has been animated off the screen.
         @Override
-        public void onAdClosed(POBInterstitial ad) {
+        public void onAdClosed(@NonNull POBInterstitial ad) {
             Log.d(TAG, "onAdClosed");
         }
 
         // Callback method notifies ad click
         @Override
-        public void onAdClicked(POBInterstitial ad) {
+        public void onAdClicked(@NonNull POBInterstitial ad) {
             Log.d(TAG, "onAdClicked");
         }
 
         // Callback method notifies ad expiration
         @Override
-        public void onAdExpired(POBInterstitial ad){
+        public void onAdExpired(@NonNull POBInterstitial ad){
             Log.d(TAG, "onAdExpired");
+        }
+
+        // Callback method Notifies whenever current app goes in the background due to user click
+        @Override
+        public void onAppLeaving(@NonNull POBInterstitial ad) {
+            Log.d(TAG, "onAppLeaving");
         }
     }
 }

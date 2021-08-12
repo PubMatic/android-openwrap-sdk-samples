@@ -17,8 +17,8 @@ allprojects {
     repositories {
         google()
         jcenter()
-        //Mopub classpath central repo dependency
-        maven { url "https://s3.amazonaws.com/moat-sdk-builds" }
+        //Maven Central Repo for MoPub SDK binaries
+        mavenCentral()
         maven {
             url 'https://repo.pubmatic.com/artifactory/public-repos'
         }

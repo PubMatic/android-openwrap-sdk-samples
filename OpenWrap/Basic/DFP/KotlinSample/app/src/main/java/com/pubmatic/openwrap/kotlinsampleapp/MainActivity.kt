@@ -112,7 +112,8 @@ class MainActivity : AppCompatActivity() {
         BANNER(DFPBannerActivity::class.java, "Banner"),
         INTERSTITIAL(DFPInterstitialActivity::class.java, "Interstitial"),
         VIDEO_INTERSTITIAL(VideoInterstitialActivity::class.java, "Video Interstitial"),
-        IN_BANNER_VIDEO(DFPInBannerVideoActivity::class.java, "In-Banner Video")
+        IN_BANNER_VIDEO(DFPInBannerVideoActivity::class.java, "In-Banner Video"),
+        REWARDED_AD(DFPRewardedActivity::class.java,"Rewarded Ad")
     }
 
 

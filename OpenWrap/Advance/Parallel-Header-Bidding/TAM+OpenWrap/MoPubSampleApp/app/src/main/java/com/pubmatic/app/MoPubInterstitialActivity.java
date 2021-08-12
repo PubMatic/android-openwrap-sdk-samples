@@ -315,7 +315,7 @@ public class MoPubInterstitialActivity extends AppCompatActivity implements POBB
          * @param ad    Instance of POBInterstitial
          */
         @Override
-        public void onAdReceived(POBInterstitial ad) {
+        public void onAdReceived(@NonNull POBInterstitial ad) {
             Log.d(TAG, "onAdReceived");
             // Method gets called when ad gets loaded in container
             // Here, you can show interstitial ad to user
@@ -356,7 +356,7 @@ public class MoPubInterstitialActivity extends AppCompatActivity implements POBB
          * @param ad    Instance of POBInterstitial
          */
         @Override
-        public void onAppLeaving(POBInterstitial ad) {
+        public void onAppLeaving(@NonNull POBInterstitial ad) {
             Log.d(TAG, "onAppLeaving");
         }
 
@@ -367,7 +367,7 @@ public class MoPubInterstitialActivity extends AppCompatActivity implements POBB
          * @param ad    Instance of POBInterstitial
          */
         @Override
-        public void onAdOpened(POBInterstitial ad) {
+        public void onAdOpened(@NonNull POBInterstitial ad) {
             Log.d(TAG, "onAdOpened");
         }
 
@@ -377,7 +377,7 @@ public class MoPubInterstitialActivity extends AppCompatActivity implements POBB
          * @param ad    Instance of POBInterstitial
          */
         @Override
-        public void onAdClosed(POBInterstitial ad) {
+        public void onAdClosed(@NonNull POBInterstitial ad) {
             Log.d(TAG, "onAdClosed");
         }
 
@@ -387,7 +387,7 @@ public class MoPubInterstitialActivity extends AppCompatActivity implements POBB
          * @param ad    Instance of POBInterstitial
          */
         @Override
-        public void onAdClicked(POBInterstitial ad) {
+        public void onAdClicked(@NonNull POBInterstitial ad) {
             Log.d(TAG, "onAdClicked");
         }
     }

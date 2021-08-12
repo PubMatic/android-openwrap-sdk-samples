@@ -98,7 +98,7 @@ class InterstitialActivity : AppCompatActivity() {
 
 
         // Callback method notifies that an ad has been received successfully.
-        override fun onAdReceived(ad: POBInterstitial?) {
+        override fun onAdReceived(ad: POBInterstitial) {
             Log.d(TAG, "onAdReceived")
             // Method gets called when ad gets loaded in container
             // Here, you can show interstitial ad to user
@@ -120,22 +120,23 @@ class InterstitialActivity : AppCompatActivity() {
         }
 
         // Callback method notifies that the interstitial ad will be presented as a modal on top of the current view.
-        override fun onAdOpened(ad: POBInterstitial?) {
+        override fun onAdOpened(ad: POBInterstitial) {
             Log.d(TAG, "onAdOpened")
         }
 
         // Callback method notifies that the interstitial ad has been animated off the screen.
-        override fun onAdClosed(ad: POBInterstitial?) {
+        override fun onAdClosed(ad: POBInterstitial) {
             Log.d(TAG, "onAdClosed")
         }
 
         // Callback method notifies ad click
-        override fun onAdClicked(ad: POBInterstitial?) {
+        override fun onAdClicked(ad: POBInterstitial) {
             Log.d(TAG, "onAdClicked")
         }
 
-        override fun onAppLeaving(ad: POBInterstitial?) {
-            Log.d(TAG, "Interstitial : App Leaving")
+        // Callback method Notifies whenever current app goes in the background due to user click
+        override fun onAppLeaving(ad: POBInterstitial) {
+            Log.d(TAG, "onAppLeaving")
         }
     }
 

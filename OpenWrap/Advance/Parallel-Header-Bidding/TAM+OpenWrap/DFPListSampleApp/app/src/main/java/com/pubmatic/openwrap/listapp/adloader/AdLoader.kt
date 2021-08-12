@@ -110,7 +110,7 @@ class AdLoader(val appContext:Context, val adSize: AdSize, val slotId: String,
 
         // Optional listener to listen banner events
         banner?.setListener(object : POBBannerView.POBBannerViewListener(){
-            override fun onAdReceived(bannerView: POBBannerView?) {
+            override fun onAdReceived(bannerView: POBBannerView) {
                 Log.d(TAG, "Ad Received")
                 // OpenWrap SDK will start refresh loop internally as soon as ad rendering succeeds/fails.
                 // To include other partner bids in next refresh cycle, call loadBids on bidding manager.
@@ -119,7 +119,7 @@ class AdLoader(val appContext:Context, val adSize: AdSize, val slotId: String,
                 listener?.onAdReceived(bannerView)
             }
 
-            override fun onAdFailed(bannerView: POBBannerView?, pobError: POBError?) {
+            override fun onAdFailed(bannerView: POBBannerView, pobError: POBError) {
                 Log.e(TAG, pobError.toString())
                 // OpenWrap SDK will start refresh loop internally as soon as ad rendering succeeds/fails.
                 // To include other partner bids in next refresh cycle, call loadBids on bidding manager.
@@ -186,13 +186,13 @@ class AdLoader(val appContext:Context, val adSize: AdSize, val slotId: String,
          * Gets called when ad is received successfully.
          * @param view the banner view
          */
-        fun onAdReceived(view: POBBannerView?)
+        fun onAdReceived(view: POBBannerView)
 
         /**
          * Gets called when ad loader failed to receive ad
          * @param error the specific error which includes error code and its reason
          */
-        fun onAdFailed(error: POBError?)
+        fun onAdFailed(error: POBError)
     }
 
     // Ad loader constants.

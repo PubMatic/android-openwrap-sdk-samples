@@ -18,34 +18,28 @@
 
         <activity
             android:name="com.pubmatic.openwrap.kotlinsampleapp.DFPBannerActivity"
-            android:label="@string/title_activity_banner"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
-
+            android:label="@string/title_activity_banner"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.pubmatic.openwrap.kotlinsampleapp.DFPInterstitialActivity"
-            android:label="@string/title_activity_interstitial"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:label="@string/title_activity_interstitial"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.pubmatic.openwrap.kotlinsampleapp.VideoInterstitialActivity"
-            android:label="@string/title_activity_video_interstitial"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-
+            android:label="@string/title_activity_video_interstitial"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.pubmatic.openwrap.kotlinsampleapp.DFPInBannerVideoActivity"
-            android:label="@string/title_activity_in_banner_video"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:label="@string/title_activity_in_banner_video"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.pubmatic.openwrap.kotlinsampleapp.MainActivity"
-            android:label="@string/title_activity_home"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
+            android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -53,10 +47,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.pubmatic.openwrap.kotlinsampleapp.DFPRewardedActivity"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
+            android:label="Rewarded Ad"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
 
         <meta-data
             android:name="com.google.android.gms.ads.AD_MANAGER_APP"
-            android:value="true" />
+            android:value="true"/>
     </application>
 
 </manifest>

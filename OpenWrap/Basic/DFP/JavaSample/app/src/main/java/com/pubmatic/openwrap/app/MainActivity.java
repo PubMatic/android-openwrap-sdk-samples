@@ -129,7 +129,8 @@ public class MainActivity extends AppCompatActivity {
         BANNER(DFPBannerActivity.class, "Banner"),
         INTERSTITIAL(DFPInterstitialActivity.class, "Interstitial"),
         VIDEO_INTERSTITIAL(DFPVideoInterstitialActivity.class, "Video Interstitial"),
-        IN_BANNER_VIDEO(DFPInBannerVideoActivity.class, "In-Banner Video");
+        IN_BANNER_VIDEO(DFPInBannerVideoActivity.class, "In-Banner Video"),
+        REWARDED_AD(DFPRewardedActivity.class,"Rewarded Ad");
 
         private Class activity;
         private String displayText;

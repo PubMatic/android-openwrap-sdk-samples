@@ -109,15 +109,12 @@ class FeedListAdapter(val feedItems: ArrayList<FeedItem>): RecyclerView.Adapter<
     // Load and update banner dimension on banner receive callback
     private fun setBannerListener(banner: POBBannerView?){
         banner?.setListener(object : POBBannerView.POBBannerViewListener(){
-            override fun onAdReceived(view: POBBannerView?) {
-                // let block to check if banner instance is not null
-                view?.let {
-                    updateBannerDimensions(it)
-                }
+            override fun onAdReceived(view: POBBannerView) {
+                updateBannerDimensions(view)
             }
 
-            override fun onAdFailed(p0: POBBannerView?, p1: POBError?) {
-                Log.d(TAG, "Unable to load ad, Error: "+p1?.errorMessage)
+            override fun onAdFailed(p0: POBBannerView, p1: POBError) {
+                Log.d(TAG, "Unable to load ad, Error: "+p1.errorMessage)
             }
         })
     }

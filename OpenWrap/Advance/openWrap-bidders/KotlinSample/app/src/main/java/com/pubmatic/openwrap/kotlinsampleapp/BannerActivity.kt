@@ -79,26 +79,26 @@ class BannerActivity : AppCompatActivity() {
         val TAG = "POBBannerViewListener"
 
         // Callback method Notifies that an  banner ad has been successfully loaded and rendered.
-        override fun onAdReceived(view: POBBannerView?) {
+        override fun onAdReceived(view: POBBannerView) {
             Log.d(TAG, "onAdReceived")
         }
 
         // Callback method Notifies an error encountered while loading or rendering an ad.
-        override fun onAdFailed(view: POBBannerView?, error: POBError?) {
+        override fun onAdFailed(view: POBBannerView, error: POBError) {
             Log.e(TAG, "onAdFailed : Ad failed with error - " + error.toString())
         }
 
         // Callback method Notifies that the  banner ad will launch a dialog on top of the current view
-        override fun onAdOpened(view: POBBannerView?) {
+        override fun onAdOpened(view: POBBannerView) {
             Log.d(TAG, "onAdOpened")
         }
 
         // Callback method Notifies that the  banner ad has dismissed the modal on top of the current view
-        override fun onAdClosed(view: POBBannerView?) {
+        override fun onAdClosed(view: POBBannerView) {
             Log.d(TAG, "onAdClosed")
         }
 
-        override fun onAppLeaving(view: POBBannerView?) {
+        override fun onAppLeaving(view: POBBannerView) {
             Log.d(TAG, "Banner : App Leaving")
         }
     }

@@ -29,6 +29,7 @@ import com.pubmatic.sdk.openwrap.eventhandler.mopub.MoPubBannerEventHandler;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class BannerActivity extends AppCompatActivity {
@@ -95,31 +96,34 @@ public class BannerActivity extends AppCompatActivity {
 
         // Callback method Notifies that an ad has been successfully loaded and rendered.
         @Override
-        public void onAdReceived(POBBannerView view) {
+        public void onAdReceived(@NonNull POBBannerView view) {
             Log.d(TAG, "Ad Received");
         }
 
         // Callback method Notifies an error encountered while loading or rendering an ad.
         @Override
-        public void onAdFailed(POBBannerView view, POBError error) {
+        public void onAdFailed(@NonNull POBBannerView view, @NonNull POBError error) {
             Log.e(TAG, error.toString());
         }
 
         // Callback method Notifies that the banner ad view will launch a dialog on top of the current view
         @Override
-        public void onAdOpened(POBBannerView view) {
+        public void onAdOpened(@NonNull POBBannerView view) {
             Log.d(TAG, "Ad Opened");
         }
 
         // Callback method Notifies that the banner ad view has dismissed the modal on top of the current view
         @Override
-        public void onAdClosed(POBBannerView view) {
+        public void onAdClosed(@NonNull POBBannerView view) {
             Log.d(TAG, "Ad Closed");
         }
 
+        // Callback method Notifies whenever current app goes in the background due to user click
+        @Override
+        public void onAppLeaving(@NonNull POBBannerView view) {
+            Log.d(TAG, "App Leaving");
+        }
     }
-
-
 
 }
 

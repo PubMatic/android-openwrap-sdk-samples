@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    
+
     <application
         android:name="androidx.multidex.MultiDexApplication"
         android:allowBackup="true"
@@ -39,6 +39,11 @@
             android:label="In-Banner Video"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout">
         </activity>
+        <activity android:name="com.pubmatic.openwrap.app.DFPRewardedActivity"
+            android:label="Rewarded Ad"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout">
+        </activity>
+
         <meta-data
             android:name="com.google.android.gms.ads.AD_MANAGER_APP"
             android:value="true"/>

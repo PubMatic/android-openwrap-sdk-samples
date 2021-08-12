@@ -271,7 +271,7 @@ public class DFPBannerActivity extends AppCompatActivity implements POBBidEventL
          * @param view  Instance of POBBannerView
          */
         @Override
-        public void onAdReceived(POBBannerView view) {
+        public void onAdReceived(@NonNull POBBannerView view) {
             Log.d(TAG, "Ad Received");
 
             // OpenWrap SDK will start refresh loop internally as soon as ad rendering succeeds/fails.
@@ -289,7 +289,7 @@ public class DFPBannerActivity extends AppCompatActivity implements POBBidEventL
          * @param error     Details of error occurred
          */
         @Override
-        public void onAdFailed(POBBannerView view, POBError error) {
+        public void onAdFailed(@NonNull POBBannerView view, @NonNull POBError error) {
             Log.e(TAG, error.toString());
 
             // OpenWrap SDK will start refresh loop internally as soon as ad rendering succeeds/fails.
@@ -306,7 +306,7 @@ public class DFPBannerActivity extends AppCompatActivity implements POBBidEventL
          * @param view  Instance of POBBannerView
          */
         @Override
-        public void onAppLeaving(POBBannerView view) {
+        public void onAppLeaving(@NonNull POBBannerView view) {
             Log.d(TAG, "App Leaving");
         }
 
@@ -317,7 +317,7 @@ public class DFPBannerActivity extends AppCompatActivity implements POBBidEventL
          * @param view  Instance of POBBannerView
          */
         @Override
-        public void onAdOpened(POBBannerView view) {
+        public void onAdOpened(@NonNull POBBannerView view) {
             Log.d(TAG, "Ad Opened");
         }
 
@@ -328,7 +328,7 @@ public class DFPBannerActivity extends AppCompatActivity implements POBBidEventL
          * @param view  Instance of POBBannerView
          */
         @Override
-        public void onAdClosed(POBBannerView view) {
+        public void onAdClosed(@NonNull POBBannerView view) {
             Log.d(TAG, "Ad Closed");
         }
 

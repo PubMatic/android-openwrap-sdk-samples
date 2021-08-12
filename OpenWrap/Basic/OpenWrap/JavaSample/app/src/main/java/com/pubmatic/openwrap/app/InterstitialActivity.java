@@ -112,7 +112,7 @@ public class InterstitialActivity extends AppCompatActivity {
         private final String TAG = "POBInterstitialListener";
         // Callback method notifies that an ad has been received successfully.
         @Override
-        public void onAdReceived(POBInterstitial ad) {
+        public void onAdReceived(@NonNull POBInterstitial ad) {
             Log.d(TAG, "onAdReceived");
             //Method gets called when ad gets loaded in container
             //Here, you can show interstitial ad to user
@@ -137,24 +137,25 @@ public class InterstitialActivity extends AppCompatActivity {
 
         // Callback method notifies that the interstitial ad will be presented as a modal on top of the current view controller
         @Override
-        public void onAdOpened(POBInterstitial ad) {
+        public void onAdOpened(@NonNull POBInterstitial ad) {
             Log.d(TAG, "onAdOpened");
         }
 
         // Callback method notifies that the interstitial ad has been animated off the screen.
         @Override
-        public void onAdClosed(POBInterstitial ad) {
+        public void onAdClosed(@NonNull POBInterstitial ad) {
             Log.d(TAG, "onAdClosed");
         }
 
         // Callback method notifies ad click
         @Override
-        public void onAdClicked(POBInterstitial ad) {
+        public void onAdClicked(@NonNull POBInterstitial ad) {
             Log.d(TAG, "onAdClicked");
         }
 
+        // Callback method Notifies whenever current app goes in the background due to user click
         @Override
-        public void onAppLeaving(POBInterstitial ad) {
+        public void onAppLeaving(@NonNull POBInterstitial ad) {
             // Implement your custom logic
             Log.d(TAG, "Interstitial : App Leaving");
         }

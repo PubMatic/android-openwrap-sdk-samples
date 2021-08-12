@@ -119,17 +119,14 @@ class FeedListAdapter(val feedItems: ArrayList<FeedItem>): RecyclerView.Adapter<
     private fun setAdLoaderListener(adLoader: AdLoader?){
         Log.d(TAG, "setBannerListener $adLoader")
         adLoader?.listener = object : AdLoader.AdLoaderListener{
-            override fun onAdReceived(view: POBBannerView?) {
+            override fun onAdReceived(view: POBBannerView) {
                 Log.d(TAG, "onAd Received $adLoader")
-                // let block to check if banner instance is not null
-                view?.let {
-                    // Remove child banner view
-                    updateBannerDimensions(it)
-                }
+                // Remove child banner view
+                updateBannerDimensions(view)
             }
 
-            override fun onAdFailed(error: POBError?) {
-                Log.d(TAG, "Unable to load ad, Error: ${error?.errorMessage}")
+            override fun onAdFailed(error: POBError) {
+                Log.d(TAG, "Unable to load ad, Error: ${error.errorMessage}")
             }
         }
     }
