@@ -50,6 +50,6 @@ dependencies {
     implementation 'com.pubmatic.sdk:openwrap:2.3.0'
 
     // To integrate MoPub Event Handler
-    implementation 'com.pubmatic.sdk:openwrap-eventhandler-mopub:2.5.0'
+    implementation 'com.pubmatic.sdk:openwrap-eventhandler-mopub:2.4.0'
 
 }

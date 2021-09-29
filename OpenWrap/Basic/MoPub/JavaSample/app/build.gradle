@@ -55,5 +55,5 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
 
     //To integrate MoPub Event Handler
-    implementation 'com.pubmatic.sdk:openwrap-eventhandler-mopub:2.5.0'
+    implementation 'com.pubmatic.sdk:openwrap-eventhandler-mopub:2.4.0'
 }
