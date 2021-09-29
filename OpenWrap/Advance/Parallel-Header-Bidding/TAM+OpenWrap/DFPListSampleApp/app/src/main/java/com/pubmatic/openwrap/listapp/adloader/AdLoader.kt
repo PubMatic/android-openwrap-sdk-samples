@@ -40,7 +40,7 @@ import java.net.URL
  */
 class AdLoader(val appContext:Context, val adSize: AdSize, val slotId: String,
                val profileId: Int, val pubId: String, val owAdUnitId: String,
-               val gamAdUnitId: String) : POBBidEventListener, BiddingManagerListener{
+               val gamAdUnitId: String) : POBBidEventListener, BiddingManagerListener, AdLoaderEvent{
 
 
     private val biddingManager: BiddingManager
@@ -48,41 +48,24 @@ class AdLoader(val appContext:Context, val adSize: AdSize, val slotId: String,
     // Map to maintain response from different partners
     private var partnerTargeting: MutableMap<String?, Map<String?, List<String?>?>?>? = null
 
-    // Banner view property
-    var banner: POBBannerView? = null
-
     // Listener property to listen ad loader callbacks
-    var listener: AdLoaderListener? = null
-
+    override var listener: AdLoaderListener? = null
+    // Banner view property
+    override var banner: POBBannerView? = null
     // Property flag to identify whether ad is received
-    var isAdReceived = false
+    override var isAdReceived: Boolean = false
+
 
     init {
         // Create bidding manager
         biddingManager = BiddingManager()
         // Set listener to bidding manager events.
         biddingManager.setBiddingManagerListener(this)
+
+        banner = createBanner()
     }
 
-    /**
-     * Load Ad with parallel header bidding
-     */
-    fun loadAd(){
-        // Load TAM Bids
-        val tamAdLoader = TAMAdLoader(DTBAdSize(adSize.width, adSize.height, slotId))
-        biddingManager.registerBidder(tamAdLoader)
-        biddingManager.loadBids()
-
-        // Load OpenWrap bids
-        // A valid Play Store Url of an Android application is required.
-        val appInfo = POBApplicationInfo()
-        try {
-            appInfo.storeURL =
-                URL("https://play.google.com/store/apps/details?id=com.example.android&hl=en")
-        } catch (e: MalformedURLException) {
-            e.printStackTrace()
-        }
-
+    private fun createBanner() : POBBannerView {
         // Create a banner custom event handler for your ad server. Make sure you use
         // separate event handler objects to create each banner view.
         // For example, The code below creates an event handler for DFP ad server.
@@ -105,11 +88,11 @@ class AdLoader(val appContext:Context, val adSize: AdSize, val slotId: String,
         })
 
         // Initialise banner view
-        banner = POBBannerView(appContext)
-        banner?.init(pubId, profileId, owAdUnitId, eventHandler)
+        val banner = POBBannerView(appContext)
+        banner.init(pubId, profileId, owAdUnitId, eventHandler)
 
         // Optional listener to listen banner events
-        banner?.setListener(object : POBBannerView.POBBannerViewListener(){
+        banner.setListener(object : POBBannerView.POBBannerViewListener(){
             override fun onAdReceived(bannerView: POBBannerView) {
                 Log.d(TAG, "Ad Received")
                 // OpenWrap SDK will start refresh loop internally as soon as ad rendering succeeds/fails.
@@ -130,7 +113,29 @@ class AdLoader(val appContext:Context, val adSize: AdSize, val slotId: String,
         })
 
         // Set listener to get get bid details
-        banner?.setBidEventListener(this)
+        banner.setBidEventListener(this)
+
+        return banner
+    }
+
+    /**
+     * Load Ad with parallel header bidding
+     */
+    override fun loadAd(){
+        // Load TAM Bids
+        val tamAdLoader = TAMAdLoader(DTBAdSize(adSize.width, adSize.height, slotId))
+        biddingManager.registerBidder(tamAdLoader)
+        biddingManager.loadBids()
+
+        // Load OpenWrap bids
+        // A valid Play Store Url of an Android application is required.
+        val appInfo = POBApplicationInfo()
+        try {
+            appInfo.storeURL =
+                URL("https://play.google.com/store/apps/details?id=com.example.android&hl=en")
+        } catch (e: MalformedURLException) {
+            e.printStackTrace()
+        }
 
         // Request bids from PubMatic OpenWrap SDK & Load Ad
         banner?.loadAd()
@@ -139,7 +144,7 @@ class AdLoader(val appContext:Context, val adSize: AdSize, val slotId: String,
     /**
      * Cleans up banner
      */
-    fun destroy(){
+    override fun destroy(){
         banner?.destroy()
     }
 
@@ -176,23 +181,6 @@ class AdLoader(val appContext:Context, val adSize: AdSize, val slotId: String,
         // Just call proceedToLoadAd. OpenWrap SDK will have it's response saved internally
         // so it can proceed accordingly.
         banner?.proceedToLoadAd()
-    }
-
-    /**
-     * Interface definition, to provide ad loading callbacks to user class.
-     */
-    interface AdLoaderListener{
-        /**
-         * Gets called when ad is received successfully.
-         * @param view the banner view
-         */
-        fun onAdReceived(view: POBBannerView)
-
-        /**
-         * Gets called when ad loader failed to receive ad
-         * @param error the specific error which includes error code and its reason
-         */
-        fun onAdFailed(error: POBError)
     }
 
     // Ad loader constants.

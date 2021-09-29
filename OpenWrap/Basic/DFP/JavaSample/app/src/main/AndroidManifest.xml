@@ -43,6 +43,10 @@
             android:label="Rewarded Ad"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout">
         </activity>
+        <activity android:name="com.pubmatic.openwrap.app.GAMNativeBannerActivity"
+            android:label="Native+Banner Ad"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout">
+        </activity>
 
         <meta-data
             android:name="com.google.android.gms.ads.AD_MANAGER_APP"

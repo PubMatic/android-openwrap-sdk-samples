@@ -9,8 +9,8 @@ import com.pubmatic.sdk.common.OpenWrapSDK
 import com.pubmatic.sdk.common.POBError
 import com.pubmatic.sdk.common.models.POBApplicationInfo
 import com.pubmatic.sdk.openwrap.core.POBReward
-import com.pubmatic.sdk.rewardedad.POBRewardedAd
 import com.pubmatic.sdk.openwrap.eventhandler.dfp.DFPRewardedEventHandler
+import com.pubmatic.sdk.rewardedad.POBRewardedAd
 import kotlinx.android.synthetic.main.activity_dfp_rewarded.*
 import java.net.MalformedURLException
 import java.net.URL

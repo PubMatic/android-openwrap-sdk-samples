@@ -53,5 +53,20 @@ class Constants {
 
         // Max no. of feeds can be displayed displayed in a feed view.
         const val MAX_FEEDS = 100
+
+        const val OPENWRAP_NATIVE_AD_UNIT_ID = "/15671365/pm_sdk/PMSDK-Demo-App-NativeAndBanner"
+        const val NATIVE_PUB_ID = "156276"
+        const val NATIVE_PROFILE_ID = 1165
+        const val DFP_NATIVE_AD_UNIT_ID = "/15671365/pm_sdk/PMSDK-Demo-App-NativeAndBanner"
+        const val CUSTOM_NATIVE_FORMAT = "12051535"
+    }
+
+    /**
+     * Constant to represents AdType
+     */
+    enum class AD_TYPE constructor(val activity: Class<*>?, val displayText: String) {
+        BANNER(GAMBannerListActivity::class.java, "Banner List Demo"),
+        NATIVEBANNER(GAMNativeBannerListActivity::class.java, "Native+Banner Ad");
+
     }
 }

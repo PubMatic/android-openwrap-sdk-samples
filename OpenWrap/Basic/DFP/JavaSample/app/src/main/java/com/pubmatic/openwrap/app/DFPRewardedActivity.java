@@ -1,20 +1,19 @@
 package com.pubmatic.openwrap.app;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.pubmatic.sdk.common.OpenWrapSDK;
 import com.pubmatic.sdk.common.POBError;
 import com.pubmatic.sdk.common.models.POBApplicationInfo;
 import com.pubmatic.sdk.openwrap.core.POBReward;
-import com.pubmatic.sdk.rewardedad.POBRewardedAd;
 import com.pubmatic.sdk.openwrap.eventhandler.dfp.DFPRewardedEventHandler;
+import com.pubmatic.sdk.rewardedad.POBRewardedAd;
 
 import java.net.MalformedURLException;
 import java.net.URL;

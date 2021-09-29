@@ -26,12 +26,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.pubmatic.sdk.common.OpenWrapSDK;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,6 +33,12 @@ import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.pubmatic.sdk.common.OpenWrapSDK;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * This class host the list view to show the entry for the Ad types for demonstrating the respective features.
@@ -130,7 +130,8 @@ public class MainActivity extends AppCompatActivity {
         INTERSTITIAL(DFPInterstitialActivity.class, "Interstitial"),
         VIDEO_INTERSTITIAL(DFPVideoInterstitialActivity.class, "Video Interstitial"),
         IN_BANNER_VIDEO(DFPInBannerVideoActivity.class, "In-Banner Video"),
-        REWARDED_AD(DFPRewardedActivity.class,"Rewarded Ad");
+        REWARDED_AD(DFPRewardedActivity.class,"Rewarded Ad"),
+        NATIVEBANNER(GAMNativeBannerActivity.class, "Native+Banner Ad");
 
         private Class activity;
         private String displayText;

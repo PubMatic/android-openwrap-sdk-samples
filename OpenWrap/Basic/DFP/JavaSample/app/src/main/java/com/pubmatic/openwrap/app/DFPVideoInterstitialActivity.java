@@ -20,6 +20,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.pubmatic.sdk.common.OpenWrapSDK;
 import com.pubmatic.sdk.common.POBError;
 import com.pubmatic.sdk.common.models.POBApplicationInfo;
@@ -28,9 +31,6 @@ import com.pubmatic.sdk.openwrap.interstitial.POBInterstitial;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 public class DFPVideoInterstitialActivity extends AppCompatActivity {
     

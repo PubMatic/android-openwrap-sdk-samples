@@ -19,6 +19,9 @@ package com.pubmatic.openwrap.app;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.ads.AdSize;
 import com.pubmatic.sdk.common.OpenWrapSDK;
 import com.pubmatic.sdk.common.POBError;
@@ -28,9 +31,6 @@ import com.pubmatic.sdk.openwrap.eventhandler.dfp.DFPBannerEventHandler;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 public class DFPBannerActivity extends AppCompatActivity {
 

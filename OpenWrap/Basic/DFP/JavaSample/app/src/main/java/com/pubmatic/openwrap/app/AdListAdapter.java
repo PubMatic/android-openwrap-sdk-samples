@@ -16,13 +16,14 @@
  */
 package com.pubmatic.openwrap.app;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class AdListAdapter extends RecyclerView.Adapter<AdListAdapter.AdViewHold
         itemList = list;
     }
 
-    void setItemClickListener(OnItemClickListener itemClickListener) {
+    public void setItemClickListener(OnItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
 

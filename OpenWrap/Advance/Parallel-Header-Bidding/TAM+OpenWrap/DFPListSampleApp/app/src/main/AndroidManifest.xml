@@ -25,6 +25,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".GAMBannerListActivity"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
+            android:label="Banner List Demo"/>
+
+        <activity android:name=".GAMNativeBannerListActivity"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
+            android:label="Native + Banner List Demo"/>
+
         <activity android:name="com.amazon.device.ads.DTBActivity"
             tools:ignore="AppLinkUrlError">
             <intent-filter>

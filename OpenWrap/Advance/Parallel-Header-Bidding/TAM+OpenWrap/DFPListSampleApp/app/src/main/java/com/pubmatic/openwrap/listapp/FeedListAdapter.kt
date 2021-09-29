@@ -20,13 +20,20 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.google.android.ads.nativetemplates.NativeTemplateStyle
+import com.google.android.ads.nativetemplates.TemplateView
+import com.google.android.gms.ads.nativead.NativeAd
+import com.google.android.gms.ads.nativead.NativeCustomFormatAd
 import com.pubmatic.openwrap.listapp.adloader.AdLoader
+import com.pubmatic.openwrap.listapp.adloader.AdLoaderEvent
+import com.pubmatic.openwrap.listapp.adloader.AdLoaderListener
 import com.pubmatic.sdk.common.POBError
-import com.pubmatic.sdk.common.utility.POBUtils
 import com.pubmatic.sdk.openwrap.banner.POBBannerView
 
 /**
@@ -64,47 +71,36 @@ class FeedListAdapter(val feedItems: ArrayList<FeedItem>): RecyclerView.Adapter<
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Log.d(AdLoader.TAG, "onBindViewHolder position: $position")
-        val feedItem = feedItems.get(position)
+        val feedItem = feedItems[position]
         if(holder is BannerViewHolder){
-            val parent: LinearLayout = (holder.itemView as? LinearLayout)?: LinearLayout(holder.itemView.context)
+            Log.d(AdLoader.TAG, "position ${position+1} onBindViewHolder position: ${position+1}")
 
             // Get banner from feed item
             val adLoader = feedItem.adLoader
 
             // Set adLoader listener if not available
             if(adLoader?.listener == null){
-                setAdLoaderListener(adLoader)
+                setAdLoaderListener(holder, adLoader, position)
             }
 
             // Notify banner is getting bind
-            onBannerBindListener?.onBannerBind()
+            onBannerBindListener?.onBannerBind(feedItem)
 
             // If you are scrolling so fast sometime remove view takes time before that you can not
             // add before remove it parent, hence exception occurs
             try {
                 // Attach banner to view holder view
                 adLoader?.banner?.let {
-                    Log.d(TAG, "is parent has banner : ${parent.getChildAt(0) == it}")
-                    if(parent.getChildAt(0) != it){
-                        parent.removeAllViews()
-                        parent.addView(it)
+                    Log.d(TAG, "position ${position+1} Banner instance attaching : ${it.hashCode()}")
+                    feedItem.view?.let {
+                        holder.displayAdView(it)
                     }
                 }
             }catch (e: IllegalStateException){
-                Log.e(TAG, "Not able to render banner: "+e.message)
+                Log.e(TAG, "position ${position+1} Not able to render banner: "+e.message)
             }
-
-            // In case if banner is already loaded, view holder is recycled,
-            // set banner dimension explicitly
-            if(adLoader?.isAdReceived == true){
-                adLoader.banner?.let{
-                    updateBannerDimensions(it)
-                }
-            }
-
         }else if(holder is NewsViewHolder){
-            holder.textView.setText(feedItem.title)
+            holder.textView.text = feedItem.title
         }
     }
 
@@ -116,32 +112,72 @@ class FeedListAdapter(val feedItems: ArrayList<FeedItem>): RecyclerView.Adapter<
     }
 
     // Load and update banner dimension on AdLoader receive callback
-    private fun setAdLoaderListener(adLoader: AdLoader?){
-        Log.d(TAG, "setBannerListener $adLoader")
-        adLoader?.listener = object : AdLoader.AdLoaderListener{
+    private fun setAdLoaderListener(adholder: BannerViewHolder, adLoader: AdLoaderEvent?, position: Int){
+        Log.d(TAG, "position ${position+1} setBannerListener $adLoader")
+        adLoader?.listener = object : AdLoaderListener{
+
             override fun onAdReceived(view: POBBannerView) {
-                Log.d(TAG, "onAd Received $adLoader")
-                // Remove child banner view
-                updateBannerDimensions(view)
+                Log.d(TAG, "position ${position+1} on Ad Received $adLoader")
+                // Update feed item view with banner view
+                feedItems.get(position).view = view
+                adholder.displayAdView(view)
+            }
+
+            override fun onNativeAdReceived(nativeAd: NativeAd) {
+                Log.d(TAG, "position ${position+1} on Native Ad Received $adLoader")
+                val styles = NativeTemplateStyle.Builder().build()
+                val templateView: TemplateView  = LayoutInflater.from(adholder.container.context).
+                inflate(R.layout.layout_native_ad_template, adholder.container, false) as TemplateView
+                templateView.setStyles(styles)
+                templateView.setNativeAd(nativeAd)
+                // Update feed item view with template view
+                feedItems.get(position).view = templateView
+                adholder.displayAdView(templateView)
+            }
+
+            override fun onCustomNativeAdReceived(customNative: NativeCustomFormatAd) {
+                Log.d(TAG, "position ${position+1} on Custom Native Ad Received $adLoader")
+                val customNativeAd = LayoutInflater.from(adholder.container.context).
+                inflate(R.layout.layout_custom_native, adholder.container, false)
+
+                // Update feed item view with custom native views
+                feedItems.get(position).view = customNativeAd
+
+                renderCustomNative(customNativeAd, customNative)
+
+                // Create cusotm native view from inflater
+                adholder.displayAdView(customNativeAd)
+
+                // Since this is custom native ad format, app is responsible for recording impressions and
+                // reporting click events to the Google Mobile Ads SDK.
+                customNative.recordImpression()
             }
 
             override fun onAdFailed(error: POBError) {
-                Log.d(TAG, "Unable to load ad, Error: ${error.errorMessage}")
+                Log.d(TAG, "position ${position+1} Unable to load ad, Error: ${error.errorMessage}")
             }
         }
     }
 
-    // To update banner layout params once ad's dimensions are available
-    private fun updateBannerDimensions(banner: POBBannerView){
-        // Get ad size from banner
-        val adSize = banner.creativeSize
-        adSize?.let {
-            val width: Int = POBUtils.convertDpToPixel(adSize.adWidth)
-            val height: Int = POBUtils.convertDpToPixel(adSize.adHeight)
-            // Create layout params which is required set banner dimensions
-            val layoutParams = LinearLayout.LayoutParams(width, height)
-            banner.layoutParams = layoutParams
+    /**
+     * Populates and render's custom native ad
+     */
+    fun renderCustomNative(adView: View, nativeCustomFormatAd: NativeCustomFormatAd) {
+        val imageView = adView.findViewById<ImageView>(R.id.ad_app_icon)
+        val image = nativeCustomFormatAd.getImage("MainImage")
+        if (image != null) {
+            imageView.setImageDrawable(image.drawable)
         }
+        var textView = adView.findViewById<TextView>(R.id.ad_headline)
+        textView.text = nativeCustomFormatAd.getText("Title")
+        textView = adView.findViewById(R.id.ad_description)
+        textView.text = nativeCustomFormatAd.getText("description")
+        val button = adView.findViewById<Button>(R.id.ad_button)
+        val clickThroughAssetName = "ClickThroughText"
+        button.text = nativeCustomFormatAd.getText(clickThroughAssetName)
+        button.setOnClickListener(View.OnClickListener {
+            nativeCustomFormatAd.performClick(clickThroughAssetName)
+        })
     }
 
     /**
@@ -151,21 +187,27 @@ class FeedListAdapter(val feedItems: ArrayList<FeedItem>): RecyclerView.Adapter<
         /**
          * Notifies banner is about to get bind to view holder
          */
-        fun onBannerBind()
+        fun onBannerBind(feedItem : FeedItem)
     }
 
     /**
      * View holder class to manager news
      */
     class NewsViewHolder(view: View): ViewHolder(view){
-        var textView: TextView
-        init {
-            textView = view.findViewById(R.id.news_title)
-        }
+        var textView: TextView = view.findViewById(R.id.news_title)
     }
 
     /**
      * View holder class to manager Banner
      */
-    class BannerViewHolder(view: View): ViewHolder(view)
+    class BannerViewHolder(view: View): ViewHolder(view) {
+        var container : LinearLayout = view.findViewById(R.id.container)
+        /**
+         * It display's one of the native, custom native and banner ad
+         */
+        fun displayAdView (view : View) {
+            container.removeAllViews()
+            container.addView(view)
+        }
+    }
 }

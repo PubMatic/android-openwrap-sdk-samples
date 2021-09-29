@@ -16,13 +16,15 @@
  */
 package com.pubmatic.openwrap.listapp
 
-import com.pubmatic.openwrap.listapp.adloader.AdLoader
+import android.view.View
+import com.pubmatic.openwrap.listapp.adloader.AdLoaderEvent
 
 /**
  * Data class represent feed item.
  */
-data class FeedItem(val title: String, val feedType: FeedType, val adLoader: AdLoader?,
-                    var isBannerLoaded: Boolean) {
+data class FeedItem(val title: String, val feedType: FeedType, val adLoader: AdLoaderEvent?,
+                    var isBannerLoaded: Boolean, var view: View?
+) {
 
     /**
      * Enum defines types of feed
