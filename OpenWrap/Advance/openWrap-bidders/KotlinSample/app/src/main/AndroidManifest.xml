@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
@@ -16,22 +17,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
         <activity
             android:name="com.pubmatic.openwrap.kotlinsampleapp.BannerActivity"
-            android:label="@string/title_activity_banner"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:label="@string/title_activity_banner"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.pubmatic.openwrap.kotlinsampleapp.InterstitialActivity"
-            android:label="@string/title_activity_interstitial"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:label="@string/title_activity_interstitial"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name="com.pubmatic.openwrap.kotlinsampleapp.MainActivity"
-            android:label="@string/title_activity_home"
+            android:exported="true"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
+            android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

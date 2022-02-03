@@ -5,11 +5,11 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 31
     defaultConfig {
         applicationId "com.pubmatic.openwrap.listapp"
         minSdkVersion 19
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -41,10 +41,13 @@ dependencies {
     // GAM Integration
     implementation 'com.google.android.gms:play-services-ads:20.1.0'
     // OpenWrap SDK integration.
-    implementation 'com.pubmatic.sdk:openwrap:2.3.0'
+    implementation 'com.pubmatic.sdk:openwrap:2.4.0'
     //To integrate DFP Event Handler
-    implementation 'com.pubmatic.sdk:openwrap-eventhandler-dfp:2.5.0'
+    implementation 'com.pubmatic.sdk:openwrap-eventhandler-dfp:2.6.0'
     // To integrate Amazon A9 SDK
     implementation 'com.amazon.android:aps-sdk:8.4.3@aar'
     implementation project(':nativetemplates')
+
+    // TODO : Remove this library when GAM's Android 12 compatible version is available
+    implementation 'androidx.work:work-runtime:2.7.0'
 }

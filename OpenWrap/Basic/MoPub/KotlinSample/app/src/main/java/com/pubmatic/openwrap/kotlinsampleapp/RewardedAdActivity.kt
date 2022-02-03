@@ -24,7 +24,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.pubmatic.sdk.common.OpenWrapSDK
 import com.pubmatic.sdk.common.POBError
-import com.pubmatic.sdk.common.log.PMLog
+import com.pubmatic.sdk.common.log.POBLog
 import com.pubmatic.sdk.common.models.POBApplicationInfo
 import com.pubmatic.sdk.openwrap.core.POBReward
 import com.pubmatic.sdk.openwrap.eventhandler.mopub.MoPubRewardedEventHandler
@@ -109,7 +109,7 @@ class RewardedAdActivity : AppCompatActivity() {
             // Call show on rewarded
             rewardedAd?.show(customDataMap)
         } else {
-            PMLog.debug(TAG, "RewardedAd not ready ")
+            POBLog.debug(TAG, "RewardedAd not ready ")
         }
     }
 
@@ -128,8 +128,8 @@ class RewardedAdActivity : AppCompatActivity() {
          * @param rewardedAd POBRewardedAd instance invoking this method.
          */
         override fun onAdReceived(rewardedAd: POBRewardedAd) {
-            PMLog.debug(TAG, "onAdReceived is on Main thread: " + (Looper.myLooper() == Looper.getMainLooper()))
-            PMLog.debug(TAG, "RewardedAd : Ad Received")
+            POBLog.debug(TAG, "onAdReceived is on Main thread: " + (Looper.myLooper() == Looper.getMainLooper()))
+            POBLog.debug(TAG, "RewardedAd : Ad Received")
             findViewById<View>(R.id.showAdBtn).isEnabled = true
         }
 
@@ -140,8 +140,8 @@ class RewardedAdActivity : AppCompatActivity() {
          * @param error      The error encountered while attempting to receive or render the ad.
          */
         override fun onAdFailedToLoad(rewardedAd: POBRewardedAd, error: POBError) {
-            PMLog.debug(TAG, "onAdFailed is on Main thread: " + (Looper.myLooper() == Looper.getMainLooper()))
-            PMLog.debug(TAG, "RewardedAd : Ad failed with error - $error")
+            POBLog.debug(TAG, "onAdFailed is on Main thread: " + (Looper.myLooper() == Looper.getMainLooper()))
+            POBLog.debug(TAG, "RewardedAd : Ad failed with error - $error")
         }
 
         /**
@@ -152,8 +152,8 @@ class RewardedAdActivity : AppCompatActivity() {
          * @param rewardedAd POBRewardedAd instance invoking this method.
          */
         override fun onAppLeaving(rewardedAd: POBRewardedAd) {
-            PMLog.debug(TAG, "onAppLeave is on Main thread: " + (Looper.myLooper() == Looper.getMainLooper()))
-            PMLog.debug(TAG, "RewardedAd : App Leave")
+            POBLog.debug(TAG, "onAppLeave is on Main thread: " + (Looper.myLooper() == Looper.getMainLooper()))
+            POBLog.debug(TAG, "RewardedAd : App Leave")
         }
 
         /**
@@ -162,8 +162,8 @@ class RewardedAdActivity : AppCompatActivity() {
          * @param rewardedAd POBRewardedAd instance invoking this method.
          */
         override fun onAdOpened(rewardedAd: POBRewardedAd) {
-            PMLog.debug(TAG, "onAdOpened is on Main thread: " + (Looper.myLooper() == Looper.getMainLooper()))
-            PMLog.debug(TAG, "RewardedAd : Ad Opened")
+            POBLog.debug(TAG, "onAdOpened is on Main thread: " + (Looper.myLooper() == Looper.getMainLooper()))
+            POBLog.debug(TAG, "RewardedAd : Ad Opened")
         }
 
         /**
@@ -172,8 +172,8 @@ class RewardedAdActivity : AppCompatActivity() {
          * @param rewardedAd POBRewardedAd instance invoking this method.
          */
         override fun onAdClosed(rewardedAd: POBRewardedAd) {
-            PMLog.debug(TAG, "onAdClosed is on Main thread: " + (Looper.myLooper() == Looper.getMainLooper()))
-            PMLog.debug(TAG, "RewardedAd : Ad Closed")
+            POBLog.debug(TAG, "onAdClosed is on Main thread: " + (Looper.myLooper() == Looper.getMainLooper()))
+            POBLog.debug(TAG, "RewardedAd : Ad Closed")
         }
 
         /**
@@ -182,8 +182,8 @@ class RewardedAdActivity : AppCompatActivity() {
          * @param rewardedAd POBRewardedAd instance invoking this method.
          */
         override fun onAdClicked(rewardedAd: POBRewardedAd) {
-            PMLog.debug(TAG, "onAdClicked is on Main thread: " + (Looper.myLooper() == Looper.getMainLooper()))
-            PMLog.debug(TAG, "RewardedAd : Ad Clicked")
+            POBLog.debug(TAG, "onAdClicked is on Main thread: " + (Looper.myLooper() == Looper.getMainLooper()))
+            POBLog.debug(TAG, "RewardedAd : Ad Clicked")
         }
 
         /**
@@ -195,8 +195,8 @@ class RewardedAdActivity : AppCompatActivity() {
          * @param rewardedAd POBRewardedAd instance invoking this method.
          */
         override fun onAdExpired(rewardedAd: POBRewardedAd) {
-            PMLog.debug(TAG, "onAdExpired is on Main thread: " + (Looper.myLooper() == Looper.getMainLooper()))
-            PMLog.debug(TAG, "RewardedAd : Ad Expired")
+            POBLog.debug(TAG, "onAdExpired is on Main thread: " + (Looper.myLooper() == Looper.getMainLooper()))
+            POBLog.debug(TAG, "RewardedAd : Ad Expired")
         }
 
         /**
@@ -208,7 +208,7 @@ class RewardedAdActivity : AppCompatActivity() {
          */
         override fun onReceiveReward(rewardedAd: POBRewardedAd, reward: POBReward) {
             // As this is callback method, No action Required
-            PMLog.debug(TAG, "onReceiveReward is on Main thread: " + (Looper.myLooper() == Looper.getMainLooper()))
+            POBLog.debug(TAG, "onReceiveReward is on Main thread: " + (Looper.myLooper() == Looper.getMainLooper()))
             Toast.makeText(this@RewardedAdActivity, "Congratulation! You are rewarded with " + reward.amount + " " + reward.currencyType, Toast.LENGTH_LONG).show()
         }
 
@@ -219,8 +219,8 @@ class RewardedAdActivity : AppCompatActivity() {
          * @param error      The error encountered while attempting to rendering the ad.
          */
         override fun onAdFailedToShow(rewardedAd: POBRewardedAd, error: POBError) {
-            PMLog.debug(TAG, "onAdFailedToShow is on Main thread: " + (Looper.myLooper() == Looper.getMainLooper()))
-            PMLog.debug(TAG, "Rewarded Ad: Ad failed with error - $error")
+            POBLog.debug(TAG, "onAdFailedToShow is on Main thread: " + (Looper.myLooper() == Looper.getMainLooper()))
+            POBLog.debug(TAG, "Rewarded Ad: Ad failed with error - $error")
         }
     }
 

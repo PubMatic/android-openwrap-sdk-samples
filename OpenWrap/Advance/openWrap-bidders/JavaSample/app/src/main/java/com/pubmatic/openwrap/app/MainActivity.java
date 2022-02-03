@@ -26,8 +26,13 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.facebook.ads.AudienceNetworkAds;
+import com.pubmatic.sdk.BuildConfig;
 import com.pubmatic.sdk.common.OpenWrapSDK;
+import com.pubmatic.sdk.common.models.POBApplicationInfo;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -86,6 +91,8 @@ public class MainActivity extends AppCompatActivity {
             OpenWrapSDK.setLogLevel(OpenWrapSDK.LogLevel.Debug);
         }
 
+        AudienceNetworkAds.initialize(this);
+
         //Change the Status Bar color
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
@@ -110,6 +117,18 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS, MULTIPLE_PERMISSIONS_REQUEST_CODE);
         }
 
+        // A valid Play Store Url of an Android application is required.
+        POBApplicationInfo appInfo = new POBApplicationInfo();
+        try {
+            appInfo.setStoreURL(new URL("https://play.google.com/store/apps/details?id=com.example.android&hl=en"));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        // This app information is a global configuration & you
+        // Need not set this for every ad request(of any ad type)
+        OpenWrapSDK.setApplicationInfo(appInfo);
+
         initListView();
     }
 
@@ -120,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    enum AdType {
+     public enum AdType {
         BANNER(BannerActivity.class, "Banner"),
         INTERSTITIAL(InterstitialActivity.class, "Interstitial");
 

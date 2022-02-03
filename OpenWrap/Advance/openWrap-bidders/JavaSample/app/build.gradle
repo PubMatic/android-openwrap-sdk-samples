@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
 
     defaultConfig {
         applicationId "com.pubmatic.openwrap.app"
         minSdkVersion 19
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
 
@@ -35,10 +35,12 @@ dependencies {
 
     //To integrate OpenWrap SDK
     implementation 'com.pubmatic.sdk:openwrap:2.3.0'
-    
-    //To integrate OpenWrap FanBidder SDK
-    implementation 'com.pubmatic.sdk:openwrap-fanbidder:1.1.0'
 
-    //To integrate facebook audience sdk
-    implementation 'com.facebook.android:audience-network-sdk:5.7.1'
+    implementation 'com.facebook.android:audience-network-sdk:6.8.0'
+
+    // To integrate FAN Bidder Module
+    implementation 'com.pubmatic.sdk:openwrap-fanbidder:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+
 }

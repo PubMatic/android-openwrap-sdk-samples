@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
 
     compileOptions {
         sourceCompatibility 1.8
@@ -11,7 +11,7 @@ android {
     defaultConfig {
         applicationId "com.pubmatic.app"
         minSdkVersion 19
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
 
@@ -50,10 +50,10 @@ dependencies {
     }
 
     //To integrate PubMatic SDK
-    implementation 'com.pubmatic.sdk:openwrap:2.3.0'
+    implementation 'com.pubmatic.sdk:openwrap:2.4.0'
 
     //To integrate MoPub Event Handler
-    implementation 'com.pubmatic.sdk:openwrap-eventhandler-mopub:2.4.0'
+    implementation 'com.pubmatic.sdk:openwrap-eventhandler-mopub:2.5.0'
 
     // To integrate Amazon A9 SDK
     implementation 'com.amazon.android:aps-sdk:8.4.3@aar'

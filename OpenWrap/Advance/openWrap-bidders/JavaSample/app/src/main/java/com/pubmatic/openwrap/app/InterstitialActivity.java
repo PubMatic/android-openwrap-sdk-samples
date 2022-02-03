@@ -45,18 +45,6 @@ public class InterstitialActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interstitial);
 
-        // A valid Play Store Url of an Android application is required.
-        POBApplicationInfo appInfo = new POBApplicationInfo();
-        try {
-            appInfo.setStoreURL(new URL("https://play.google.com/store/apps/details?id=com.example.android&hl=en"));
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-
-        // This app information is a global configuration & you
-        // Need not set this for every ad request(of any ad type)
-        OpenWrapSDK.setApplicationInfo(appInfo);
-
         // Create  interstitial instance by passing activity context and
         interstitial = new POBInterstitial(this, PUB_ID,
                 PROFILE_ID,

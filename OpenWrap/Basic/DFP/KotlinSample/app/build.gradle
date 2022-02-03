@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
 
 
 
     defaultConfig {
         applicationId "com.pubmatic.openwrap.kotlinsampleapp"
         minSdkVersion 19
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
 
@@ -41,8 +41,11 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
 
     //To integrate PubMatic SDK
-    implementation 'com.pubmatic.sdk:openwrap:2.3.0'
+    implementation 'com.pubmatic.sdk:openwrap:2.4.0'
     //To integrate DFP Event Handler
-    implementation 'com.pubmatic.sdk:openwrap-eventhandler-dfp:2.5.0'
+    implementation 'com.pubmatic.sdk:openwrap-eventhandler-dfp:2.6.0'
     implementation project(':nativetemplates')
+
+    // TODO : Remove this library when GAM's Android 12 compatible version is available
+    implementation 'androidx.work:work-runtime:2.7.0'
 }

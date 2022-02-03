@@ -24,7 +24,7 @@ import java.net.URL;
  */
 public class DFPRewardedActivity extends AppCompatActivity {
 
-    private static final String OPENWRAP_AD_UNIT_ID = "OpenWrapRewardedAdUnit";
+    private static final String OPENWRAP_AD_UNIT_ID = "/15671365/pm_sdk/PMSDK-Demo-App-RewardedAd";
     private static final String PUB_ID = "156276";
     private static final int PROFILE_ID = 1757;
     private static final String DFP_AD_UNIT_ID = "/15671365/pm_sdk/PMSDK-Demo-App-RewardedAd";

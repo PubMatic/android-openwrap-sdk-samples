@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
 
     defaultConfig {
         applicationId "com.pubmatic.openwrap.app"
         minSdkVersion 19
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
 
@@ -49,11 +49,11 @@ dependencies {
         transitive = true
     }
     //To integrate PubMatic SDK
-    implementation 'com.pubmatic.sdk:openwrap:2.3.0'
+    implementation 'com.pubmatic.sdk:openwrap:2.4.0'
    
     //Enable Multidex
     implementation 'androidx.multidex:multidex:2.0.1'
 
     //To integrate MoPub Event Handler
-    implementation 'com.pubmatic.sdk:openwrap-eventhandler-mopub:2.4.0'
+    implementation 'com.pubmatic.sdk:openwrap-eventhandler-mopub:2.5.0'
 }

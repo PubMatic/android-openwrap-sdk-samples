@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
 
     defaultConfig {
         applicationId "com.pubmatic.openwrap.app"
         minSdkVersion 19
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
 
@@ -36,13 +36,16 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
 
     //To integrate PubMatic SDK
-    implementation 'com.pubmatic.sdk:openwrap:2.3.0'
+    implementation 'com.pubmatic.sdk:openwrap:2.4.0'
 
     // To integrate Multidex
     implementation 'androidx.multidex:multidex:2.0.1'
 
     //To integrate DFP Event Handler
-    implementation 'com.pubmatic.sdk:openwrap-eventhandler-dfp:2.5.0'
+    implementation 'com.pubmatic.sdk:openwrap-eventhandler-dfp:2.6.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation project(':nativetemplates')
+
+    // TODO : Remove this library when GAM's Android 12 compatible version is available
+    implementation 'androidx.work:work-runtime:2.7.0'
 }

@@ -45,18 +45,6 @@ public class BannerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_banner);
 
-        // A valid Play Store Url of an Android application is required.
-        POBApplicationInfo appInfo = new POBApplicationInfo();
-        try {
-            appInfo.setStoreURL(new URL("https://play.google.com/store/apps/details?id=com.example.android&hl=en"));
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-
-        // This app information is a global configuration & you
-        // Need not set this for every ad request(of any ad type)
-        OpenWrapSDK.setApplicationInfo(appInfo);
-
         // Initialise banner view
         banner = findViewById(R.id.banner);
         banner.init(PUB_ID,

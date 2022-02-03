@@ -26,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.facebook.ads.AudienceNetworkAds
 import kotlinx.android.synthetic.main.activity_home.*
 import java.util.*
 
@@ -61,6 +62,8 @@ class MainActivity : AppCompatActivity()  {
     
         list = ArrayList()
         list?.addAll(AdType.values())
+
+        AudienceNetworkAds.initialize(this)
 
         var recyclerAdapter: RecyclerAdapter? = null
         if(null != list){
@@ -101,7 +104,7 @@ class MainActivity : AppCompatActivity()  {
      */
     enum class AdType constructor(val activity: Class<*>?, val displayName: String) {
         BANNER(BannerActivity::class.java, "Banner"),
-        INTERSTITIAL(InterstitialActivity::class.java, "Interstitial")
+        INTERSTITIAL(InterstitialActivity::class.java, "Interstitial"),
     }
 
     /**

@@ -16,7 +16,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.pubmatic.app.MainActivity">
+        <activity
+            android:name="com.pubmatic.app.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -31,6 +33,7 @@
             android:configChanges="orientation|screenSize">
         </activity>
         <activity android:name="com.amazon.device.ads.DTBActivity"
+            android:exported="true"
             tools:ignore="AppLinkUrlError">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

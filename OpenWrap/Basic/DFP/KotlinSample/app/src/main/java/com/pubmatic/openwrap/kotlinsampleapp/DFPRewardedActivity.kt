@@ -21,7 +21,7 @@ import java.net.URL
  */
 class DFPRewardedActivity : AppCompatActivity() {
 
-    private val OPENWRAP_AD_UNIT_ID = "OpenWrapRewardedAdUnit"
+    private val OPENWRAP_AD_UNIT_ID = "/15671365/pm_sdk/PMSDK-Demo-App-RewardedAd"
     private val PUB_ID = "156276"
     private val PROFILE_ID = 1757
     private val DFP_AD_UNIT = "/15671365/pm_sdk/PMSDK-Demo-App-RewardedAd"

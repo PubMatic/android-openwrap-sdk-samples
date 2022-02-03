@@ -4,6 +4,7 @@
     <string name="title_activity_interstitial">Interstitial</string>
     <string name="title_activity_video_interstitial">Video Interstitial</string>
     <string name="title_activity_in_banner_video">In-Banner Video</string>
+    <string name="title_activity_rewarded">Rewarded</string>
     <string name="title_activity_banner">Banner</string>
     <string name="title_activity_home">KotlinSample</string>
 </resources>
