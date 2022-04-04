@@ -14,7 +14,10 @@ android {
         multiDexEnabled true
 
     }
-
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     lintOptions {
         abortOnError false
     }
@@ -42,10 +45,7 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
 
     //To integrate DFP Event Handler
-    implementation 'com.pubmatic.sdk:openwrap-eventhandler-dfp:2.6.0'
+    implementation 'com.pubmatic.sdk:openwrap-eventhandler-dfp:2.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation project(':nativetemplates')
-
-    // TODO : Remove this library when GAM's Android 12 compatible version is available
-    implementation 'androidx.work:work-runtime:2.7.0'
 }

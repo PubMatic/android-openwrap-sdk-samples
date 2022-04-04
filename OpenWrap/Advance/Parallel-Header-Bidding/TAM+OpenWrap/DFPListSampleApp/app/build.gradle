@@ -43,7 +43,7 @@ dependencies {
     // OpenWrap SDK integration.
     implementation 'com.pubmatic.sdk:openwrap:2.5.0'
     //To integrate DFP Event Handler
-    implementation 'com.pubmatic.sdk:openwrap-eventhandler-dfp:2.6.0'
+    implementation 'com.pubmatic.sdk:openwrap-eventhandler-dfp:2.7.0'
     // To integrate Amazon A9 SDK
     implementation 'com.amazon.android:aps-sdk:8.4.3@aar'
     implementation project(':nativetemplates')
