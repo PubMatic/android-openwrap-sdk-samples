@@ -34,20 +34,17 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.google.android.gms:play-services-ads:20.1.0'
+    implementation 'com.google.android.gms:play-services-ads:20.6.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
 
     //To integrate PubMatic SDK
-    implementation 'com.pubmatic.sdk:openwrap:2.4.0'
+    implementation 'com.pubmatic.sdk:openwrap:2.5.0'
     //To integrate DFP Event Handler
     implementation 'com.pubmatic.sdk:openwrap-eventhandler-dfp:2.6.0'
 
     // To integrate Amazon A9 SDK
     implementation 'com.amazon.android:aps-sdk:8.4.3@aar'
-
-    // TODO : Remove this library when GAM's Android 12 compatible version is available
-    implementation 'androidx.work:work-runtime:2.7.0'
 }

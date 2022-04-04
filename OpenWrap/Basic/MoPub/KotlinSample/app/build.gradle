@@ -38,16 +38,16 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
 
     // MoPub For banners
-    implementation('com.mopub:mopub-sdk-banner:5.17.0@aar') {
+    implementation('com.mopub:mopub-sdk-banner:5.18.0@aar') {
         transitive = true
     }
 
     // MoPubFor interstitials
-    implementation('com.mopub:mopub-sdk-fullscreen:5.17.0@aar') {
+    implementation('com.mopub:mopub-sdk-fullscreen:5.18.0@aar') {
         transitive = true
     }
     //To integrate PubMatic SDK
-    implementation 'com.pubmatic.sdk:openwrap:2.4.0'
+    implementation 'com.pubmatic.sdk:openwrap:2.5.0'
 
     // To integrate MoPub Event Handler
     implementation 'com.pubmatic.sdk:openwrap-eventhandler-mopub:2.5.0'
