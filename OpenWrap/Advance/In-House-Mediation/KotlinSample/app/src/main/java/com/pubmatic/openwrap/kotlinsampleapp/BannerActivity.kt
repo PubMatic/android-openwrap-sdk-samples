@@ -17,10 +17,8 @@
 package com.pubmatic.openwrap.kotlinsampleapp
 
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
-import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.pubmatic.sdk.common.OpenWrapSDK
 import com.pubmatic.sdk.common.POBAdSize
 import com.pubmatic.sdk.common.POBError
@@ -115,6 +113,11 @@ class BannerActivity : AppCompatActivity() {
         // Callback method Notifies that the  banner ad will launch a dialog on top of the current view
         override fun onAdOpened(view: POBBannerView) {
             Log.d(TAG, "onAdOpened")
+        }
+
+        // Callback method Notifies that the banner ad view is clicked.
+        override fun onAdClicked(view: POBBannerView) {
+            Log.d(TAG, "onAdClicked")
         }
 
         // Callback method Notifies that the  banner ad has dismissed the modal on top of the current view

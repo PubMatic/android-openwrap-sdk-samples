@@ -172,6 +172,11 @@ class GAMNativeBannerActivity : AppCompatActivity() {
             Log.d(TAG, "onAdOpened")
         }
 
+        // Callback method Notifies that the banner ad view is clicked.
+        override fun onAdClicked(view: POBBannerView) {
+            Log.d(TAG, "onAdClicked")
+        }
+
         // Callback method Notifies that the  banner ad has dismissed the modal on top of the current view
         override fun onAdClosed(view: POBBannerView) {
             Log.d(TAG, "onAdClosed")

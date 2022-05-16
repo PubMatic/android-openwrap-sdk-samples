@@ -113,6 +113,12 @@ public class DFPInBannerVideoActivity extends AppCompatActivity {
             Log.d(TAG, "App Leaving");
         }
 
+        // Callback method Notifies that the banner ad view is clicked.
+        @Override
+        public void onAdClicked(@NonNull POBBannerView view) {
+            Log.d(TAG, "Ad Clicked");
+        }
+
         // Callback method Notifies that the banner ad view will launch a dialog on top of the current view
         @Override
         public void onAdOpened(@NonNull POBBannerView view) {
@@ -124,7 +130,6 @@ public class DFPInBannerVideoActivity extends AppCompatActivity {
         public void onAdClosed(@NonNull POBBannerView view) {
             Log.d(TAG, "Ad Closed");
         }
-
     }
 
 }

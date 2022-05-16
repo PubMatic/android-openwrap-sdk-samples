@@ -322,6 +322,16 @@ public class DFPBannerActivity extends AppCompatActivity implements POBBidEventL
         }
 
         /**
+         * Callback method Notifies that the banner ad view is clicked.
+         *
+         * @param view  Instance of POBBannerView
+         */
+        @Override
+        public void onAdClicked(@NonNull POBBannerView view) {
+            Log.d(TAG, "Ad Clicked");
+        }
+
+        /**
          * Callback method Notifies that the banner ad view has dismissed the modal
          * on top of the current view.
          *

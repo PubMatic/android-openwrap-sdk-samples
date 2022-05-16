@@ -101,6 +101,12 @@ public class InBannerVideoActivity extends AppCompatActivity {
             Log.d(TAG, "Ad Opened");
         }
 
+        // Callback method Notifies that the banner ad view is clicked.
+        @Override
+        public void onAdClicked(@NonNull POBBannerView view) {
+            Log.d(TAG, "Ad Clicked");
+        }
+
         // Callback method Notifies that the banner ad view has dismissed the modal on top of the current view
         @Override
         public void onAdClosed(@NonNull POBBannerView view) {
