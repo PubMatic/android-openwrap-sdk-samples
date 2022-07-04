@@ -25,8 +25,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.amazon.device.ads.AdRegistration
 import com.amazon.device.ads.MRAIDPolicy
 import com.pubmatic.openwrap.listapp.adloader.AdLoader
-import com.pubmatic.openwrap.listapp.adloader.AdLoaderEvent
 import com.pubmatic.sdk.common.OpenWrapSDK
+import java.util.ArrayList
 
 /**
  * A List activity to display banner ads.

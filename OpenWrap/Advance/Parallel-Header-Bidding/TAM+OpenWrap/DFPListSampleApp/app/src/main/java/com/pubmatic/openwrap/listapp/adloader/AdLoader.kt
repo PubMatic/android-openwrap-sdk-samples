@@ -77,8 +77,11 @@ class AdLoader(val appContext:Context, val adSize: AdSize, val slotId: String,
                 // By this time adloader assume partner targeting includes TAM's bid
                 partnerTargeting?.keys?.forEach {
                     val bidderResponse: Map<String?, List<String?>?>? = partnerTargeting?.get(it)
-                    bidderResponse?.keys?.forEach{ it ->
-                        builder.addCustomTargeting(it, bidderResponse.get(it))
+                    bidderResponse?.keys?.forEach{it ->
+                        val targeting =  bidderResponse.get(it);
+                        if(it!=null && targeting!=null) {
+                            builder.addCustomTargeting(it, targeting)
+                        }
                     }
                 }?: kotlin.run {
                     Log.e(TAG, "Failed to add targeting from partners.")

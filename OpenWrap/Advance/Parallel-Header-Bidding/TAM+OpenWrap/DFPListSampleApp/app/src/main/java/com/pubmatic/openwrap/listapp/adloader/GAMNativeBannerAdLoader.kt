@@ -120,7 +120,10 @@ class GAMNativeBannerAdLoader(val appContext: Context, val adSize: AdSize, val s
                 partnerTargeting?.keys?.forEach {
                     val bidderResponse: Map<String?, List<String?>?>? = partnerTargeting?.get(it)
                     bidderResponse?.keys?.forEach{ it ->
-                        builder.addCustomTargeting(it, bidderResponse.get(it))
+                        val targeting =  bidderResponse.get(it);
+                        if(it!=null && targeting!=null) {
+                            builder.addCustomTargeting(it, targeting)
+                        }
                     }
                 }?: kotlin.run {
                     Log.e(TAG, "Failed to add targeting from partners.")
