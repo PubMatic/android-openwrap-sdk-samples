@@ -33,7 +33,7 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
     //To integrate PubMatic SDK
-    implementation 'com.pubmatic.sdk:openwrap:2.6.3'
+    implementation 'com.pubmatic.sdk:openwrap:2.6.4'
     // Highly recommended to fetch the Android Advertising Id in OW SDK
     implementation 'com.google.android.gms:play-services-ads-identifier:18.0.1'
 }
