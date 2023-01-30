@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
 
     compileOptions {
         sourceCompatibility 1.8
@@ -11,12 +11,10 @@ android {
     defaultConfig {
         applicationId "com.pubmatic.appapp"
         minSdkVersion 19
-        targetSdkVersion 31
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
+        multiDexEnabled true
     }
 
     lintOptions {
@@ -34,21 +32,24 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.google.android.gms:play-services-ads:21.0.0'
+    implementation 'com.google.android.gms:play-services-ads:21.4.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
 
     //To integrate PubMatic SDK
-    implementation 'com.pubmatic.sdk:openwrap:2.6.5'
+    implementation 'com.pubmatic.sdk:openwrap:2.7.0'
 
     // Highly recommended to fetch the Android Advertising Id in OW SDK
     implementation 'com.google.android.gms:play-services-ads-identifier:18.0.1'
     
     //To integrate DFP Event Handler
-    implementation 'com.pubmatic.sdk:openwrap-eventhandler-dfp:2.8.1'
+    implementation 'com.pubmatic.sdk:openwrap-eventhandler-dfp:2.9.0'
 
     // To integrate Amazon A9 SDK
     implementation 'com.amazon.android:aps-sdk:8.4.3@aar'
+
+    // To integrate Multidex
+    implementation 'androidx.multidex:multidex:2.0.1'
 }
