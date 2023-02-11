@@ -32,7 +32,7 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
 
     //To integrate PubMatic SDK
-    implementation 'com.pubmatic.sdk:openwrap:2.7.0'
+    implementation 'com.pubmatic.sdk:openwrap:2.7.1'
     // Enable Multidex
     implementation "androidx.multidex:multidex:2.0.1"
     // Highly recommended to fetch the Android Advertising Id in OW SDK
