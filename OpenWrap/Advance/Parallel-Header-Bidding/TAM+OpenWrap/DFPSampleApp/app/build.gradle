@@ -39,7 +39,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
 
     //To integrate PubMatic SDK
-    implementation 'com.pubmatic.sdk:openwrap:2.7.1'
+    implementation 'com.pubmatic.sdk:openwrap:2.7.2'
 
     // Highly recommended to fetch the Android Advertising Id in OW SDK
     implementation 'com.google.android.gms:play-services-ads-identifier:18.0.1'
