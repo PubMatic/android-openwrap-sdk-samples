@@ -2,13 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.pubmatic.openwrap.app">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    
+
     <application
         android:name="androidx.multidex.MultiDexApplication"
         android:allowBackup="true"
@@ -18,35 +18,55 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.pubmatic.openwrap.app.MainActivity"
+            android:name=".MainActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name="com.pubmatic.openwrap.app.BannerActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
-            android:label="Banner"></activity>
+            android:exported="false"
+            android:label="Banner" />
         <activity
             android:name="com.pubmatic.openwrap.app.InterstitialActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
-            android:label="Interstitial"></activity>
+            android:exported="false"
+            android:label="Interstitial Display" />
         <activity
             android:name="com.pubmatic.openwrap.app.VideoInterstitialActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
-            android:label="Video Interstitial"></activity>
+            android:exported="false"
+            android:label="Interstitial Video" />
         <activity
-            android:name="com.pubmatic.openwrap.app.InBannerVideoActivity"
+            android:name="com.pubmatic.openwrap.app.MRECVideoActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
-            android:label="In-Banner Video"></activity>
+            android:exported="false"
+            android:label="MREC Video" />
+        <activity
+            android:name="com.pubmatic.openwrap.app.MRECDisplayActivity"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
+            android:exported="false"
+            android:label="MREC Display" />
         <activity
             android:name="com.pubmatic.openwrap.app.RewardedActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
-            android:label="Rewarded"></activity>
-
+            android:exported="false"
+            android:label="Rewarded" />
+        <activity
+            android:name="com.pubmatic.openwrap.app.NativeStandardTemplateActivity"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
+            android:exported="false"
+            android:label="Native Ad - Standard Template" />
+        <activity
+            android:name="com.pubmatic.openwrap.app.NativeCustomizedTemplateActivity"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
+            android:exported="false"
+            android:label="Native Ad - Customized Template" />
     </application>
 
 </manifest>

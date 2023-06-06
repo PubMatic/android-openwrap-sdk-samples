@@ -63,7 +63,7 @@ public class BannerActivity extends AppCompatActivity {
                 OPENWRAP_AD_UNIT_ID, POBAdSize.BANNER_SIZE_320x50);
 
         //optional listener to listen banner events
-        banner.setListener(new BannerActivity.POBBannerViewListener());
+        banner.setListener(new POBBannerViewListener());
 
         // Call loadAd() on banner instance
         banner.loadAd();
@@ -121,4 +121,3 @@ public class BannerActivity extends AppCompatActivity {
 
     }
 }
-

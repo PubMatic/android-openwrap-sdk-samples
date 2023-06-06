@@ -29,7 +29,7 @@
             android:configChanges="orientation|screenSize">
         </activity>
         <activity android:name="com.pubmatic.app.DFPInterstitialActivity"
-            android:label="Interstitial"
+            android:label="Interstitial Display"
             android:configChanges="orientation|screenSize">
         </activity>
         <activity android:name="com.amazon.device.ads.DTBActivity"

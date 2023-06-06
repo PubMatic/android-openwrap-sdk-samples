@@ -9,21 +9,6 @@
     tools:context=".InterstitialActivity"
     android:layout_marginTop="20dp">
 
-    <Button
-        android:layout_centerHorizontal="true"
-        android:id="@+id/loadAdBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Load Ad"/>
-
-    <Button
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/loadAdBtn"
-        android:id="@+id/showAdBtn"
-        android:layout_marginLeft="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Show Ad"
-        android:enabled="false"/>
+    <include layout="@layout/layout_controls_ad" />
 
 </LinearLayout>

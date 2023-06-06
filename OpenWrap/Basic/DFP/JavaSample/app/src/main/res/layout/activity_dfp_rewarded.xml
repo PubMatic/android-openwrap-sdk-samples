@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_gravity="center_horizontal"
@@ -10,20 +9,6 @@
     android:layout_marginTop="20dp"
     tools:context=".DFPRewardedActivity">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/loadAdBtn"
-        android:text="Load Ad"
-        />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/showAdBtn"
-        android:text="Show Ad"
-        android:layout_marginLeft="20dp"
-        android:enabled="false"
-        />
+    <include layout="@layout/layout_controls_ad" />
 
 </LinearLayout>

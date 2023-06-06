@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
         final List<String> itemList = new ArrayList<>();
         itemList.add("Banner Ad");
-        itemList.add("Interstitial Ad");
+        itemList.add("Interstitial Display Ad");
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         adList.setLayoutManager(layoutManager);

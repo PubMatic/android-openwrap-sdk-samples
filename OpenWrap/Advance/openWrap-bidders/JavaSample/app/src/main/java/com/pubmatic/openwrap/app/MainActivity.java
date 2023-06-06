@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
 
      public enum AdType {
         BANNER(BannerActivity.class, "Banner"),
-        INTERSTITIAL(InterstitialActivity.class, "Interstitial");
+        INTERSTITIAL(InterstitialActivity.class, "Interstitial Display");
 
         private Class activity;
         private String displayName;

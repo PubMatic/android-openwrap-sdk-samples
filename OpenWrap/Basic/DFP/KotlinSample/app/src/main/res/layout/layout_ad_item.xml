@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="2dp"
@@ -9,13 +10,14 @@
         android:layout_height="wrap_content"
         app:cardElevation="5dp"
         app:cardCornerRadius="2dp"
-        >
+        tools:ignore="MissingConstraints">
         <TextView
             android:id="@+id/ad_item"
             android:gravity="center_vertical"
             android:padding="5dp"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
+            android:minHeight="50dp"
             android:textSize="20sp"
             android:textStyle="bold"/>
     </androidx.cardview.widget.CardView>

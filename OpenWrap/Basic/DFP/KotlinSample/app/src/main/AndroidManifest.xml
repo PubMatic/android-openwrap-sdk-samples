@@ -22,21 +22,31 @@
             android:name="com.pubmatic.openwrap.kotlinsampleapp.DFPBannerActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
             android:label="@string/title_activity_banner"
+            android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.pubmatic.openwrap.kotlinsampleapp.DFPInterstitialActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
             android:label="@string/title_activity_interstitial"
+            android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.pubmatic.openwrap.kotlinsampleapp.VideoInterstitialActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
             android:label="@string/title_activity_video_interstitial"
+            android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.pubmatic.openwrap.kotlinsampleapp.DFPInBannerVideoActivity"
+            android:name="com.pubmatic.openwrap.kotlinsampleapp.DFPMRECDisplayActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
-            android:label="@string/title_activity_in_banner_video"
+            android:label="@string/title_activity_mrec_display"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.pubmatic.openwrap.kotlinsampleapp.DFPMRECVideoActivity"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
+            android:label="@string/title_activity_mrec_video"
+            android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.pubmatic.openwrap.kotlinsampleapp.MainActivity"
@@ -52,15 +62,24 @@
         </activity>
         <activity android:name="com.pubmatic.openwrap.kotlinsampleapp.DFPRewardedActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
-            android:label="Rewarded Ad"
+            android:label="@string/title_activity_rewarded"
+            android:exported="false"
             android:theme="@style/AppTheme.NoActionBar"
             />
         <activity android:name="com.pubmatic.openwrap.kotlinsampleapp.GAMNativeBannerActivity"
-            android:label="Native+Banner Ad"
+            android:label="@string/title_activity_native_banner"
+            android:exported="false"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-
+        <activity android:name=".GAMNativeStandardTemplateActivity"
+            android:label="@string/title_activity_native_standard_template"
+            android:exported="false"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"/>
+        <activity android:name=".GAMNativeCustomizedTemplateActivity"
+            android:label="@string/title_activity_native_customized_template"
+            android:exported="false"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"/>
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-4798227666512375~8140551180"/>

@@ -1,3 +1,20 @@
+/*
+ * PubMatic Inc. ("PubMatic") CONFIDENTIAL
+ * Unpublished Copyright (c) 2006-2023 PubMatic, All Rights Reserved.
+ *
+ * NOTICE:  All information contained herein is, and remains the property of PubMatic. The intellectual and technical concepts contained
+ * herein are proprietary to PubMatic and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret or copyright law.
+ * Dissemination of this information or reproduction of this material is strictly forbidden unless prior written permission is obtained
+ * from PubMatic.  Access to the source code contained herein is hereby forbidden to anyone except current PubMatic employees, managers or contractors who have executed
+ * Confidentiality and Non-disclosure agreements explicitly covering such access or to such other persons whom are directly authorized by PubMatic to access the source code and are subject to confidentiality and nondisclosure obligations with respect to the source code.
+ *
+ * The copyright notice above does not evidence any actual or intended publication or disclosure  of  this source code, which includes
+ * information that is confidential and/or proprietary, and is a trade secret, of  PubMatic.   ANY REPRODUCTION, MODIFICATION, DISTRIBUTION, PUBLIC  PERFORMANCE,
+ * OR PUBLIC DISPLAY OF OR THROUGH USE  OF THIS  SOURCE CODE  WITHOUT  THE EXPRESS WRITTEN CONSENT OF PUBMATIC IS STRICTLY PROHIBITED, AND IN VIOLATION OF APPLICABLE
+ * LAWS AND INTERNATIONAL TREATIES.  THE RECEIPT OR POSSESSION OF  THIS SOURCE CODE AND/OR RELATED INFORMATION DOES NOT CONVEY OR IMPLY ANY RIGHTS
+ * TO REPRODUCE, DISCLOSE OR DISTRIBUTE ITS CONTENTS, OR TO MANUFACTURE, USE, OR SELL ANYTHING THAT IT  MAY DESCRIBE, IN WHOLE OR IN PART.
+ */
+
 package com.pubmatic.openwrap.kotlinsampleapp
 
 import android.os.Bundle
@@ -16,9 +33,9 @@ import com.pubmatic.sdk.common.POBError
 import com.pubmatic.sdk.common.models.POBApplicationInfo
 import com.pubmatic.sdk.common.utility.POBUtils
 import com.pubmatic.sdk.openwrap.banner.POBBannerView
-import com.pubmatic.sdk.openwrap.eventhandler.dfp.GAMNativeEventHandler
-import com.pubmatic.sdk.openwrap.eventhandler.dfp.GAMNativeEventHandler.NativeAdListener
-import com.pubmatic.sdk.openwrap.eventhandler.dfp.GAMNativeEventHandler.NativeCustomFormatAdListener
+import com.pubmatic.sdk.openwrap.eventhandler.dfp.GAMNativeBannerEventHandler
+import com.pubmatic.sdk.openwrap.eventhandler.dfp.GAMNativeBannerEventHandler.NativeAdListener
+import com.pubmatic.sdk.openwrap.eventhandler.dfp.GAMNativeBannerEventHandler.NativeCustomFormatAdListener
 import kotlinx.android.synthetic.main.activity_banner.*
 import java.net.MalformedURLException
 import java.net.URL
@@ -58,16 +75,16 @@ class GAMNativeBannerActivity : AppCompatActivity() {
         // Create a banner custom event handler for your ad server. Make sure you use
         // separate event handler objects to create each banner view.
         // For example, The code below creates an event handler for DFP ad server.
-        val gamNativeEventHandler = GAMNativeEventHandler(this, DFP_AD_UNIT_ID, AdSize.MEDIUM_RECTANGLE)
+        val gamNativeBannerEventHandler = GAMNativeBannerEventHandler(this, DFP_AD_UNIT_ID, AdSize.MEDIUM_RECTANGLE)
 
         // Prepares handler to request GAM's NativeAd
-        gamNativeEventHandler.configureNativeAd(POBNativeListener())
+        gamNativeBannerEventHandler.configureNativeAd(POBNativeListener())
 
         // Prepares handler to request GAM's NativeCustomFormatAd
-        gamNativeEventHandler.configureNativeCustomFormatAd(CUSTOM_NATIVE_FORMAT, POBCustomNativeListener(), null)
+        gamNativeBannerEventHandler.configureNativeCustomFormatAd(CUSTOM_NATIVE_FORMAT, POBCustomNativeListener(), null)
         
         // Initialise banner view
-        banner = POBBannerView(this, PUB_ID, PROFILE_ID, OPENWRAP_AD_UNIT_ID, gamNativeEventHandler)
+        banner = POBBannerView(this, PUB_ID, PROFILE_ID, OPENWRAP_AD_UNIT_ID, gamNativeBannerEventHandler)
 
         //optional listener to listen banner events
         banner?.setListener(POBBannerViewListener())
@@ -104,7 +121,7 @@ class GAMNativeBannerActivity : AppCompatActivity() {
             nativeCustomFormatAd.performClick(mainImageAssetName)
         })
 
-        var headLineTextView = adView.findViewById<TextView>(R.id.ad_headline)
+        val headLineTextView = adView.findViewById<TextView>(R.id.ad_headline)
 
         val titleAssetName = "Title"
         headLineTextView.text = nativeCustomFormatAd.getText(titleAssetName)
@@ -112,7 +129,7 @@ class GAMNativeBannerActivity : AppCompatActivity() {
         headLineTextView.setOnClickListener { nativeCustomFormatAd.performClick(titleAssetName) }
 
         val descriptionAssetName = "description"
-        var descriptionTextView = adView.findViewById<TextView>(R.id.ad_description)
+        val descriptionTextView = adView.findViewById<TextView>(R.id.ad_description)
         descriptionTextView.text = nativeCustomFormatAd.getText(descriptionAssetName)
 
         // Perform click when custom native asset click happens

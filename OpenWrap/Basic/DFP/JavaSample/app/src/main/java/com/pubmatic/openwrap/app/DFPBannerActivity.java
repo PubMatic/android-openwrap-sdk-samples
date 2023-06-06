@@ -130,8 +130,4 @@ public class DFPBannerActivity extends AppCompatActivity {
             Log.d(TAG, "Ad Closed");
         }
     }
-
-
-
 }
-

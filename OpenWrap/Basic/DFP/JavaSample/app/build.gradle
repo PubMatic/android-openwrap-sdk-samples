@@ -31,13 +31,13 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.google.android.gms:play-services-ads:21.4.0'
+    implementation 'com.google.android.gms:play-services-ads:22.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.1.0'
 
     //To integrate PubMatic SDK
-    implementation 'com.pubmatic.sdk:openwrap:2.8.0'
+    implementation 'com.pubmatic.sdk:openwrap:3.0.0'
 
     // Highly recommended to fetch the Android Advertising Id in OW SDK
     implementation 'com.google.android.gms:play-services-ads-identifier:18.0.1'
@@ -46,7 +46,7 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
 
     //To integrate DFP Event Handler
-    implementation 'com.pubmatic.sdk:openwrap-eventhandler-dfp:2.9.0'
+    implementation 'com.pubmatic.sdk:openwrap-eventhandler-dfp:3.0.0'
 
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation project(':nativetemplates')

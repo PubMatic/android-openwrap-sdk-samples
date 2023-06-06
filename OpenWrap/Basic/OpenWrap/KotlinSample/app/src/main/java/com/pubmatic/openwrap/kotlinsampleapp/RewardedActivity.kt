@@ -1,6 +1,6 @@
 /*
  * PubMatic Inc. ("PubMatic") CONFIDENTIAL
- * Unpublished Copyright (c) 2006-2021 PubMatic, All Rights Reserved.
+ * Unpublished Copyright (c) 2006-2023 PubMatic, All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains the property of PubMatic. The intellectual and technical concepts contained
  * herein are proprietary to PubMatic and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret or copyright law.
@@ -42,8 +42,8 @@ class RewardedActivity : AppCompatActivity() {
     private val PROFILE_ID = 1757
 
     private var rewardedAd : POBRewardedAd? = null
-    private var loadAd: Button? = null;
-    private var showAd: Button? = null;
+    private var loadAd: Button? = null
+    private var showAd: Button? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

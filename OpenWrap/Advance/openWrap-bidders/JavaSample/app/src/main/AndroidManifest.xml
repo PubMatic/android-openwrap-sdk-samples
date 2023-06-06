@@ -33,7 +33,7 @@
         <activity
             android:name="com.pubmatic.openwrap.app.InterstitialActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
-            android:label="Interstitial"></activity>
+            android:label="Interstitial Display"></activity>
     </application>
 
 </manifest>

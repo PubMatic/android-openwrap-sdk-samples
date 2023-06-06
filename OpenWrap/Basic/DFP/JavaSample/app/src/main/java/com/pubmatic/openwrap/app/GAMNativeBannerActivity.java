@@ -41,7 +41,7 @@ import com.pubmatic.sdk.common.POBError;
 import com.pubmatic.sdk.common.models.POBApplicationInfo;
 import com.pubmatic.sdk.common.utility.POBUtils;
 import com.pubmatic.sdk.openwrap.banner.POBBannerView;
-import com.pubmatic.sdk.openwrap.eventhandler.dfp.GAMNativeEventHandler;
+import com.pubmatic.sdk.openwrap.eventhandler.dfp.GAMNativeBannerEventHandler;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -81,7 +81,7 @@ public class GAMNativeBannerActivity extends AppCompatActivity {
         // Create a banner custom event handler for your ad server. Make sure you use
         // separate event handler objects to create each banner view.
         // For example, The code below creates an event handler for DFP ad server.
-        GAMNativeEventHandler gamNativeEventHandler = new GAMNativeEventHandler(this, DFP_AD_UNIT_ID, AdSize.MEDIUM_RECTANGLE);
+        GAMNativeBannerEventHandler gamNativeEventHandler = new GAMNativeBannerEventHandler(this, DFP_AD_UNIT_ID, AdSize.MEDIUM_RECTANGLE);
 
         // Prepares handler to request GAM's NativeAd
         gamNativeEventHandler.configureNativeAd(new POBNativeListener());
@@ -233,7 +233,7 @@ public class GAMNativeBannerActivity extends AppCompatActivity {
     /**
      * GAM Native Ad listener callbacks
      */
-    private class POBNativeListener extends GAMNativeEventHandler.NativeAdListener {
+    private class POBNativeListener extends GAMNativeBannerEventHandler.NativeAdListener {
 
         private static final String TAG = "POBNativeListener";
 
@@ -272,7 +272,7 @@ public class GAMNativeBannerActivity extends AppCompatActivity {
     /**
      * GAM Custom Native Ad listener callbacks
      */
-    private class POBCustomNativeListener extends GAMNativeEventHandler.NativeCustomFormatAdListener {
+    private class POBCustomNativeListener extends GAMNativeBannerEventHandler.NativeCustomFormatAdListener {
 
         private static final String TAG = "POBCustomNativeListener";
 

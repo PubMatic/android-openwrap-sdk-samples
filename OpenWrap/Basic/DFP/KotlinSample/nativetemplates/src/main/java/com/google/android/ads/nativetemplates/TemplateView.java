@@ -249,7 +249,7 @@ public class TemplateView extends FrameLayout {
   /**
    * To prevent memory leaks, make sure to destroy your ad when you don't need it anymore. This
    * method does not destroy the template view.
-   * https://developers.google.com/admob/android/native-unified#destroy_ad
+   * <a href="https://developers.google.com/admob/android/native-unified#destroy_ad">Native Ads</a>
    */
   public void destroyNativeAd() {
     nativeAd.destroy();

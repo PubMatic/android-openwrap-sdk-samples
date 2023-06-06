@@ -27,28 +27,47 @@
         </activity>
         <activity android:name="com.pubmatic.openwrap.app.DFPBannerActivity"
             android:label="Banner"
+            android:exported="false"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout">
         </activity>
         <activity android:name="com.pubmatic.openwrap.app.DFPInterstitialActivity"
-            android:label="Interstitial"
+            android:label="Interstitial Display"
+            android:exported="false"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout">
         </activity>
         <activity android:name="com.pubmatic.openwrap.app.DFPVideoInterstitialActivity"
-            android:label="Video Interstitial"
+            android:label="Interstitial Video"
+            android:exported="false"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout">
         </activity>
-        <activity android:name="com.pubmatic.openwrap.app.DFPInBannerVideoActivity"
-            android:label="In-Banner Video"
+        <activity android:name="com.pubmatic.openwrap.app.DFPMRECVideoActivity"
+            android:label="MREC Video"
+            android:exported="false"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout">
+        </activity>
+        <activity android:name="com.pubmatic.openwrap.app.DFPMRECDisplayActivity"
+            android:label="MREC Display"
+            android:exported="false"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout">
         </activity>
         <activity android:name="com.pubmatic.openwrap.app.DFPRewardedActivity"
             android:label="Rewarded Ad"
+            android:exported="false"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout">
         </activity>
         <activity android:name="com.pubmatic.openwrap.app.GAMNativeBannerActivity"
             android:label="Native+Banner Ad"
+            android:exported="false"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout">
         </activity>
+        <activity android:name="com.pubmatic.openwrap.app.GAMNativeStandardTemplateActivity"
+            android:label="Native Ad - Standard Template"
+            android:exported="false"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"/>
+        <activity android:name="com.pubmatic.openwrap.app.GAMNativeCustomizedTemplateActivity"
+            android:label="Native Ad - Customized Template"
+            android:exported="false"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"/>
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-4798227666512375~8140551180"/>

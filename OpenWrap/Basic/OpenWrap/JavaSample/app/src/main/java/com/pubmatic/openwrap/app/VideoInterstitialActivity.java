@@ -31,9 +31,6 @@ import com.pubmatic.sdk.openwrap.interstitial.POBInterstitial;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 public class VideoInterstitialActivity extends AppCompatActivity {
 
     private static final String OPENWRAP_AD_UNIT_ONE = "OpenWrapInterstitialAdUnit";

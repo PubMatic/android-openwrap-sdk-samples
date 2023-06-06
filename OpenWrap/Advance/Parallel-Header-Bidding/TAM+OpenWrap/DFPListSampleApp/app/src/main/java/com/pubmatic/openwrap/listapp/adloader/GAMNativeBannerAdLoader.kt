@@ -1,6 +1,6 @@
 /*
  * PubMatic Inc. ("PubMatic") CONFIDENTIAL
- * Unpublished Copyright (c) 2006-2021 PubMatic, All Rights Reserved.
+ * Unpublished Copyright (c) 2006-2023 PubMatic, All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains the property of PubMatic. The intellectual and technical concepts contained
  * herein are proprietary to PubMatic and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret or copyright law.
@@ -30,7 +30,8 @@ import com.pubmatic.sdk.openwrap.banner.POBBannerView
 import com.pubmatic.sdk.openwrap.core.POBBid
 import com.pubmatic.sdk.openwrap.core.POBBidEvent
 import com.pubmatic.sdk.openwrap.core.POBBidEventListener
-import com.pubmatic.sdk.openwrap.eventhandler.dfp.GAMNativeEventHandler
+import com.pubmatic.sdk.openwrap.eventhandler.dfp.GAMConfigListener
+import com.pubmatic.sdk.openwrap.eventhandler.dfp.GAMNativeBannerEventHandler
 import java.net.MalformedURLException
 import java.net.URL
 
@@ -89,10 +90,10 @@ class GAMNativeBannerAdLoader(val appContext: Context, val adSize: AdSize, val s
         // Create a banner custom event handler for your ad server. Make sure you use
         // separate event handler objects to create each banner view.
         // For example, The code below creates an event handler for DFP ad server.
-        val eventHandler = GAMNativeEventHandler(appContext, gamAdUnitId, adSize)
+        val eventHandler = GAMNativeBannerEventHandler(appContext, gamAdUnitId, adSize)
 
         // Prepares handler to request GAM's NativeAd
-        eventHandler.configureNativeAd(object : GAMNativeEventHandler.NativeAdListener() {
+        eventHandler.configureNativeAd(object : GAMNativeBannerEventHandler.NativeAdListener() {
             // Callback method notifies that GAM native ad has been successfully loaded.
             override fun onAdReceived(nativeAd : NativeAd) {
                 Log.d(TAG, "Native Ad Received")
@@ -103,7 +104,7 @@ class GAMNativeBannerAdLoader(val appContext: Context, val adSize: AdSize, val s
 
         // Prepares handler to request GAM's NativeCustomFormatAd
         eventHandler.configureNativeCustomFormatAd(Constants.CUSTOM_NATIVE_FORMAT, object :
-            GAMNativeEventHandler.NativeCustomFormatAdListener() {
+            GAMNativeBannerEventHandler.NativeCustomFormatAdListener() {
             // Callback method notifies that GAM custom native ad has been successfully loaded.
             override fun onAdReceived(customNativeAd: NativeCustomFormatAd) {
                 Log.d(TAG, "Custom Native Ad Received")
@@ -114,7 +115,7 @@ class GAMNativeBannerAdLoader(val appContext: Context, val adSize: AdSize, val s
 
 
         // Set config block to event handler in order to provide TAM's ads bid targeting to DFP
-        eventHandler.setConfigListener(object : GAMNativeEventHandler.GAMConfigListener{
+        eventHandler.setConfigListener(object : GAMConfigListener {
             override fun configure(builder: AdManagerAdRequest.Builder, p1: POBBid?) {
                 // By this time adloader assume partner targeting includes TAM's bid
                 partnerTargeting?.keys?.forEach {

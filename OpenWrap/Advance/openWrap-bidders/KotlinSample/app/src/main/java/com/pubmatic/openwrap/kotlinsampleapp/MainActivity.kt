@@ -1,6 +1,6 @@
 /*
  * PubMatic Inc. ("PubMatic") CONFIDENTIAL
- * Unpublished Copyright (c) 2006-2021 PubMatic, All Rights Reserved.
+ * Unpublished Copyright (c) 2006-2023 PubMatic, All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains the property of PubMatic. The intellectual and technical concepts contained
  * herein are proprietary to PubMatic and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret or copyright law.
@@ -104,7 +104,7 @@ class MainActivity : AppCompatActivity()  {
      */
     enum class AdType constructor(val activity: Class<*>?, val displayName: String) {
         BANNER(BannerActivity::class.java, "Banner"),
-        INTERSTITIAL(InterstitialActivity::class.java, "Interstitial"),
+        INTERSTITIAL(InterstitialActivity::class.java, "Interstitial Display"),
     }
 
     /**

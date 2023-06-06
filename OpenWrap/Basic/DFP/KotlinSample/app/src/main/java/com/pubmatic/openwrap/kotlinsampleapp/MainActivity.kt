@@ -1,6 +1,6 @@
 /*
  * PubMatic Inc. ("PubMatic") CONFIDENTIAL
- * Unpublished Copyright (c) 2006-2021 PubMatic, All Rights Reserved.
+ * Unpublished Copyright (c) 2006-2023 PubMatic, All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains the property of PubMatic. The intellectual and technical concepts contained
  * herein are proprietary to PubMatic and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret or copyright law.
@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity() {
             permissionList.add(Manifest.permission.READ_PHONE_STATE)
         }
 
-        val PERMISSIONS = permissionList.toTypedArray();
+        val PERMISSIONS = permissionList.toTypedArray()
 
         if (!hasPermissions(this@MainActivity, PERMISSIONS)) {
             val MULTIPLE_PERMISSIONS_REQUEST_CODE = 123
@@ -110,13 +110,13 @@ class MainActivity : AppCompatActivity() {
      */
     enum class AdType constructor(val activity: Class<*>?, val displayName: String) {
         BANNER(DFPBannerActivity::class.java, "Banner"),
-        INTERSTITIAL(DFPInterstitialActivity::class.java, "Interstitial"),
-        VIDEO_INTERSTITIAL(VideoInterstitialActivity::class.java, "Video Interstitial"),
-        IN_BANNER_VIDEO(DFPInBannerVideoActivity::class.java, "In-Banner Video"),
+        INTERSTITIAL(DFPInterstitialActivity::class.java, "Interstitial Display"),
+        VIDEO_INTERSTITIAL(VideoInterstitialActivity::class.java, "Interstitial Video"),
+        MREC_DISPLAY(DFPMRECDisplayActivity::class.java, "MREC Display"),
+        MREC_VIDEO(DFPMRECVideoActivity::class.java, "MREC Video"),
         REWARDED_AD(DFPRewardedActivity::class.java,"Rewarded Ad"),
-        NATIVEBANNER(GAMNativeBannerActivity::class.java,"Native+Banner Ad");
-
+        NATIVE_BANNER(GAMNativeBannerActivity::class.java,"Native+Banner Ad"),
+        NATIVE_STANDARD(GAMNativeStandardTemplateActivity::class.java,"Native Ad - Standard Template"),
+        NATIVE_CUSTOM(GAMNativeCustomizedTemplateActivity::class.java,"Native Ad - Customized Template");
     }
-
-
 }

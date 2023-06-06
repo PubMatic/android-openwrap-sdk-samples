@@ -121,13 +121,17 @@ public class MainActivity extends AppCompatActivity {
 
     enum AdType {
         BANNER(BannerActivity.class, "Banner"),
-        INTERSTITIAL(InterstitialActivity.class, "Interstitial"),
-        VIDEO_INTERSTITIAL(VideoInterstitialActivity.class, "Video Interstitial"),
-        IN_BANNER_VIDEO(InBannerVideoActivity.class, "In-Banner Video"),
-        REWARDED(RewardedActivity.class, "Rewarded");
+        INTERSTITIAL(InterstitialActivity.class, "Interstitial Display"),
+        VIDEO_INTERSTITIAL(VideoInterstitialActivity.class, "Interstitial Video"),
+        MREC_DISPLAY(MRECDisplayActivity.class, "MREC Display"),
+        MREC_VIDEO(MRECVideoActivity.class, "MREC Video"),
+        REWARDED(RewardedActivity.class, "Rewarded"),
+        NATIVE_STANDARD_SMALL(NativeStandardTemplateActivity.class, "Native Ad - Standard Template"),
+        NATIVE_CUSTOM(NativeCustomizedTemplateActivity.class, "Native Ad - Customized Template");
 
-        private Class activity;
-        private String displayName;
+
+        private final Class activity;
+        private final String displayName;
 
         AdType(Class activity, String displayName) {
             this.activity = activity;
