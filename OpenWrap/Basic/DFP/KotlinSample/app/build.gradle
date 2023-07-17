@@ -39,7 +39,7 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
 
     //To integrate PubMatic SDK=
-    implementation 'com.pubmatic.sdk:openwrap:3.0.0'
+    implementation 'com.pubmatic.sdk:openwrap:3.1.0'
     
     // Highly recommended to fetch the Android Advertising Id in OW SDK
     implementation 'com.google.android.gms:play-services-ads-identifier:18.0.1'
