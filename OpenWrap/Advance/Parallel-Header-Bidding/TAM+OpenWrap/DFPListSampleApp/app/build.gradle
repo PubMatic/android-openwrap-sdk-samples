@@ -40,7 +40,7 @@ dependencies {
     // GAM Integration
     implementation 'com.google.android.gms:play-services-ads:22.0.0'
     // OpenWrap SDK integration.
-    implementation 'com.pubmatic.sdk:openwrap:3.1.1'
+    implementation 'com.pubmatic.sdk:openwrap:3.3.0'
     // Highly recommended to fetch the Android Advertising Id in OW SDK
     implementation 'com.google.android.gms:play-services-ads-identifier:18.0.1'
     //To integrate DFP Event Handler
