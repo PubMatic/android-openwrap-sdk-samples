@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 android {
-    compileSdkVersion 33
+    compileSdkVersion 34
 
 
 
     defaultConfig {
         applicationId "com.pubmatic.openwrap.kotlinsampleapp"
         minSdkVersion 19
-        targetSdkVersion 33
+        targetSdkVersion 34
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -39,7 +39,7 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
 
     //To integrate PubMatic SDK=
-    implementation 'com.pubmatic.sdk:openwrap:3.3.0'
+    implementation 'com.pubmatic.sdk:openwrap:+'
     
     // Highly recommended to fetch the Android Advertising Id in OW SDK
     implementation 'com.google.android.gms:play-services-ads-identifier:18.0.1'
