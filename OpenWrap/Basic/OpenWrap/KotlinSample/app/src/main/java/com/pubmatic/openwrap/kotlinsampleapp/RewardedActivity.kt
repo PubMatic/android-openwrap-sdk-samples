@@ -145,6 +145,12 @@ class RewardedActivity : AppCompatActivity() {
             Log.d(TAG, "Rewarded Ad : Ad Expired")
         }
 
+        // Callback method notifies on Ad Impression
+        override fun onAdImpression(rewardedAd: POBRewardedAd) {
+            // Implement your custom logic
+            Log.d(TAG, "Rewarded Ad : Ad Impression")
+        }
+
         // Callback method notifies user will be rewarded once the ad is completely viewed
         override fun onReceiveReward(rewardedAd: POBRewardedAd, reward: POBReward) {
             Log.d(TAG, "Rewarded Ad : Ad should reward - ${reward.amount}(${reward.currencyType})")

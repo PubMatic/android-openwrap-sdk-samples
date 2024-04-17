@@ -159,6 +159,11 @@ class VideoInterstitialActivity : AppCompatActivity() {
         override fun onAdExpired(ad: POBInterstitial) {
             Log.d(TAG, "onAdExpired")
         }
+
+        // Callback method Notifies impression recorded on ad view
+        override fun onAdImpression(ad: POBInterstitial) {
+            Log.d(TAG, "onAdImpression")
+        }
     }
 
 

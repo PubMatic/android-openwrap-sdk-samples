@@ -17,11 +17,13 @@
 package com.pubmatic.openwrap.kotlinsampleapp
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Looper
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.pubmatic.sdk.common.OpenWrapSDK
 import com.pubmatic.sdk.common.POBAdSize
 import com.pubmatic.sdk.common.POBError
+import com.pubmatic.sdk.common.log.POBLog
 import com.pubmatic.sdk.common.models.POBApplicationInfo
 import com.pubmatic.sdk.openwrap.banner.POBBannerView
 import kotlinx.android.synthetic.main.activity_banner.*
@@ -57,7 +59,7 @@ class BannerActivity : AppCompatActivity() {
         OpenWrapSDK.setApplicationInfo(appInfo)
 
         // Call init() to set tag information
-        // For test IDs see - https://community.pubmatic.com/x/mQg5AQ#TestandDebugYourIntegration-TestWrapperProfile/Placement
+        // For test IDs see - https://help.pubmatic.com/openwrap/docs/test-and-debug-your-integration#test-profileplacements
         banner = findViewById(R.id.banner)
         banner?.init(PUB_ID, PROFILE_ID, OPENWRAP_AD_UNIT_ID, POBAdSize.BANNER_SIZE_320x50)
 
@@ -106,6 +108,13 @@ class BannerActivity : AppCompatActivity() {
         override fun onAppLeaving(view: POBBannerView) {
             Log.d(TAG, "onAppLeaving")
         }
+
+        // Callback method Notifies impression recorded on ad view
+        override fun onAdImpression(view: POBBannerView) {
+            Log.d(TAG, "onAdImpression")
+        }
+
+
     }
 
 

@@ -162,6 +162,12 @@ public class DFPRewardedActivity extends AppCompatActivity {
             Log.d(TAG,"Rewarded : Ad should Reward -" + reward.getAmount() +"(" + reward.getCurrencyType()+")");
             Toast.makeText(getApplicationContext(), "Congratulation! You are rewarded with "+reward.getAmount()+" "+reward.getCurrencyType(), Toast.LENGTH_LONG).show();
         }
+
+        // Callback method for ad Impression
+        @Override
+        public void onAdImpression(@NonNull POBRewardedAd ad) {
+            Log.d(TAG, "Rewarded : onAdImpression");
+        }
     }
 
 }

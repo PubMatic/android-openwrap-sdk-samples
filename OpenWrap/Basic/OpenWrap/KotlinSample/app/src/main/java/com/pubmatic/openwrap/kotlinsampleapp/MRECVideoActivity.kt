@@ -57,7 +57,7 @@ class MRECVideoActivity : AppCompatActivity() {
         OpenWrapSDK.setApplicationInfo(appInfo)
 
         // Call init() to set tag information
-        // For test IDs see - https://community.pubmatic.com/x/mQg5AQ#TestandDebugYourIntegration-TestWrapperProfile/Placement
+        // For test IDs see - https://help.pubmatic.com/openwrap/docs/test-and-debug-your-integration#test-profileplacements
         banner = findViewById(R.id.banner)
         banner?.init(PUB_ID, PROFILE_ID, OPENWRAP_AD_UNIT_ID, POBAdSize.BANNER_SIZE_300x250)
 
@@ -105,6 +105,11 @@ class MRECVideoActivity : AppCompatActivity() {
         // Callback method Notifies whenever current app goes in the background due to user click
         override fun onAppLeaving(view: POBBannerView) {
             Log.d(TAG, "onAppLeaving")
+        }
+
+        // Callback method Notifies impression recorded on ad view
+        override fun onAdImpression(view: POBBannerView) {
+            Log.d(TAG, "onAdImpression")
         }
     }
 

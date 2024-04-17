@@ -181,5 +181,10 @@ public class VideoInterstitialActivity extends AppCompatActivity {
         public void onAppLeaving(@NonNull POBInterstitial ad) {
             Log.d(TAG, "onAppLeaving");
         }
+
+        @Override
+        public void onAdImpression(@NonNull POBInterstitial ad) {
+            Log.d(TAG, "onAdImpression");
+        }
     }
 }

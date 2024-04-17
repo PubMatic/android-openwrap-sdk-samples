@@ -119,5 +119,11 @@ public class MRECVideoActivity extends AppCompatActivity {
             Log.d(TAG, "Banner : App Leaving");
         }
 
+        @Override
+        public void onAdImpression(@NonNull POBBannerView view) {
+            // Implement your custom logic
+            Log.d(TAG, "Ad Impression");
+        }
+
     }
 }

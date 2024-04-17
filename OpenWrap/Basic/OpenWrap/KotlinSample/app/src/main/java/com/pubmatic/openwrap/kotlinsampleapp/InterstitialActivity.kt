@@ -23,6 +23,7 @@ import android.widget.Button
 import com.pubmatic.sdk.common.OpenWrapSDK
 import com.pubmatic.sdk.common.POBError
 import com.pubmatic.sdk.common.models.POBApplicationInfo
+import com.pubmatic.sdk.openwrap.banner.POBBannerView
 import com.pubmatic.sdk.openwrap.interstitial.POBInterstitial
 import kotlinx.android.synthetic.main.activity_interstitial.*
 import java.net.MalformedURLException
@@ -137,6 +138,11 @@ class InterstitialActivity : AppCompatActivity() {
         // Callback method Notifies whenever current app goes in the background due to user click
         override fun onAppLeaving(ad: POBInterstitial) {
             Log.d(TAG, "onAppLeaving")
+        }
+
+        // Callback method Notifies impression recorded on ad view
+        override fun onAdImpression(ad: POBInterstitial) {
+            Log.d(TAG, "onAdImpression")
         }
     }
 

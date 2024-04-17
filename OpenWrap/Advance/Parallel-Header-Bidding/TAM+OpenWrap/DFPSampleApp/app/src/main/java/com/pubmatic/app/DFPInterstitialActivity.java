@@ -356,6 +356,11 @@ public class DFPInterstitialActivity extends AppCompatActivity implements POBBid
         public void onAdClicked(@NonNull POBInterstitial ad) {
             Log.d(TAG, "onAdClicked");
         }
+
+        @Override
+        public void onAdImpression(@NonNull POBInterstitial ad) {
+            Log.d(TAG, "onAdImpression");
+        }
     }
     //endregion
 }

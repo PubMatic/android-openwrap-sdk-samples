@@ -150,6 +150,11 @@ class DFPRewardedActivity : AppCompatActivity() {
             Log.d(TAG, "Rewarded:onAdClicked")
         }
 
+        // Callback method notifies on Ad Impression
+        override fun onAdImpression(ad: POBRewardedAd) {
+            Log.d(TAG, "Rewarded:onAdImpression")
+        }
+
         //Callback method notifies about rewards received
         override fun onReceiveReward(ad: POBRewardedAd, reward: POBReward){
 

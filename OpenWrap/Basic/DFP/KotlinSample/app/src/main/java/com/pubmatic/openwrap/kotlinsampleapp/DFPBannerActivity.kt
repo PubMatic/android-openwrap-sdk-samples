@@ -66,7 +66,7 @@ class DFPBannerActivity : AppCompatActivity() {
         val eventHandler = DFPBannerEventHandler(this, DFP_AD_UNIT_ID, AdSize.BANNER)
 
         // Call init() to set tag information
-        // For test IDs see - https://community.pubmatic.com/x/mQg5AQ#TestandDebugYourIntegration-TestWrapperProfile/Placement
+        // For test IDs see - https://help.pubmatic.com/openwrap/docs/test-and-debug-your-integration-2#test-profileplacements
         banner = findViewById(R.id.banner)
         banner?.init(PUB_ID, PROFILE_ID, OPENWRAP_AD_UNIT_ID, eventHandler)
 

@@ -163,6 +163,12 @@ public class RewardedActivity extends AppCompatActivity {
             Log.d(TAG, "Rewarded Ad : Ad Expired");
         }
 
+        // Callback method notifies on Ad Impression
+        @Override
+        public void onAdImpression(@NonNull POBRewardedAd rewardedAd) {
+            Log.d(TAG, "Rewarded Ad : Ad Impression");
+        }
+
         // Callback method notifies user will be rewarded once the ad is completely viewed
         @Override
         public void onReceiveReward(@NonNull POBRewardedAd rewardedAd, @NonNull POBReward reward) {

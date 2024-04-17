@@ -119,5 +119,10 @@ public class BannerActivity extends AppCompatActivity {
             Log.d(TAG, "Banner : App Leaving");
         }
 
+        @Override
+        public void onAdImpression(@NonNull POBBannerView view) {
+            Log.d(TAG, "Ad Impression");
+        }
+
     }
 }

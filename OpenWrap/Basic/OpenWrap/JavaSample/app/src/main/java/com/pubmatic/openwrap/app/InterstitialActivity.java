@@ -159,5 +159,10 @@ public class InterstitialActivity extends AppCompatActivity {
             // Implement your custom logic
             Log.d(TAG, "Interstitial : App Leaving");
         }
+
+        @Override
+        public void onAdImpression(@NonNull POBInterstitial ad) {
+            Log.d(TAG, "onAdImpression");
+        }
     }
 }

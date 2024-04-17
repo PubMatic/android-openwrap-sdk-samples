@@ -5,7 +5,7 @@ android {
 
     defaultConfig {
         applicationId "com.pubmatic.openwrap.app"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 34
         versionCode 1
         versionName "1.0"
@@ -13,7 +13,7 @@ android {
 
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
     lintOptions {
@@ -31,7 +31,7 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.google.android.gms:play-services-ads:22.0.0'
+    implementation 'com.google.android.gms:play-services-ads:23.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.1.0'
@@ -46,7 +46,7 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
 
     //To integrate DFP Event Handler
-    implementation 'com.pubmatic.sdk:openwrap-eventhandler-dfp:3.0.0'
+    implementation 'com.pubmatic.sdk:openwrap-eventhandler-dfp:+'
 
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation project(':nativetemplates')

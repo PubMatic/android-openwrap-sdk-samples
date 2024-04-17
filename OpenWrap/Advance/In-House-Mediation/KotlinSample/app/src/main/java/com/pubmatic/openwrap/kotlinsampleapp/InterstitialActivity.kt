@@ -163,6 +163,11 @@ class InterstitialActivity : AppCompatActivity() {
         override fun onAppLeaving(ad: POBInterstitial) {
             Log.d(TAG, "Interstitial : App Leaving")
         }
+
+        // Callback method Notifies impression recorded on ad view
+        override fun onAdImpression(ad: POBInterstitial) {
+            Log.d(TAG, "onAdImpression")
+        }
     }
 
 

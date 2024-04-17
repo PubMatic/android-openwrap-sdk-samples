@@ -228,6 +228,11 @@ public class GAMNativeBannerActivity extends AppCompatActivity {
             Log.d(TAG, "Ad Closed");
         }
 
+        @Override
+        public void onAdImpression(@NonNull POBBannerView view) {
+            Log.d(TAG, "Ad Impression");
+        }
+
     }
 
     /**

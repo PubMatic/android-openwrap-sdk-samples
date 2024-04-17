@@ -189,6 +189,10 @@ public class DFPVideoInterstitialActivity extends AppCompatActivity {
         public void onAdExpired(@NonNull POBInterstitial ad){
             Log.d(TAG, "onAdExpired");
         }
+        @Override
+        public void onAdImpression(@NonNull POBInterstitial ad) {
+            Log.d(TAG, "onAdImpression");
+        }
     }
 
 }

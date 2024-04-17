@@ -130,6 +130,11 @@ public class DFPMRECVideoActivity extends AppCompatActivity {
         public void onAdClosed(@NonNull POBBannerView view) {
             Log.d(TAG, "Ad Closed");
         }
+
+        @Override
+        public void onAdImpression(@NonNull POBBannerView view) {
+            Log.d(TAG, "Ad Impression");
+        }
     }
 
 }
