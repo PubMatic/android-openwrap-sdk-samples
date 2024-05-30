@@ -10,4 +10,7 @@
     <string name="title_activity_native_standard_template">Native Ad - Standard Template</string>
     <string name="title_activity_native_customized_template">Native Ad - Customized Template</string>
     <string name="title_activity_home">KotlinSample</string>
+    <string name="render_ad">Render Ad</string>
+    <string name="load_ad">Load Ad</string>
+    <string name="show_ad">Show Ad</string>
 </resources>

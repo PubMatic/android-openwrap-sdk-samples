@@ -37,12 +37,12 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
 
     //To integrate PubMatic SDK=
-    implementation 'com.pubmatic.sdk:openwrap:+'
+    implementation 'com.pubmatic.sdk:openwrap:3.+'
     
     // Highly recommended to fetch the Android Advertising Id in OW SDK
     implementation 'com.google.android.gms:play-services-ads-identifier:18.0.1'
 
     //To integrate DFP Event Handler
-    implementation 'com.pubmatic.sdk:openwrap-eventhandler-dfp:+'
+    implementation 'com.pubmatic.sdk:openwrap-eventhandler-dfp:4.+'
     implementation project(':nativetemplates')
 }

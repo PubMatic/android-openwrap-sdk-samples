@@ -4,5 +4,9 @@
     <string name="title_activity_interstitial">Interstitial Display</string>
     <string name="title_activity_rewarded">Rewarded</string>
     <string name="title_activity_banner">Banner</string>
+    <string name="title_activity_native">Native</string>
     <string name="title_activity_home">KotlinSample</string>
+    <string name="load_ad">Load Ad</string>
+    <string name="show_ad">Show Ad</string>
+    <string name="render_ad">Render Ad</string>
 </resources>

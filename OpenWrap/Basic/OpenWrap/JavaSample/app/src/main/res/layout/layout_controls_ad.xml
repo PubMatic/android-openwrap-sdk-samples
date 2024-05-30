@@ -9,14 +9,14 @@
         android:id="@+id/loadAdBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Load Ad"/>
+        android:text="@string/load_ad"/>
 
     <Button
         android:id="@+id/showAdBtn"
         android:layout_marginLeft="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Show Ad"
+        android:text="@string/show_ad"
         android:enabled="false"/>
 
 </LinearLayout>

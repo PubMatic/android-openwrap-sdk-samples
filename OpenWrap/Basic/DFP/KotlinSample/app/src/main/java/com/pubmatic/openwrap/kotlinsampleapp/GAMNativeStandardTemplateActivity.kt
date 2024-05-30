@@ -1,6 +1,6 @@
 /*
  * PubMatic Inc. ("PubMatic") CONFIDENTIAL
- * Unpublished Copyright (c) 2006-2023 PubMatic, All Rights Reserved.
+ * Unpublished Copyright (c) 2006-2024 PubMatic, All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains the property of PubMatic. The intellectual and technical concepts contained
  * herein are proprietary to PubMatic and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret or copyright law.
@@ -45,17 +45,43 @@ import com.pubmatic.sdk.openwrap.eventhandler.dfp.GAMNativeEventHandler
 import java.net.MalformedURLException
 import java.net.URL
 
-
 /**
  * Class representing GAM Native Ad and OpenWrap SDK standard small template
  */
 class GAMNativeStandardTemplateActivity : AppCompatActivity() {
 
-    private var nativeAd: POBNativeAd ?= null
+    private lateinit var nativeAdLoader: POBNativeAdLoader
+
+    private var nativeAd: POBNativeAd? = null
+
+    private lateinit var renderAd: Button
+
+    private lateinit var container: FrameLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_native_standard)
+
+        val loadAd = findViewById<Button>(R.id.load_ad)
+        renderAd = findViewById(R.id.render_ad)
+        container = findViewById(R.id.container)
+
+        loadAd.setOnClickListener {
+            // Load the native ad
+            nativeAd = null
+            container.removeAllViews()
+            renderAd.setEnabled(false)
+            nativeAdLoader.loadAd()
+        }
+
+        renderAd.setOnClickListener{
+            // Set the native ad listener to listen the event callback and also to receive the
+            // rendered native ad view.
+            nativeAd?.renderAd(
+                NativeAdListenerImpl()
+            )
+        }
+
         OpenWrapSDK.setLogLevel(OpenWrapSDK.LogLevel.All)
 
         // A valid Play Store Url of an Android app. Required.
@@ -103,14 +129,12 @@ class GAMNativeStandardTemplateActivity : AppCompatActivity() {
             adView
         })
 
-        //Create nativeAdLoader to request ad from OpenWrap with GAM event handler
-        val nativeAdLoader = POBNativeAdLoader(this, PUB_ID, PROFILE_ID,
+        // Create nativeAdLoader to request ad from OpenWrap with GAM event handler
+        nativeAdLoader = POBNativeAdLoader(this, PUB_ID, PROFILE_ID,
             OPENWRAP_AD_UNIT_ID, POBNativeTemplateType.SMALL, nativeEventHandler)
 
-        //Set the adLoaderListener to listens the callback for ad received or ad failed to load
+        // Set the adLoaderListener to listens the callback for ad received or ad failed to load
         nativeAdLoader.setAdLoaderListener(NativeAdLoaderListenerImpl())
-
-        nativeAdLoader.loadAd()
     }
 
     override fun onDestroy() {
@@ -200,12 +224,10 @@ class GAMNativeStandardTemplateActivity : AppCompatActivity() {
     inner class NativeAdLoaderListenerImpl : POBNativeAdLoaderListener {
         override fun onAdReceived(nativeAdLoader: POBNativeAdLoader, nativeAd: POBNativeAd) {
             Log.d(TAG, "Ad Received")
-
-            //Caching nativeAd instance to destroy it when activity get destroyed
+            //Caching nativeAd instance to call renderAd method and also to destroy it when activity get 
+            // destroyed.
             this@GAMNativeStandardTemplateActivity.nativeAd = nativeAd
-
-            //Set the native ad listener to receive the event callback and also to get the rendered native ad
-            nativeAd.renderAd(NativeAdListenerImpl())
+            this@GAMNativeStandardTemplateActivity.renderAd.isEnabled = true
         }
 
         override fun onFailedToLoad(nativeAdLoader: POBNativeAdLoader, error: POBError) {
@@ -219,7 +241,6 @@ class GAMNativeStandardTemplateActivity : AppCompatActivity() {
     inner class NativeAdListenerImpl : POBNativeAdListener {
         override fun onNativeAdRendered(nativeAd: POBNativeAd) {
             Log.d(TAG, "Ad Rendered")
-            val container = findViewById<FrameLayout>(R.id.container)
             container.addView(nativeAd.adView)
         }
 
@@ -248,7 +269,7 @@ class GAMNativeStandardTemplateActivity : AppCompatActivity() {
         }
 
         override fun onNativeAdClosed(nativeAd: POBNativeAd) {
-            Log.d(TAG, "App Closed")
+            Log.d(TAG, "Ad Closed")
         }
     }
 }

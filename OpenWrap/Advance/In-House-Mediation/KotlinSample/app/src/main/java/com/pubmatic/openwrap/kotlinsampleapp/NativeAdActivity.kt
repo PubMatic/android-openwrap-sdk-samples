@@ -19,11 +19,8 @@ package com.pubmatic.openwrap.kotlinsampleapp
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
 import com.pubmatic.sdk.common.OpenWrapSDK
@@ -34,16 +31,18 @@ import com.pubmatic.sdk.nativead.POBNativeAdListener
 import com.pubmatic.sdk.nativead.POBNativeAdLoader
 import com.pubmatic.sdk.nativead.POBNativeAdLoaderListener
 import com.pubmatic.sdk.nativead.datatype.POBNativeTemplateType
-import com.pubmatic.sdk.nativead.views.POBNativeAdMediumTemplateView
-import com.pubmatic.sdk.nativead.views.POBNativeTemplateView
+import com.pubmatic.sdk.openwrap.core.POBBid
+import com.pubmatic.sdk.openwrap.core.POBBidEvent
+import com.pubmatic.sdk.openwrap.core.POBBidEventListener
+import kotlinx.android.synthetic.main.activity_native_ad.toolbar
 
 import java.net.MalformedURLException
 import java.net.URL
 
 /**
- * Class representing Native standard custom template.
+ * Activity to show NativeAd Implementation for bid caching flow.
  */
-class NativeCustomizedTemplateActivity : AppCompatActivity() {
+class NativeAdActivity : AppCompatActivity() {
 
     private lateinit var nativeAdLoader: POBNativeAdLoader
 
@@ -55,8 +54,8 @@ class NativeCustomizedTemplateActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_native)
-
+        setContentView(R.layout.activity_native_ad)
+        setSupportActionBar(toolbar)
         val loadAd = findViewById<Button>(R.id.load_ad)
         renderAd = findViewById(R.id.render_ad)
         container = findViewById(R.id.container)
@@ -65,14 +64,16 @@ class NativeCustomizedTemplateActivity : AppCompatActivity() {
             // Load the native ad
             nativeAd = null
             container.removeAllViews()
-            renderAd.isEnabled = false
+            renderAd.setEnabled(false)
             nativeAdLoader.loadAd()
         }
 
         renderAd.setOnClickListener {
             // Set the native ad listener to listen the event callback and also to receive the
             // rendered native ad view.
-            nativeAd?.renderAd(getNativeTemplateView(), NativeAdListenerImpl())
+            nativeAd?.renderAd(
+                NativeAdListenerImpl()
+            )
         }
 
         OpenWrapSDK.setLogLevel(OpenWrapSDK.LogLevel.All)
@@ -93,11 +94,30 @@ class NativeCustomizedTemplateActivity : AppCompatActivity() {
         // Create native ad loader to make request to openWrap
         nativeAdLoader = POBNativeAdLoader(
             this, PUB_ID, PROFILE_ID,
-            OPENWRAP_AD_UNIT_ID, POBNativeTemplateType.MEDIUM
+            OPENWRAP_AD_UNIT_ID, POBNativeTemplateType.SMALL
         )
 
-        // Set the ad loader listener to listens the ad received and ad failed to load callback
+        //Set the ad loader listener to listens the ad received and ad failed to load callback
         nativeAdLoader.setAdLoaderListener(NativeAdLoaderListenerImpl())
+
+        // Below code block can be used get bid event callbacks.
+        nativeAdLoader.setBidEventListener(object : POBBidEventListener {
+            override fun onBidReceived(bidEvent: POBBidEvent, bid: POBBid) {
+                // Make use of the received bid,  e.g. perform auction with your setup
+                Log.d(TAG, "Bid received.")
+                // Notify native ad to proceed to load the ad after using the bid.
+                Log.d(TAG, "Proceeding with load ad.")
+                bidEvent.proceedToLoadAd()
+            }
+
+            override fun onBidFailed(bidEvent: POBBidEvent, error: POBError) {
+                Log.d(TAG, String.format("Bid receive failed with error : %s", error.toString()))
+                bidEvent.proceedOnError(
+                    POBBidEvent.BidEventError.CLIENT_SIDE_AUCTION_LOSS,
+                    "Bid lost client side auction."
+                )
+            }
+        })
     }
 
     override fun onDestroy() {
@@ -105,47 +125,8 @@ class NativeCustomizedTemplateActivity : AppCompatActivity() {
         nativeAd?.destroy()
     }
 
-    private fun getNativeTemplateView(): POBNativeTemplateView {
-        // Create the inflater to inflate your custom template
-        val inflater = baseContext.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
-
-        // Provide your xml custom template
-        val adview = inflater.inflate(
-            R.layout.custom_medium_template,
-            null
-        ) as POBNativeAdMediumTemplateView
-
-        // Set the reference of asset views your inflated adView
-        val mainImage = adview.findViewById<ImageView>(R.id.main_image)
-        adview.mainImage = mainImage
-
-        val title = adview.findViewById<TextView>(R.id.title)
-        adview.title = title
-
-        val description = adview.findViewById<TextView>(R.id.description)
-        adview.description = description
-
-        val imageView = adview.findViewById<ImageView>(R.id.icon_image)
-        adview.iconImage = imageView
-
-        val cta = adview.findViewById<Button>(R.id.cta_text)
-        adview.cta = cta
-
-        val privacyIcon = adview.findViewById<ImageView>(R.id.privacy_icon)
-        adview.privacyIcon = privacyIcon
-
-        // Set the layout params to the ad view with width x height as of the parent of inflated xml
-        val layoutParams = FrameLayout.LayoutParams(
-            resources.getDimension(R.dimen.pob_dimen_300dp).toInt(),
-            resources.getDimension(R.dimen.pob_dimen_250dp).toInt()
-        )
-        adview.layoutParams = layoutParams
-
-        return adview
-    }
-
     companion object {
-        private const val TAG = "NativeCustomStandard"
+        private const val TAG = "NativeAdActivity"
         private const val PUB_ID = "156276"
         private const val PROFILE_ID = 1165
         private const val OPENWRAP_AD_UNIT_ID = "OpenWrapNativeAdUnit"
@@ -157,10 +138,10 @@ class NativeCustomizedTemplateActivity : AppCompatActivity() {
     inner class NativeAdLoaderListenerImpl : POBNativeAdLoaderListener {
         override fun onAdReceived(nativeAdLoader: POBNativeAdLoader, nativeAd: POBNativeAd) {
             Log.d(TAG, "Ad Received")
-            // Caching nativeAd instance to call renderAd method and also to destroy it when activity get 
+            //Caching nativeAd instance to call renderAd method and to destroy it when activity get
             // destroyed.
-            this@NativeCustomizedTemplateActivity.nativeAd = nativeAd
-            this@NativeCustomizedTemplateActivity.renderAd.isEnabled = true
+            this@NativeAdActivity.nativeAd = nativeAd
+            this@NativeAdActivity.renderAd.isEnabled = true
         }
 
         override fun onFailedToLoad(nativeAdLoader: POBNativeAdLoader, error: POBError) {
@@ -174,7 +155,7 @@ class NativeCustomizedTemplateActivity : AppCompatActivity() {
     inner class NativeAdListenerImpl : POBNativeAdListener {
         override fun onNativeAdRendered(nativeAd: POBNativeAd) {
             Log.d(TAG, "Ad Rendered")
-            //Add the received rendered native ad view in your container
+            // Add the received rendered native ad view in your container
             container.addView(nativeAd.adView)
         }
 

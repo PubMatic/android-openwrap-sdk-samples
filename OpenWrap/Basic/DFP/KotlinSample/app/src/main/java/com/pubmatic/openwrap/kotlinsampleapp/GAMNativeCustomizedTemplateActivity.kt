@@ -1,6 +1,6 @@
 /*
  * PubMatic Inc. ("PubMatic") CONFIDENTIAL
- * Unpublished Copyright (c) 2006-2023 PubMatic, All Rights Reserved.
+ * Unpublished Copyright (c) 2006-2024 PubMatic, All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains the property of PubMatic. The intellectual and technical concepts contained
  * herein are proprietary to PubMatic and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret or copyright law.
@@ -41,6 +41,7 @@ import com.pubmatic.sdk.nativead.POBNativeAdLoader
 import com.pubmatic.sdk.nativead.POBNativeAdLoaderListener
 import com.pubmatic.sdk.nativead.datatype.POBNativeTemplateType
 import com.pubmatic.sdk.nativead.views.POBNativeAdMediumTemplateView
+import com.pubmatic.sdk.nativead.views.POBNativeTemplateView
 import com.pubmatic.sdk.openwrap.eventhandler.dfp.GAMNativeConfiguration
 import com.pubmatic.sdk.openwrap.eventhandler.dfp.GAMNativeEventHandler
 import java.net.MalformedURLException
@@ -51,17 +52,46 @@ import java.net.URL
  */
 class GAMNativeCustomizedTemplateActivity : AppCompatActivity() {
 
-    private var nativeAd: POBNativeAd ?= null
+    private lateinit var nativeAdLoader: POBNativeAdLoader
+
+    private var nativeAd: POBNativeAd? = null
+
+    private lateinit var renderAd: Button
+
+    private lateinit var container: FrameLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_native_custom)
+
+        val loadAd = findViewById<Button>(R.id.load_ad)
+        renderAd = findViewById(R.id.render_ad)
+        container = findViewById(R.id.container)
+
+        loadAd.setOnClickListener {
+            // Load the native ad
+            nativeAd = null
+            container.removeAllViews()
+            renderAd.setEnabled(false)
+            nativeAdLoader.loadAd()
+        }
+
+        renderAd.setOnClickListener{
+            // Set the native ad listener to listen the event callback and also to receive the
+            // rendered native ad view.
+            nativeAd?.renderAd(
+                getNativeTemplateView(),
+                NativeAdListenerImpl()
+            )
+        }
+
         OpenWrapSDK.setLogLevel(OpenWrapSDK.LogLevel.All)
 
         // A valid Play Store Url of an Android app. Required.
         val appInfo = POBApplicationInfo()
         try {
-            appInfo.storeURL = URL("https://play.google.com/store/apps/details?id=com.example.android&hl=en")
+            appInfo.storeURL =
+                URL("https://play.google.com/store/apps/details?id=com.example.android&hl=en")
         } catch (e: MalformedURLException) {
             e.printStackTrace()
         }
@@ -70,14 +100,16 @@ class GAMNativeCustomizedTemplateActivity : AppCompatActivity() {
         // Need not set this for every ad request(of any ad type)
         OpenWrapSDK.setApplicationInfo(appInfo)
 
-        //Create nativeEventHandler to request ad from your GAM Ad Server
-        val nativeEventHandler = GAMNativeEventHandler(this, DFP_AD_UNIT_ID,
-            OPENWRAP_CUSTOM_FORMAT_ID, GAMNativeConfiguration.GAMAdTypes.NativeCustomFormatAd)
+        // Create nativeEventHandler to request ad from your GAM Ad Server
+        val nativeEventHandler = GAMNativeEventHandler(
+            this, DFP_AD_UNIT_ID,
+            OPENWRAP_CUSTOM_FORMAT_ID, GAMNativeConfiguration.GAMAdTypes.NativeCustomFormatAd
+        )
 
-        //This step is optional and you can the set the Custom Format Id List here
+        // This step is optional and you can the set the Custom Format Id List here
         nativeEventHandler.addNativeCustomFormatAd(GAM_NATIVE_CUSTOM_FORMAT_ID, null)
 
-        //Set the rendering listener for GAM Native Ad
+        // Set the rendering listener for GAM Native Ad
         nativeEventHandler.setNativeAdRendererListener(GAMNativeConfiguration.NativeAdRendererListener { nativeAd ->
             val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val adView = inflater
@@ -102,20 +134,58 @@ class GAMNativeCustomizedTemplateActivity : AppCompatActivity() {
         })
 
 
-        //Create nativeAdLoader to request ad from OpenWrap with GAM event handler
-        val nativeAdLoader = POBNativeAdLoader(this@GAMNativeCustomizedTemplateActivity, PUB_ID, PROFILE_ID,
-            OPENWRAP_AD_UNIT_ID, POBNativeTemplateType.MEDIUM, nativeEventHandler)
+        // Create nativeAdLoader to request ad from OpenWrap with GAM event handler
+        nativeAdLoader = POBNativeAdLoader(
+            this@GAMNativeCustomizedTemplateActivity, PUB_ID, PROFILE_ID,
+            OPENWRAP_AD_UNIT_ID, POBNativeTemplateType.MEDIUM, nativeEventHandler
+        )
 
         //Set the adLoaderListener to listens the callback for ad received or ad failed to load
         nativeAdLoader.setAdLoaderListener(NativeAdLoaderListenerImpl())
-
-        nativeAdLoader.loadAd()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         // Clean up native ad, helps releasing utilized resources.
         nativeAd?.destroy()
+    }
+
+    private fun getNativeTemplateView(): POBNativeTemplateView {
+        // Create the inflater to inflate your custom template
+        val inflater = baseContext.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+
+        // Provide your xml custom template
+        val adview = inflater.inflate(R.layout.custom_medium_template, null)
+                as POBNativeAdMediumTemplateView
+
+        // Set the reference of asset views your inflated adView
+        val mainImage = adview.findViewById<ImageView>(R.id.main_image)
+        adview.mainImage = mainImage
+
+        val title = adview.findViewById<TextView>(R.id.title)
+        adview.title = title
+
+        val description = adview.findViewById<TextView>(R.id.description)
+        adview.description = description
+
+        val imageView = adview.findViewById<ImageView>(R.id.icon_image)
+        adview.iconImage = imageView
+
+        val cta = adview.findViewById<Button>(R.id.cta_text)
+        adview.cta = cta
+
+        val privacyIcon = adview.findViewById<ImageView>(R.id.privacy_icon)
+        adview.privacyIcon = privacyIcon
+
+        // Set the layout param as per the width and height for OpenWrap SDK Custom Standard
+        // template to fit them properly
+        val layoutParams = FrameLayout.LayoutParams(
+            resources.getDimension(R.dimen.pob_dimen_300dp).toInt(),
+            resources.getDimension(R.dimen.pob_dimen_250dp).toInt()
+        )
+        adview.layoutParams = layoutParams
+
+        return adview
     }
 
     companion object {
@@ -193,51 +263,17 @@ class GAMNativeCustomizedTemplateActivity : AppCompatActivity() {
             nativeCustomFormatAd.performClick(CLICK_THROUGH_ASSET_NAME)
         })
     }
+
     /**
      * Listener to get callback for ad received and ad failed.
      */
     inner class NativeAdLoaderListenerImpl : POBNativeAdLoaderListener {
         override fun onAdReceived(nativeAdLoader: POBNativeAdLoader, nativeAd: POBNativeAd) {
             Log.d(TAG, "Ad Received")
-
-            //Caching nativeAd instance to destroy it when activity get destroyed
+            // Caching nativeAd instance to call renderAd method and also to destroy it when activity get 
+            // destroyed.
             this@GAMNativeCustomizedTemplateActivity.nativeAd = nativeAd
-
-            //Create the inflater to inflate your custom template
-            val inflater = baseContext.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
-
-            //provide your xml custom template
-            val adview = inflater.inflate(R.layout.custom_medium_template, null)
-                    as POBNativeAdMediumTemplateView
-
-            //Set the reference of asset views your inflated adView
-            val mainImage = adview.findViewById<ImageView>(R.id.main_image)
-            adview.mainImage = mainImage
-
-            val title = adview.findViewById<TextView>(R.id.title)
-            adview.title = title
-
-            val description = adview.findViewById<TextView>(R.id.description)
-            adview.description = description
-
-            val imageView = adview.findViewById<ImageView>(R.id.icon_image)
-            adview.iconImage = imageView
-
-            val cta = adview.findViewById<Button>(R.id.cta_text)
-            adview.cta = cta
-
-            val privacyIcon = adview.findViewById<ImageView>(R.id.privacy_icon)
-            adview.privacyIcon = privacyIcon
-
-            // Set the layout param as per the width and height for OpenWrap SDK Custom Standard
-            // template to fit them properly
-            val layoutParams = FrameLayout.LayoutParams(
-                resources.getDimension(R.dimen.pob_dimen_300dp).toInt(),
-                resources.getDimension(R.dimen.pob_dimen_250dp).toInt())
-            adview.layoutParams = layoutParams
-
-            //Set the listener to listen the event callback and also to get the rendered native ad view
-            nativeAd.renderAd(adview, NativeAdListenerImpl())
+            this@GAMNativeCustomizedTemplateActivity.renderAd.isEnabled = true
         }
 
         override fun onFailedToLoad(nativeAdLoader: POBNativeAdLoader, error: POBError) {
@@ -251,9 +287,7 @@ class GAMNativeCustomizedTemplateActivity : AppCompatActivity() {
     inner class NativeAdListenerImpl : POBNativeAdListener {
         override fun onNativeAdRendered(nativeAd: POBNativeAd) {
             Log.d(TAG, "Ad Rendered")
-            val adView = nativeAd.adView
-            val container = findViewById<FrameLayout>(R.id.container)
-            container.addView(adView)
+            container.addView(nativeAd.adView)
         }
 
         override fun onNativeAdRenderingFailed(nativeAd: POBNativeAd, error: POBError) {
@@ -281,7 +315,7 @@ class GAMNativeCustomizedTemplateActivity : AppCompatActivity() {
         }
 
         override fun onNativeAdClosed(nativeAd: POBNativeAd) {
-            Log.d(TAG, "App Closed")
+            Log.d(TAG, "Ad Closed")
         }
     }
 }

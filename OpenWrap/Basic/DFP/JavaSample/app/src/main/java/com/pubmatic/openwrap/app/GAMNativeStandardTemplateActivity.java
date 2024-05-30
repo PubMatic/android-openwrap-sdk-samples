@@ -1,6 +1,6 @@
 /*
  * PubMatic Inc. ("PubMatic") CONFIDENTIAL
- * Unpublished Copyright (c) 2006-2023 PubMatic, All Rights Reserved.
+ * Unpublished Copyright (c) 2006-2024 PubMatic, All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains the property of PubMatic. The intellectual and technical concepts contained
  * herein are proprietary to PubMatic and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret or copyright law.
@@ -79,13 +79,45 @@ public class GAMNativeStandardTemplateActivity extends AppCompatActivity {
 
     public static final String CLICK_THROUGH_ASSET_NAME = "ClickThroughText";
 
+    private POBNativeAdLoader nativeAdLoader;
+
     @Nullable
     private POBNativeAd nativeAd;
+
+    private Button renderAd;
+
+    private FrameLayout container;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_native_standard);
+
+        Button loadAd = findViewById(R.id.load_ad);
+        renderAd = findViewById(R.id.render_ad);
+        container = findViewById(R.id.container);
+
+        loadAd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Load the native ad
+                nativeAd = null;
+                container.removeAllViews();
+                renderAd.setEnabled(false);
+                nativeAdLoader.loadAd();
+            }
+        });
+
+        renderAd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Set the native ad listener to listen the event callback and also to receive the
+                // rendered native ad view.
+                if (nativeAd != null) {
+                    nativeAd.renderAd(new NativeAdListenerImpl());
+                }
+            }
+        });
 
         // A valid Play Store Url of an Android application is required.
         POBApplicationInfo appInfo = new POBApplicationInfo();
@@ -143,14 +175,12 @@ public class GAMNativeStandardTemplateActivity extends AppCompatActivity {
             }
         });
 
-        //Create nativeAdLoader to request ad from OpenWrap with GAM event handler
-        POBNativeAdLoader nativeAdLoader = new POBNativeAdLoader(this, PUB_ID, PROFILE_ID,
+        // Create nativeAdLoader to request ad from OpenWrap with GAM event handler
+        nativeAdLoader = new POBNativeAdLoader(this, PUB_ID, PROFILE_ID,
                 OPENWRAP_AD_UNIT_ID, POBNativeTemplateType.SMALL, nativeEventHandler);
 
-        //Set the adLoaderListener to listens the callback for ad received or ad failed to load
+        // Set the adLoaderListener to listens the callback for ad received or ad failed to load
         nativeAdLoader.setAdLoaderListener(new NativeAdLoaderListenerImpl());
-
-        nativeAdLoader.loadAd();
     }
 
     @Override
@@ -230,13 +260,10 @@ public class GAMNativeStandardTemplateActivity extends AppCompatActivity {
         @Override
         public void onAdReceived(@NonNull POBNativeAdLoader nativeAdLoader, @NonNull POBNativeAd nativeAd) {
             Log.d(TAG, "Ad Received");
-
-            //Caching nativeAd instance to destroy it when activity get destroyed
+            //Caching nativeAd instance to call renderAd method and to destroy it when activity get
+            // destroyed.
             GAMNativeStandardTemplateActivity.this.nativeAd = nativeAd;
-
-            //Set the native ad listener to receive the event callback and also to get the rendered
-            //native ad
-            nativeAd.renderAd(new NativeAdListenerImpl());
+            renderAd.setEnabled(true);
         }
 
         @Override
@@ -253,7 +280,6 @@ public class GAMNativeStandardTemplateActivity extends AppCompatActivity {
         @Override
         public void onNativeAdRendered(@NonNull POBNativeAd nativeAd) {
             Log.d(TAG, "Ad Rendered");
-            FrameLayout container = findViewById(R.id.container);
             container.addView(nativeAd.getAdView());
         }
 
@@ -289,7 +315,7 @@ public class GAMNativeStandardTemplateActivity extends AppCompatActivity {
 
         @Override
         public void onNativeAdClosed(@NonNull POBNativeAd nativeAd) {
-            Log.d(TAG, "App Closed");
+            Log.d(TAG, "Ad Closed");
         }
     }
 }

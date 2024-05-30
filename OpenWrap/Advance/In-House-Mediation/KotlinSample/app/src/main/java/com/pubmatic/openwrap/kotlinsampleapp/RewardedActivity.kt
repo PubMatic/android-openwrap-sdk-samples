@@ -1,6 +1,6 @@
 /*
  * PubMatic Inc. ("PubMatic") CONFIDENTIAL
- * Unpublished Copyright (c) 2006-2023 PubMatic, All Rights Reserved.
+ * Unpublished Copyright (c) 2006-2024 PubMatic, All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains the property of PubMatic. The intellectual and technical concepts contained
  * herein are proprietary to PubMatic and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret or copyright law.
@@ -38,15 +38,9 @@ import java.net.URL
  */
 class RewardedActivity : AppCompatActivity() {
 
-    val TAG = "RewardedActivity"
-
-    private val OPENWRAP_AD_UNIT_ID = "OpenWrapRewardedAdUnit"
-    private val PUB_ID = "156276"
-    private val PROFILE_ID = 1757
-
     private var rewardedAd : POBRewardedAd? = null
-    private var loadAd: Button? = null;
-    private var showAd: Button? = null;
+    private var loadAd: Button? = null
+    private var showAd: Button? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,7 +51,7 @@ class RewardedActivity : AppCompatActivity() {
         // A valid Play Store Url of an Android app. Required.
         val appInfo = POBApplicationInfo()
         try {
-            appInfo.setStoreURL(URL("https://play.google.com/store/apps/details?id=com.example.android&hl=en"))
+            appInfo.storeURL = URL("https://play.google.com/store/apps/details?id=com.example.android&hl=en")
         } catch (e: MalformedURLException) {
             e.printStackTrace()
         }
@@ -67,7 +61,9 @@ class RewardedActivity : AppCompatActivity() {
         OpenWrapSDK.setApplicationInfo(appInfo)
 
         // Initialise Rewarded ad
-        rewardedAd = POBRewardedAd.getRewardedAd(this, PUB_ID, PROFILE_ID, OPENWRAP_AD_UNIT_ID)
+        rewardedAd = POBRewardedAd.getRewardedAd(this, PUB_ID, PROFILE_ID,
+            OPENWRAP_AD_UNIT_ID
+        )
 
         // Set optional listener
         rewardedAd?.setListener(RewardedAdListener())
@@ -83,7 +79,7 @@ class RewardedActivity : AppCompatActivity() {
 
             override fun onBidFailed(bidEvent: POBBidEvent, error: POBError) {
                 Log.d(TAG, String.format("Bid receive failed with error : %s",  error.toString()))
-                rewardedAd?.proceedOnError(POBBidEvent.BidEventError.CLIENT_SIDE_AUCTION_LOSS)
+                rewardedAd?.proceedOnError(POBBidEvent.BidEventError.CLIENT_SIDE_AUCTION_LOSS, "Bid lost client side auction.")
             }
         })
 
@@ -133,7 +129,7 @@ class RewardedActivity : AppCompatActivity() {
         }
 
         override fun onAdFailedToLoad(rewardedAd: POBRewardedAd, error: POBError) {
-            Log.e(TAG, "Rewarded Ad : Ad failed with error - " + error.toString())
+            Log.e(TAG, "Rewarded Ad : Ad failed with error - $error")
         }
 
         // Callback method notifies ad is about to leave app
@@ -184,5 +180,12 @@ class RewardedActivity : AppCompatActivity() {
         super.onDestroy()
         // destroy rewarded
         rewardedAd?.destroy()
+    }
+
+    companion object {
+        private const val TAG = "RewardedActivity"
+        private const val OPENWRAP_AD_UNIT_ID = "OpenWrapRewardedAdUnit"
+        private const val PUB_ID = "156276"
+        private const val PROFILE_ID = 1757
     }
 }

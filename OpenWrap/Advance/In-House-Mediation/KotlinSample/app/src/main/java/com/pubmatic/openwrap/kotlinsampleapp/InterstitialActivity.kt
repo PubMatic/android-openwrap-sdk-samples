@@ -1,6 +1,6 @@
 /*
  * PubMatic Inc. ("PubMatic") CONFIDENTIAL
- * Unpublished Copyright (c) 2006-2023 PubMatic, All Rights Reserved.
+ * Unpublished Copyright (c) 2006-2024 PubMatic, All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains the property of PubMatic. The intellectual and technical concepts contained
  * herein are proprietary to PubMatic and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret or copyright law.
@@ -37,15 +37,9 @@ import java.net.URL
  */
 class InterstitialActivity : AppCompatActivity() {
 
-    val TAG = "InterstitialActivity"
-
-    private val OPENWRAP_AD_UNIT_ID = "OpenWrapInterstitialAdUnit"
-    private val PUB_ID = "156276"
-    private val PROFILE_ID = 1165
-
     private var interstitial : POBInterstitial? = null
-    private var loadAd: Button? = null;
-    private var showAd: Button? = null;
+    private var loadAd: Button? = null
+    private var showAd: Button? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,8 +75,8 @@ class InterstitialActivity : AppCompatActivity() {
             }
 
             override fun onBidFailed(bidEvent: POBBidEvent, error: POBError) {
-                Log.d(TAG, String.format("Bid receive failed with error : %s",  error.toString()))
-                interstitial?.proceedOnError(POBBidEvent.BidEventError.CLIENT_SIDE_AUCTION_LOSS)
+                Log.d(TAG, "Bid receive failed with error : $error")
+                interstitial?.proceedOnError(POBBidEvent.BidEventError.CLIENT_SIDE_AUCTION_LOSS , "Bid lost client side auction.")
             }
         })
 
@@ -133,14 +127,14 @@ class InterstitialActivity : AppCompatActivity() {
 
         // Callback method notifies an error encountered while loading an ad.
         override fun onAdFailedToLoad(ad: POBInterstitial, error: POBError) {
-            Log.e(TAG, "Interstitial : Ad failed to load with error - " + error.toString())
+            Log.e(TAG, "Interstitial : Ad failed to load with error - $error")
             //Method gets called when it fails to load ad
             //Here, you can put logger and see why ad failed to load
         }
 
         // Callback method notifies an error encountered while showing an ad.
         override fun onAdFailedToShow(ad: POBInterstitial, error: POBError) {
-            Log.e(TAG, "Interstitial : Ad failed to show with error - " + error.toString())
+            Log.e(TAG, "Interstitial : Ad failed to show with error - $error")
             //Method gets called when it fails to show ad
             //Here, you can put logger and see why ad failed to show
         }
@@ -175,5 +169,12 @@ class InterstitialActivity : AppCompatActivity() {
         super.onDestroy()
         // destroy interstitial
         interstitial?.destroy()
+    }
+
+    companion object {
+        private const val TAG = "InterstitialActivity"
+        private const val OPENWRAP_AD_UNIT_ID = "OpenWrapInterstitialAdUnit"
+        private const val PUB_ID = "156276"
+        private const val PROFILE_ID = 1165
     }
 }

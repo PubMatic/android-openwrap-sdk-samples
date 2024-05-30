@@ -1,6 +1,6 @@
 /*
  * PubMatic Inc. ("PubMatic") CONFIDENTIAL
- * Unpublished Copyright (c) 2006-2023 PubMatic, All Rights Reserved.
+ * Unpublished Copyright (c) 2006-2024 PubMatic, All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains the property of PubMatic. The intellectual and technical concepts contained
  * herein are proprietary to PubMatic and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret or copyright law.
@@ -47,6 +47,7 @@ import com.pubmatic.sdk.nativead.POBNativeAdLoaderListener;
 import com.pubmatic.sdk.nativead.POBNativeAdView;
 import com.pubmatic.sdk.nativead.datatype.POBNativeTemplateType;
 import com.pubmatic.sdk.nativead.views.POBNativeAdMediumTemplateView;
+import com.pubmatic.sdk.nativead.views.POBNativeTemplateView;
 import com.pubmatic.sdk.openwrap.eventhandler.dfp.GAMNativeConfiguration;
 import com.pubmatic.sdk.openwrap.eventhandler.dfp.GAMNativeEventHandler;
 
@@ -81,13 +82,45 @@ public class GAMNativeCustomizedTemplateActivity extends AppCompatActivity {
 
     public static final String CLICK_THROUGH_ASSET_NAME = "ClickThroughText";
 
+    private POBNativeAdLoader nativeAdLoader;
+
     @Nullable
     private POBNativeAd nativeAd;
+
+    private Button renderAd;
+
+    private FrameLayout container;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_native_standard);
+
+        Button loadAd = findViewById(R.id.load_ad);
+        renderAd = findViewById(R.id.render_ad);
+        container = findViewById(R.id.container);
+
+        loadAd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Load the native ad
+                nativeAd = null;
+                container.removeAllViews();
+                renderAd.setEnabled(false);
+                nativeAdLoader.loadAd();
+            }
+        });
+
+        renderAd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Set the native ad listener to listen the event callback and also to receive the
+                // rendered native ad view.
+                if (nativeAd != null) {
+                    nativeAd.renderAd(getNativeTemplateView(), new NativeAdListenerImpl());
+                }
+            }
+        });
 
         // A valid Play Store Url of an Android application is required.
         POBApplicationInfo appInfo = new POBApplicationInfo();
@@ -101,15 +134,15 @@ public class GAMNativeCustomizedTemplateActivity extends AppCompatActivity {
         // Need not set this for every ad request(of any ad type)
         OpenWrapSDK.setApplicationInfo(appInfo);
 
-        //Create nativeEventHandler to request ad from your GAM Ad Server
+        // Create nativeEventHandler to request ad from your GAM Ad Server
         GAMNativeEventHandler nativeEventHandler = new GAMNativeEventHandler(this, DFP_AD_UNIT_ID,
                 OPENWRAP_CUSTOM_FORMAT_ID, GAMNativeEventHandler.GAMAdTypes.NativeAd,
                 GAMNativeEventHandler.GAMAdTypes.NativeCustomFormatAd);
 
-        //This step is optional and you can the set the Custom Format Id List here
+        // This step is optional and you can the set the Custom Format Id List here
         nativeEventHandler.addNativeCustomFormatAd(GAM_NATIVE_CUSTOM_FORMAT_ID, null);
 
-        //Set the rendering listener for GAM Native Ad
+        // Set the rendering listener for GAM Native Ad
         nativeEventHandler.setNativeAdRendererListener(new GAMNativeConfiguration.NativeAdRendererListener() {
             @Nullable
             @Override
@@ -123,7 +156,7 @@ public class GAMNativeCustomizedTemplateActivity extends AppCompatActivity {
             }
         });
 
-        //Set the rendering listener for GAM Native Ad
+        // Set the rendering listener for GAM Native Ad
         nativeEventHandler.setNativeCustomFormatAdRendererListener(new GAMNativeConfiguration.NativeCustomFormatAdRendererListener() {
             @Nullable
             @Override
@@ -142,14 +175,12 @@ public class GAMNativeCustomizedTemplateActivity extends AppCompatActivity {
             }
         });
 
-        //Create nativeAdLoader to request ad from OpenWrap with GAM event handler
-        POBNativeAdLoader nativeAdLoader = new POBNativeAdLoader(GAMNativeCustomizedTemplateActivity.this,
+        // Create nativeAdLoader to request ad from OpenWrap with GAM event handler
+        nativeAdLoader = new POBNativeAdLoader(GAMNativeCustomizedTemplateActivity.this,
                 PUB_ID, PROFILE_ID, OPENWRAP_AD_UNIT_ID, POBNativeTemplateType.MEDIUM, nativeEventHandler);
 
-        //Set the adLoaderListener to listens the callback for ad received or ad failed to load
+        // Set the adLoaderListener to listens the callback for ad received or ad failed to load
         nativeAdLoader.setAdLoaderListener(new NativeAdLoaderListenerImpl());
-
-        nativeAdLoader.loadAd();
     }
 
     @Override
@@ -159,6 +190,44 @@ public class GAMNativeCustomizedTemplateActivity extends AppCompatActivity {
         if (nativeAd != null) {
             nativeAd.destroy();
         }
+    }
+
+    private POBNativeTemplateView getNativeTemplateView() {
+        // Create the inflater to inflate your custom template
+        LayoutInflater inflater = (LayoutInflater) getBaseContext()
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        // Provide your xml custom template
+        POBNativeAdMediumTemplateView adview = (POBNativeAdMediumTemplateView)
+                inflater.inflate(R.layout.custom_medium_template, null);
+
+        // Set the reference of asset views your inflated adView
+        ImageView mainImage = adview.findViewById(R.id.main_image);
+        adview.setMainImage(mainImage);
+
+        TextView title = adview.findViewById(R.id.title);
+        adview.setTitle(title);
+
+        TextView description = adview.findViewById(R.id.description);
+        adview.setDescription(description);
+
+        ImageView imageView = adview.findViewById(R.id.icon_image);
+        adview.setIconImage(imageView);
+
+        Button cta = adview.findViewById(R.id.cta_text);
+        adview.setCta(cta);
+
+        ImageView privacyIcon = adview.findViewById(R.id.privacy_icon);
+        adview.setPrivacyIcon(privacyIcon);
+
+        // Set the layout param as per the width and height for OpenWrap SDK Custom Standard
+        // template to fit them properly
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
+                (int) getResources().getDimension(R.dimen.pob_dimen_300dp),
+                (int) getResources().getDimension(R.dimen.pob_dimen_250dp));
+        adview.setLayoutParams(layoutParams);
+
+        return adview;
     }
 
     private void renderNativeAd(@NonNull NativeAd nativeAd, @NonNull NativeAdView nativeAdView) {
@@ -230,46 +299,10 @@ public class GAMNativeCustomizedTemplateActivity extends AppCompatActivity {
         public void onAdReceived(@NonNull POBNativeAdLoader nativeAdLoader,
                                  @NonNull POBNativeAd nativeAd) {
             Log.d(TAG, "Ad Received");
-
-            //Caching nativeAd instance to destroy it when activity get destroyed
+            // Caching nativeAd instance to call renderAd method and also to destroy it when activity get 
+            // destroyed.
             GAMNativeCustomizedTemplateActivity.this.nativeAd = nativeAd;
-
-            //Create the inflater to inflate your custom template
-            LayoutInflater inflater = (LayoutInflater) getBaseContext()
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-            //provide your xml custom template
-            POBNativeAdMediumTemplateView adview = (POBNativeAdMediumTemplateView)
-                    inflater.inflate(R.layout.custom_medium_template, null);
-
-            //Set the reference of asset views your inflated adView
-            ImageView mainImage = adview.findViewById(R.id.main_image);
-            adview.setMainImage(mainImage);
-
-            TextView title = adview.findViewById(R.id.title);
-            adview.setTitle(title);
-
-            TextView description = adview.findViewById(R.id.description);
-            adview.setDescription(description);
-
-            ImageView imageView = adview.findViewById(R.id.icon_image);
-            adview.setIconImage(imageView);
-
-            Button cta = adview.findViewById(R.id.cta_text);
-            adview.setCta(cta);
-
-            ImageView privacyIcon = adview.findViewById(R.id.privacy_icon);
-            adview.setPrivacyIcon(privacyIcon);
-
-            // Set the layout param as per the width and height for OpenWrap SDK Custom Standard
-            // template to fit them properly
-            FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
-                    (int) getResources().getDimension(R.dimen.pob_dimen_300dp),
-                    (int) getResources().getDimension(R.dimen.pob_dimen_250dp));
-            adview.setLayoutParams(layoutParams);
-
-            //Set the listener to listen the event callback and also to get the rendered native ad view
-            nativeAd.renderAd(adview, new NativeAdListenerImpl());
+            GAMNativeCustomizedTemplateActivity.this.renderAd.setEnabled(true);
         }
 
         @Override
@@ -287,7 +320,6 @@ public class GAMNativeCustomizedTemplateActivity extends AppCompatActivity {
         public void onNativeAdRendered(@NonNull POBNativeAd nativeAd) {
             Log.d(TAG, "Ad Rendered");
             POBNativeAdView adView = nativeAd.getAdView();
-            FrameLayout container = findViewById(R.id.container);
             container.addView(adView);
         }
 
@@ -323,7 +355,7 @@ public class GAMNativeCustomizedTemplateActivity extends AppCompatActivity {
 
         @Override
         public void onNativeAdClosed(@NonNull POBNativeAd nativeAd) {
-            Log.d(TAG, "App Closed");
+            Log.d(TAG, "Ad Closed");
         }
     }
 }

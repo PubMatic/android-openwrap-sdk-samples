@@ -1,6 +1,6 @@
 /*
  * PubMatic Inc. ("PubMatic") CONFIDENTIAL
- * Unpublished Copyright (c) 2006-2023 PubMatic, All Rights Reserved.
+ * Unpublished Copyright (c) 2006-2024 PubMatic, All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains the property of PubMatic. The intellectual and technical concepts contained
  * herein are proprietary to PubMatic and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret or copyright law.
@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity()  {
     companion object {
 
         private fun hasPermissions(context: Context, permissions: Array<String>): Boolean {
-            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 for (permission in permissions) {
                     if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
                         return false
@@ -79,10 +79,10 @@ class MainActivity : AppCompatActivity()  {
             permissionList.add(Manifest.permission.READ_PHONE_STATE)
         }
 
-        val PERMISSIONS: Array<String> = permissionList.toTypedArray()
-        if (!hasPermissions(this, PERMISSIONS)) {
+        val permissions: Array<String> = permissionList.toTypedArray()
+        if (!hasPermissions(this, permissions)) {
             val MULTIPLE_PERMISSIONS_REQUEST_CODE = 123
-            ActivityCompat.requestPermissions(this, PERMISSIONS, MULTIPLE_PERMISSIONS_REQUEST_CODE)
+            ActivityCompat.requestPermissions(this, permissions, MULTIPLE_PERMISSIONS_REQUEST_CODE)
         }
 
     }
@@ -100,10 +100,11 @@ class MainActivity : AppCompatActivity()  {
     /**
      * Constant to represents AdType
      */
-    enum class AdType constructor(val activity: Class<*>?, val displayName: String) {
+    enum class AdType(val activity: Class<*>?, val displayName: String) {
         BANNER(BannerActivity::class.java, "Banner"),
         INTERSTITIAL(InterstitialActivity::class.java, "Interstitial Display"),
-        REWARDED(RewardedActivity::class.java, "Rewarded")
+        REWARDED(RewardedActivity::class.java, "Rewarded"),
+        NATIVEAD(NativeAdActivity::class.java, "NativeAd")
     }
 
     /**

@@ -1,6 +1,6 @@
 /*
  * PubMatic Inc. ("PubMatic") CONFIDENTIAL
- * Unpublished Copyright (c) 2006-2023 PubMatic, All Rights Reserved.
+ * Unpublished Copyright (c) 2006-2024 PubMatic, All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains the property of PubMatic. The intellectual and technical concepts contained
  * herein are proprietary to PubMatic and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret or copyright law.
@@ -37,13 +37,8 @@ import java.net.URL
  */
 class BannerActivity : AppCompatActivity() {
 
-    private val TAG = "BannerActivity"
-
-    private val OPENWRAP_AD_UNIT_ID = "OpenWrapBannerAdUnit"
-    private val PUB_ID = "156276"
-    private val PROFILE_ID = 1165
-
     private var banner: POBBannerView ? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_banner)
@@ -53,7 +48,7 @@ class BannerActivity : AppCompatActivity() {
         // A valid Play Store Url of an Android app. Required.
         val appInfo = POBApplicationInfo()
         try {
-            appInfo.setStoreURL(URL("https://play.google.com/store/apps/details?id=com.example.android&hl=en"))
+            appInfo.storeURL = URL("https://play.google.com/store/apps/details?id=com.example.android&hl=en")
         } catch (e: MalformedURLException) {
             e.printStackTrace()
         }
@@ -65,7 +60,8 @@ class BannerActivity : AppCompatActivity() {
         // Call init() to set tag information
         // For test IDs see - https://help.pubmatic.com/openwrap/docs/test-and-debug-your-integration#test-profileplacements
         banner = findViewById(R.id.banner)
-        banner?.init(PUB_ID, PROFILE_ID, OPENWRAP_AD_UNIT_ID, POBAdSize.BANNER_SIZE_320x50)
+        banner?.init(PUB_ID,
+            PROFILE_ID, OPENWRAP_AD_UNIT_ID, POBAdSize.BANNER_SIZE_320x50)
 
         //optional listener to listen banner events
         banner?.setListener(POBBannerViewListener())
@@ -81,7 +77,7 @@ class BannerActivity : AppCompatActivity() {
 
             override fun onBidFailed(bidEvent: POBBidEvent, error: POBError) {
                 Log.d(TAG, String.format("Bid receive failed with error : %s",  error.toString()))
-                banner?.proceedOnError(POBBidEvent.BidEventError.CLIENT_SIDE_AUCTION_LOSS)
+                banner?.proceedOnError(POBBidEvent.BidEventError.CLIENT_SIDE_AUCTION_LOSS , "Bid lost client side auction.")
             }
         })
 
@@ -107,7 +103,7 @@ class BannerActivity : AppCompatActivity() {
 
         // Callback method Notifies an error encountered while loading or rendering an ad.
         override fun onAdFailed(view: POBBannerView, error: POBError) {
-            Log.e(TAG, "onAdFailed : Ad failed with error - " + error.toString())
+            Log.e(TAG, "onAdFailed : Ad failed with error - $error")
         }
 
         // Callback method Notifies that the  banner ad will launch a dialog on top of the current view
@@ -139,5 +135,12 @@ class BannerActivity : AppCompatActivity() {
         // destroy banner before onDestroy of Activity lifeCycle
         super.onDestroy()
         banner?.destroy()
+    }
+
+    companion object {
+        private const val TAG = "BannerActivity"
+        private const val OPENWRAP_AD_UNIT_ID = "OpenWrapBannerAdUnit"
+        private const val PUB_ID = "156276"
+        private const val PROFILE_ID = 1165
     }
 }
