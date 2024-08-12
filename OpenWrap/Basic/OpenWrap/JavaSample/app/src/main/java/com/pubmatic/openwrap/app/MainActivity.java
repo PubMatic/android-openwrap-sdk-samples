@@ -33,6 +33,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.pubmatic.sdk.common.OpenWrapSDK;
+import com.pubmatic.sdk.common.models.POBDSAComplianceStatus;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -85,6 +86,8 @@ public class MainActivity extends AppCompatActivity {
         if (BuildConfig.DEBUG) {
             OpenWrapSDK.setLogLevel(OpenWrapSDK.LogLevel.Debug);
         }
+
+        OpenWrapSDK.setDSAComplianceStatus(POBDSAComplianceStatus.REQUIRED);
 
         //Change the Status Bar color
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

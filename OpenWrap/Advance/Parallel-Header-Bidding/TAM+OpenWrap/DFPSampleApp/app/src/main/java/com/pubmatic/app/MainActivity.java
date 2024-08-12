@@ -31,6 +31,7 @@ import com.amazon.device.ads.MRAIDPolicy;
 import com.pubmatic.appapp.R;
 import com.pubmatic.sdk.common.BuildConfig;
 import com.pubmatic.sdk.common.OpenWrapSDK;
+import com.pubmatic.sdk.common.models.POBDSAComplianceStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,6 +114,8 @@ public class MainActivity extends AppCompatActivity {
 
         initListView();
         registerTAMAds();
+
+        OpenWrapSDK.setDSAComplianceStatus(POBDSAComplianceStatus.REQUIRED);
     }
 
     public void loadAdScreen(String adType) {

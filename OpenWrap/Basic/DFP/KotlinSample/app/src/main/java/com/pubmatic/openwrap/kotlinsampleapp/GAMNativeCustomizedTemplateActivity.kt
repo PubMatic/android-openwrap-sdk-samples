@@ -177,6 +177,9 @@ class GAMNativeCustomizedTemplateActivity : AppCompatActivity() {
         val privacyIcon = adview.findViewById<ImageView>(R.id.privacy_icon)
         adview.privacyIcon = privacyIcon
 
+        val dsaIcon = adview.findViewById<ImageView>(R.id.dsa_icon)
+        adview.dsaIcon = dsaIcon
+
         // Set the layout param as per the width and height for OpenWrap SDK Custom Standard
         // template to fit them properly
         val layoutParams = FrameLayout.LayoutParams(

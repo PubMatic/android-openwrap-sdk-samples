@@ -153,6 +153,9 @@ public class NativeCustomizedTemplateActivity extends AppCompatActivity {
         ImageView privacyIcon = adview.findViewById(R.id.privacy_icon);
         adview.setPrivacyIcon(privacyIcon);
 
+        ImageView dsaIcon = adview.findViewById(R.id.dsa_icon);
+        adview.setDSAIcon(dsaIcon);
+
         // Set the layout params to your ad view with inflated xml width and height
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
                 (int) getResources().getDimension(R.dimen.pob_dimen_300dp),

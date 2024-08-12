@@ -12,7 +12,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:layout_marginRight="@dimen/pob_dimen_8dp"
-        android:layout_marginTop="@dimen/pob_dimen_8dp"/>
+        android:layout_marginTop="@dimen/pob_dimen_2dp"/>
 
     <ImageView
         android:id="@+id/privacy_icon"
@@ -22,6 +22,15 @@
         android:layout_alignParentEnd="true"
         android:layout_marginRight="@dimen/pob_dimen_8dp"
         android:layout_below="@id/ad_icon"
+        android:layout_marginTop="@dimen/pob_dimen_6.5dp"/>
+
+    <ImageView
+        android:id="@+id/dsa_icon"
+        android:layout_width="@dimen/pob_dimen_16dp"
+        android:layout_height="@dimen/pob_dimen_15dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="@dimen/pob_dimen_8dp"
+        android:layout_below="@id/privacy_icon"
         android:layout_marginTop="@dimen/pob_dimen_6.5dp"/>
 
     <ImageView

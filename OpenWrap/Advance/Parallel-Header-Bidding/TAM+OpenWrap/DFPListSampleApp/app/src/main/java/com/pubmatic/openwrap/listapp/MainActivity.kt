@@ -26,6 +26,7 @@ import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pubmatic.sdk.common.OpenWrapSDK
+import com.pubmatic.sdk.common.models.POBDSAComplianceStatus
 
 
 /**
@@ -64,6 +65,8 @@ class MainActivity : AppCompatActivity() {
 
         val recyclerAdapter = AdTypeRecyclerViewAdapter(list, RecyclerItemListener())
         recycler?.adapter = recyclerAdapter
+
+        OpenWrapSDK.setDSAComplianceStatus(POBDSAComplianceStatus.REQUIRED)
 
     }
 

@@ -35,6 +35,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pubmatic.sdk.common.OpenWrapSDK;
+import com.pubmatic.sdk.common.models.POBDSAComplianceStatus;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -118,6 +119,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         initListView();
+
+        OpenWrapSDK.setDSAComplianceStatus(POBDSAComplianceStatus.REQUIRED);
     }
 
     public void loadAdScreen(@NonNull Class activity) {

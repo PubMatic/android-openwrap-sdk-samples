@@ -30,6 +30,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pubmatic.openwrap.listapp.banner.BannerListActivity
 import com.pubmatic.openwrap.listapp.nativead.NativeListActivity
 import com.pubmatic.sdk.common.OpenWrapSDK
+import com.pubmatic.sdk.common.models.POBDSAComplianceStatus
 
 /**
  * Activity shows the list of ad type supported
@@ -90,6 +91,8 @@ class MainActivity : AppCompatActivity() {
             ActivityCompat.requestPermissions(this, PERMISSIONS,
                 MULTIPLE_PERMISSIONS_REQUEST_CODE)
         }
+
+        OpenWrapSDK.setDSAComplianceStatus(POBDSAComplianceStatus.REQUIRED)
     }
 
     /**

@@ -220,6 +220,9 @@ public class GAMNativeCustomizedTemplateActivity extends AppCompatActivity {
         ImageView privacyIcon = adview.findViewById(R.id.privacy_icon);
         adview.setPrivacyIcon(privacyIcon);
 
+        ImageView dsaIcon = adview.findViewById(R.id.dsa_icon);
+        adview.setPrivacyIcon(dsaIcon);
+
         // Set the layout param as per the width and height for OpenWrap SDK Custom Standard
         // template to fit them properly
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(

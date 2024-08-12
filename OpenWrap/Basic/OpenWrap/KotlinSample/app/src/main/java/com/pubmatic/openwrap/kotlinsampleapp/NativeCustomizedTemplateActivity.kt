@@ -134,6 +134,9 @@ class NativeCustomizedTemplateActivity : AppCompatActivity() {
         val privacyIcon = adview.findViewById<ImageView>(R.id.privacy_icon)
         adview.privacyIcon = privacyIcon
 
+        val dsaIcon = adview.findViewById<ImageView>(R.id.dsa_icon)
+        adview.dsaIcon = dsaIcon
+
         // Set the layout params to the ad view with width x height as of the parent of inflated xml
         val layoutParams = FrameLayout.LayoutParams(
             resources.getDimension(R.dimen.pob_dimen_300dp).toInt(),

@@ -26,6 +26,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.pubmatic.sdk.common.OpenWrapSDK
+import com.pubmatic.sdk.common.models.POBDSAComplianceStatus
 import kotlinx.android.synthetic.main.activity_home.*
 import java.util.*
 
@@ -84,6 +86,8 @@ class MainActivity : AppCompatActivity()  {
             val MULTIPLE_PERMISSIONS_REQUEST_CODE = 123
             ActivityCompat.requestPermissions(this, permissions, MULTIPLE_PERMISSIONS_REQUEST_CODE)
         }
+
+        OpenWrapSDK.setDSAComplianceStatus(POBDSAComplianceStatus.REQUIRED)
 
     }
 
