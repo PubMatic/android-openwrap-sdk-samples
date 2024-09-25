@@ -15,30 +15,15 @@
  * TO REPRODUCE, DISCLOSE OR DISTRIBUTE ITS CONTENTS, OR TO MANUFACTURE, USE, OR SELL ANYTHING THAT IT  MAY DESCRIBE, IN WHOLE OR IN PART.
  */
 
-package com.pubmatic.openwrap.listapp
+package com.pubmatic.openwrap.kotlinsampleapp
 
 /**
- * Constants used for the count of items in the feed
+ * Constants used in other activities
  */
 object Constants {
-
-    /**
-     * Number of items after which the ad will be displayed
-     */
-    val AD_INTERVAL = 3
-
-    /**
-     * Total number of items in the feed list including ad and placeholder
-     */
-    val NUMBER_OF_ITEMS = 20
-
     const val PUB_ID = "156276"
-
     const val PROFILE_ID = 1165
-
     const val PROFILE_ID_FOR_VIDEO = 1757
-
     const val OWSDK_INITIALIZATION_SUCCESSFUL = "OpenWrap SDK initialization successful"
-
     const val OWSDK_INITIALIZATION_FAILED = "OpenWrap SDK initialization failed with error : "
 }

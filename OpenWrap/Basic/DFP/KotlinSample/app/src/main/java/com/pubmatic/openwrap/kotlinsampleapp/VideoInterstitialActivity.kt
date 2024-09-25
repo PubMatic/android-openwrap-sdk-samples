@@ -35,8 +35,6 @@ import java.net.URL
 class VideoInterstitialActivity : AppCompatActivity() {
 
     private val OPENWRAP_AD_UNIT_ID = "/15671365/pm_sdk/PMSDK-Demo-App-Interstitial"
-    private val PUB_ID = "156276"
-    private val PROFILE_ID = 1757
     private val DFP_AD_UNIT = "/15671365/pm_sdk/PMSDK-Demo-App-Interstitial"
 
     private var interstitial : POBInterstitial? = null
@@ -67,7 +65,7 @@ class VideoInterstitialActivity : AppCompatActivity() {
         val eventHandler = DFPInterstitialEventHandler(this, DFP_AD_UNIT)
 
         // Initialise interstitial ad
-        interstitial = POBInterstitial(this, PUB_ID, PROFILE_ID, OPENWRAP_AD_UNIT_ID, eventHandler)
+        interstitial = POBInterstitial(this, Constants.PUB_ID, Constants.PROFILE_ID_FOR_VIDEO, OPENWRAP_AD_UNIT_ID, eventHandler)
 
         // Set the optional listener
         interstitial?.setListener(POBInterstitialListener())

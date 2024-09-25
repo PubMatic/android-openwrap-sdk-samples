@@ -37,6 +37,9 @@ import java.net.URL
  */
 class InterstitialActivity : AppCompatActivity() {
 
+    private val TAG = "InterstitialActivity"
+    private val OPENWRAP_AD_UNIT_ID = "OpenWrapInterstitialAdUnit"
+
     private var interstitial : POBInterstitial? = null
     private var loadAd: Button? = null
     private var showAd: Button? = null
@@ -60,7 +63,7 @@ class InterstitialActivity : AppCompatActivity() {
         OpenWrapSDK.setApplicationInfo(appInfo)
 
         // Initialise interstitial ad
-        interstitial = POBInterstitial(this, PUB_ID, PROFILE_ID, OPENWRAP_AD_UNIT_ID)
+        interstitial = POBInterstitial(this, Constants.PUB_ID, Constants.PROFILE_ID, OPENWRAP_AD_UNIT_ID)
 
         // Set optional listener
         interstitial?.setListener(POBInterstitialListener())
@@ -171,10 +174,4 @@ class InterstitialActivity : AppCompatActivity() {
         interstitial?.destroy()
     }
 
-    companion object {
-        private const val TAG = "InterstitialActivity"
-        private const val OPENWRAP_AD_UNIT_ID = "OpenWrapInterstitialAdUnit"
-        private const val PUB_ID = "156276"
-        private const val PROFILE_ID = 1165
-    }
 }

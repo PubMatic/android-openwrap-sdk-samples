@@ -58,10 +58,6 @@ public class GAMNativeStandardTemplateActivity extends AppCompatActivity {
 
     private static final String TAG = "NativeStandardTemplate";
 
-    private static final String PUB_ID = "156276";
-
-    private static final int PROFILE_ID = 1165;
-
     private static final String OPENWRAP_AD_UNIT_ID = "/15671365/pm_sdk/PMSDK-Demo-App-Native";
 
     private static final String DFP_AD_UNIT_ID = "/15671365/pm_sdk/PMSDK-Demo-App-Native";
@@ -176,7 +172,7 @@ public class GAMNativeStandardTemplateActivity extends AppCompatActivity {
         });
 
         // Create nativeAdLoader to request ad from OpenWrap with GAM event handler
-        nativeAdLoader = new POBNativeAdLoader(this, PUB_ID, PROFILE_ID,
+        nativeAdLoader = new POBNativeAdLoader(this, Constants.PUB_ID, Constants.PROFILE_ID,
                 OPENWRAP_AD_UNIT_ID, POBNativeTemplateType.SMALL, nativeEventHandler);
 
         // Set the adLoaderListener to listens the callback for ad received or ad failed to load

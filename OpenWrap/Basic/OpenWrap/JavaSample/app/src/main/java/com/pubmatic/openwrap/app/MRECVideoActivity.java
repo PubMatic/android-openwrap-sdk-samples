@@ -34,8 +34,6 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MRECVideoActivity extends AppCompatActivity {
 
     private static final String OPENWRAP_AD_UNIT_ID = "OpenWrapBannerAdUnit";
-    private static final String PUB_ID = "156276";
-    private static final int PROFILE_ID = 1757;
 
     private POBBannerView banner;
 
@@ -58,8 +56,8 @@ public class MRECVideoActivity extends AppCompatActivity {
 
         // Initialise banner view with MRECVideo size i.e 300x250
         banner = findViewById(R.id.banner);
-        banner.init(PUB_ID,
-                PROFILE_ID,
+        banner.init(Constants.PUB_ID,
+                Constants.PROFILE_ID_FOR_VIDEO,
                 OPENWRAP_AD_UNIT_ID, POBAdSize.BANNER_SIZE_300x250);
 
         //optional listener to listen banner events

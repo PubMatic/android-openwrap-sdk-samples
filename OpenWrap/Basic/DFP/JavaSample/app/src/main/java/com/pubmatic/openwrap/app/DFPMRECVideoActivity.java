@@ -38,8 +38,6 @@ import java.net.URL;
 public class DFPMRECVideoActivity extends AppCompatActivity {
 
     private static final String OPENWRAP_AD_UNIT_ID = "/15671365/pm_sdk/PMSDK-Demo-App-Banner";
-    private static final String PUB_ID = "156276";
-    private static final int PROFILE_ID = 1757;
     private static final String DFP_AD_UNIT_ID = "/15671365/pm_sdk/PMSDK-Demo-App-Banner";
 
     private POBBannerView banner;
@@ -68,8 +66,8 @@ public class DFPMRECVideoActivity extends AppCompatActivity {
 
         // Initialise banner view
         banner = findViewById(R.id.banner);
-        banner.init(PUB_ID,
-                PROFILE_ID,
+        banner.init(Constants.PUB_ID,
+                Constants.PROFILE_ID_FOR_VIDEO,
                 OPENWRAP_AD_UNIT_ID,
                 eventHandler);
 

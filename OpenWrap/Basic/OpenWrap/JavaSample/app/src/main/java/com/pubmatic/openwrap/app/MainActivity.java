@@ -28,6 +28,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -111,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
             int MULTIPLE_PERMISSIONS_REQUEST_CODE = 123;
             ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS, MULTIPLE_PERMISSIONS_REQUEST_CODE);
         }
-
         initListView();
     }
 

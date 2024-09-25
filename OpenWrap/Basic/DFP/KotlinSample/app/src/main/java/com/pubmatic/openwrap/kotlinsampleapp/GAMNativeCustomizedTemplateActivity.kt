@@ -136,7 +136,7 @@ class GAMNativeCustomizedTemplateActivity : AppCompatActivity() {
 
         // Create nativeAdLoader to request ad from OpenWrap with GAM event handler
         nativeAdLoader = POBNativeAdLoader(
-            this@GAMNativeCustomizedTemplateActivity, PUB_ID, PROFILE_ID,
+            this@GAMNativeCustomizedTemplateActivity, Constants.PUB_ID, Constants.PROFILE_ID,
             OPENWRAP_AD_UNIT_ID, POBNativeTemplateType.MEDIUM, nativeEventHandler
         )
 
@@ -193,10 +193,6 @@ class GAMNativeCustomizedTemplateActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "GAMNativeCustomActivity"
-
-        private const val PUB_ID = "156276"
-
-        private const val PROFILE_ID = 1165
 
         private const val OPENWRAP_AD_UNIT_ID = "OpenWrapNativeAdUnit"
 

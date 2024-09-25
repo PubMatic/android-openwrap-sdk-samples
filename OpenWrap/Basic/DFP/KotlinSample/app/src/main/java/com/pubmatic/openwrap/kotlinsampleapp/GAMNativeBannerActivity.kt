@@ -43,8 +43,6 @@ import java.net.URL
 class GAMNativeBannerActivity : AppCompatActivity() {
 
     private val OPENWRAP_AD_UNIT_ID = "/15671365/pm_sdk/PMSDK-Demo-App-NativeAndBanner"
-    private val PUB_ID = "156276"
-    private val PROFILE_ID = 1165
     private val DFP_AD_UNIT_ID = "/15671365/pm_sdk/PMSDK-Demo-App-NativeAndBanner"
     private val CUSTOM_NATIVE_FORMAT = "12051535"
 
@@ -84,7 +82,7 @@ class GAMNativeBannerActivity : AppCompatActivity() {
         gamNativeBannerEventHandler.configureNativeCustomFormatAd(CUSTOM_NATIVE_FORMAT, POBCustomNativeListener(), null)
         
         // Initialise banner view
-        banner = POBBannerView(this, PUB_ID, PROFILE_ID, OPENWRAP_AD_UNIT_ID, gamNativeBannerEventHandler)
+        banner = POBBannerView(this, Constants.PUB_ID, Constants.PROFILE_ID, OPENWRAP_AD_UNIT_ID, gamNativeBannerEventHandler)
 
         //optional listener to listen banner events
         banner?.setListener(POBBannerViewListener())

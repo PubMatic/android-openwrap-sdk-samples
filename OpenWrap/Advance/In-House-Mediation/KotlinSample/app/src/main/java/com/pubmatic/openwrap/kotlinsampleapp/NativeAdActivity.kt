@@ -44,6 +44,9 @@ import java.net.URL
  */
 class NativeAdActivity : AppCompatActivity() {
 
+    private val TAG = "NativeAdActivity"
+    private val OPENWRAP_AD_UNIT_ID = "OpenWrapNativeAdUnit"
+
     private lateinit var nativeAdLoader: POBNativeAdLoader
 
     private var nativeAd: POBNativeAd? = null
@@ -93,7 +96,7 @@ class NativeAdActivity : AppCompatActivity() {
 
         // Create native ad loader to make request to openWrap
         nativeAdLoader = POBNativeAdLoader(
-            this, PUB_ID, PROFILE_ID,
+            this, Constants.PUB_ID, Constants.PROFILE_ID,
             OPENWRAP_AD_UNIT_ID, POBNativeTemplateType.SMALL
         )
 
@@ -125,12 +128,6 @@ class NativeAdActivity : AppCompatActivity() {
         nativeAd?.destroy()
     }
 
-    companion object {
-        private const val TAG = "NativeAdActivity"
-        private const val PUB_ID = "156276"
-        private const val PROFILE_ID = 1165
-        private const val OPENWRAP_AD_UNIT_ID = "OpenWrapNativeAdUnit"
-    }
 
     /**
      * Listener to get callback for ad received and ad failed.

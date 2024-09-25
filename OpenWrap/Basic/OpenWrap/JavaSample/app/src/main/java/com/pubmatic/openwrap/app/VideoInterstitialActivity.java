@@ -34,8 +34,6 @@ import java.net.URL;
 public class VideoInterstitialActivity extends AppCompatActivity {
 
     private static final String OPENWRAP_AD_UNIT_ONE = "OpenWrapInterstitialAdUnit";
-    private static final String PUB_ID = "156276";
-    private static final int PROFILE_ID = 1757;
 
     private POBInterstitial interstitial;
 
@@ -58,8 +56,8 @@ public class VideoInterstitialActivity extends AppCompatActivity {
 
 
         // Create  interstitial instance by passing activity context
-        interstitial = new POBInterstitial(this, PUB_ID,
-                PROFILE_ID,
+        interstitial = new POBInterstitial(this, Constants.PUB_ID,
+                Constants.PROFILE_ID_FOR_VIDEO,
                 OPENWRAP_AD_UNIT_ONE);
 
         // Set Optional listener

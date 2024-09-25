@@ -40,8 +40,6 @@ class NativeListActivity : AppCompatActivity(), NativeFeedListAdapter.OnNativeAd
 
     // Native Ad Units
     private val OPENWRAP_AD_UNIT_ID = "OpenWrapNativeAdUnit"
-    private val PUB_ID = "156276"
-    private val PROFILE_ID = 1165
 
     // Feed list
     private var feedList = ArrayList<NativeFeedItem>()
@@ -113,7 +111,7 @@ class NativeListActivity : AppCompatActivity(), NativeFeedListAdapter.OnNativeAd
      * Function creates the POBNativeAdLoader instance with the required ad placement details.
      */
     private fun createNativeAdLoader(): POBNativeAdLoader {
-        val nativeAdLoader =  POBNativeAdLoader(this, PUB_ID, PROFILE_ID, OPENWRAP_AD_UNIT_ID,
+        val nativeAdLoader =  POBNativeAdLoader(this, Constants.PUB_ID, Constants.PROFILE_ID, OPENWRAP_AD_UNIT_ID,
             POBNativeTemplateType.MEDIUM)
         nativeAdLoader.setAdLoaderListener(object: POBNativeAdLoaderListener{
             override fun onAdReceived(adLoader: POBNativeAdLoader, nativeAd: POBNativeAd) {

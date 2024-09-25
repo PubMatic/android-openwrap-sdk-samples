@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
+        android:name=".OpenWrapSampleApp"
         android:allowBackup="true"
         android:icon="@mipmap/icon_app_launcher"
         android:label="@string/app_name"

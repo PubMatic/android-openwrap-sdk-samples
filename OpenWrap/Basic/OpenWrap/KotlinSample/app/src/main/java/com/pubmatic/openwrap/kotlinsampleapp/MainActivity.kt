@@ -31,6 +31,7 @@ import com.pubmatic.sdk.common.models.POBDSAComplianceStatus
 import kotlinx.android.synthetic.main.activity_home.*
 import java.util.*
 
+
 /**
  * Main Activity to show Multiple Ad Type Implementation
  */
@@ -39,9 +40,10 @@ class MainActivity : AppCompatActivity()  {
     private var recycler: RecyclerView? = null
     private var list: ArrayList<AdType>? = null
 
+
     companion object {
         private fun hasPermissions(context: Context?, permissions: Array<String>): Boolean {
-            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null) {
                 for (permission in permissions) {
                     if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
                         return false
@@ -85,7 +87,6 @@ class MainActivity : AppCompatActivity()  {
             val MULTIPLE_PERMISSIONS_REQUEST_CODE = 123
             ActivityCompat.requestPermissions(this, PERMISSIONS, MULTIPLE_PERMISSIONS_REQUEST_CODE)
         }
-
         OpenWrapSDK.setDSAComplianceStatus(POBDSAComplianceStatus.REQUIRED)
 
     }

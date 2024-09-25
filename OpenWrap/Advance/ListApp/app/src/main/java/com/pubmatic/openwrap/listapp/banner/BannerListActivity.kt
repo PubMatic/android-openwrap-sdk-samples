@@ -24,7 +24,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pubmatic.openwrap.listapp.Constants
 import com.pubmatic.openwrap.listapp.R
-import com.pubmatic.sdk.common.OpenWrapSDK
 import com.pubmatic.sdk.common.POBAdSize
 import com.pubmatic.sdk.openwrap.banner.POBBannerView
 
@@ -35,8 +34,6 @@ class BannerListActivity : AppCompatActivity() {
 
     // Banner Ad Units
     private val OPENWRAP_AD_UNIT_ID = "OpenWrapBannerAdUnit"
-    private val PUB_ID = "156276"
-    private val PROFILE_ID = 1757
     // Feed list
     private var feedList = ArrayList<BannerFeedItem>()
 
@@ -86,7 +83,7 @@ class BannerListActivity : AppCompatActivity() {
         var isFirstBannerLoaded = false
         for (i in 1..Constants.NUMBER_OF_ITEMS) {
             if (i % (Constants.AD_INTERVAL + 1) == 0) {
-                val banner = POBBannerView(this, PUB_ID, PROFILE_ID, OPENWRAP_AD_UNIT_ID, POBAdSize.BANNER_SIZE_300x250)
+                val banner = POBBannerView(this, Constants.PUB_ID, Constants.PROFILE_ID_FOR_VIDEO, OPENWRAP_AD_UNIT_ID, POBAdSize.BANNER_SIZE_300x250)
                 val feedItem = BannerFeedItem("Banner ${i / (Constants.AD_INTERVAL + 1)}", BannerFeedItem.FeedType.BANNER, banner, false)
                 feedList.add(feedItem)
                 if (!isFirstBannerLoaded) {

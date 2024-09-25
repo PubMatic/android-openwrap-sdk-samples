@@ -45,6 +45,7 @@ class MainActivity : AppCompatActivity() {
     private var recycler: RecyclerView? = null
     private var list: ArrayList<AD_TYPE>? = null
 
+
     // To check app already has the requested permission.
     private fun hasPermissions(context: Context, permissions: Array<String>): Boolean {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

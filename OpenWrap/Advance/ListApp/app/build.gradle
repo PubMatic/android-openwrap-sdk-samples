@@ -12,6 +12,7 @@ android {
         targetSdkVersion 34
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -29,7 +30,8 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
-    implementation 'com.pubmatic.sdk:openwrap:3.+'
+    implementation "androidx.multidex:multidex:2.0.1"
+    implementation 'com.pubmatic.sdk:openwrap:4.+'
     // Highly recommended to fetch the Android Advertising Id in OW SDK
     implementation 'com.google.android.gms:play-services-ads-identifier:18.0.1'
 }

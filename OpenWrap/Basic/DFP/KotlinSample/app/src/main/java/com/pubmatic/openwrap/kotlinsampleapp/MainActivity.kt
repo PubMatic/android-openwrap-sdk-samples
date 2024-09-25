@@ -86,7 +86,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         OpenWrapSDK.setDSAComplianceStatus(POBDSAComplianceStatus.REQUIRED)
-
     }
 
     /**

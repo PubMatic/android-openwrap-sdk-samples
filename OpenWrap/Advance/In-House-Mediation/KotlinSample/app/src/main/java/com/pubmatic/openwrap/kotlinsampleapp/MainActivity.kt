@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity()  {
     private var recycler: RecyclerView? = null
     private var list: ArrayList<AdType>? = null
 
+
     companion object {
 
         private fun hasPermissions(context: Context, permissions: Array<String>): Boolean {

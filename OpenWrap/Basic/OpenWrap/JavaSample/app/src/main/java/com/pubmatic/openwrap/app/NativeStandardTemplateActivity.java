@@ -46,10 +46,6 @@ public class NativeStandardTemplateActivity extends AppCompatActivity {
 
     private static final String TAG = "NativeStandardTemplate";
 
-    private static final String PUB_ID = "156276";
-
-    private static final int PROFILE_ID = 1165;
-
     private static final String OPENWRAP_AD_UNIT_ID = "OpenWrapNativeAdUnit";
 
     private POBNativeAdLoader nativeAdLoader;
@@ -105,7 +101,7 @@ public class NativeStandardTemplateActivity extends AppCompatActivity {
         OpenWrapSDK.setApplicationInfo(appInfo);
 
         // Create native ad loader to make request to openWrap
-        nativeAdLoader = new POBNativeAdLoader(this, PUB_ID, PROFILE_ID,
+        nativeAdLoader = new POBNativeAdLoader(this, Constants.PUB_ID, Constants.PROFILE_ID,
                 OPENWRAP_AD_UNIT_ID, POBNativeTemplateType.SMALL);
 
         // Set the ad loader listener to listens the ad received and ad failed to load callback

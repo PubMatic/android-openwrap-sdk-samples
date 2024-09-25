@@ -119,7 +119,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         initListView();
-
         OpenWrapSDK.setDSAComplianceStatus(POBDSAComplianceStatus.REQUIRED);
     }
 

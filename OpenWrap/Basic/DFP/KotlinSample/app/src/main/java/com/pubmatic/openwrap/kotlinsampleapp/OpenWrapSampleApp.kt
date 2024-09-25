@@ -15,30 +15,35 @@
  * TO REPRODUCE, DISCLOSE OR DISTRIBUTE ITS CONTENTS, OR TO MANUFACTURE, USE, OR SELL ANYTHING THAT IT  MAY DESCRIBE, IN WHOLE OR IN PART.
  */
 
-package com.pubmatic.openwrap.listapp
+package com.pubmatic.openwrap.kotlinsampleapp
+
+import android.util.Log
+import androidx.multidex.MultiDexApplication
+import com.pubmatic.sdk.common.OpenWrapSDK
+import com.pubmatic.sdk.common.OpenWrapSDKConfig
+import com.pubmatic.sdk.common.OpenWrapSDKInitializer
+import com.pubmatic.sdk.common.POBError
 
 /**
- * Constants used for the count of items in the feed
+ * OpenWrapSampleApp Application class to Initialize SDK
  */
-object Constants {
+class OpenWrapSampleApp : MultiDexApplication() {
+    private val TAG = "OpenWrap"
 
-    /**
-     * Number of items after which the ad will be displayed
-     */
-    val AD_INTERVAL = 3
+    override fun onCreate() {
+        super.onCreate()
+        // Call the initialize method to warm up the OpenWrap SDK.
+        OpenWrapSDK.initialize(
+            applicationContext,
+            OpenWrapSDKConfig.Builder(Constants.PUB_ID, listOf(Constants.PROFILE_ID)).build(),
+            object : OpenWrapSDKInitializer.Listener   {
+                override fun onSuccess() {
+                    Log.i(TAG, Constants.OWSDK_INITIALIZATION_SUCCESSFUL)
+                }
 
-    /**
-     * Total number of items in the feed list including ad and placeholder
-     */
-    val NUMBER_OF_ITEMS = 20
-
-    const val PUB_ID = "156276"
-
-    const val PROFILE_ID = 1165
-
-    const val PROFILE_ID_FOR_VIDEO = 1757
-
-    const val OWSDK_INITIALIZATION_SUCCESSFUL = "OpenWrap SDK initialization successful"
-
-    const val OWSDK_INITIALIZATION_FAILED = "OpenWrap SDK initialization failed with error : "
+                override fun onFailure(error: POBError) {
+                    Log.e(TAG, Constants.OWSDK_INITIALIZATION_FAILED + error.toString())
+                }
+            })
+    }
 }

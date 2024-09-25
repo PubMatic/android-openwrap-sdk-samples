@@ -35,8 +35,6 @@ import java.net.URL;
 public class DFPVideoInterstitialActivity extends AppCompatActivity {
     
     private static final String OPENWRAP_AD_UNIT_ONE = "/15671365/pm_sdk/PMSDK-Demo-App-Interstitial";
-    private static final String PUB_ID = "156276";
-    private static final int PROFILE_ID = 1757;
     private static final String DFP_AD_UNIT_ID = "/15671365/pm_sdk/PMSDK-Demo-App-Interstitial";
 
     private POBInterstitial interstitial;
@@ -64,8 +62,8 @@ public class DFPVideoInterstitialActivity extends AppCompatActivity {
         DFPInterstitialEventHandler eventHandler = new DFPInterstitialEventHandler(this, DFP_AD_UNIT_ID);
 
         // Create  interstitial instance by passing activity context and
-        interstitial = new POBInterstitial(this, PUB_ID,
-                PROFILE_ID,
+        interstitial = new POBInterstitial(this, Constants.PUB_ID,
+                Constants.PROFILE_ID_FOR_VIDEO,
                 OPENWRAP_AD_UNIT_ONE,
                 eventHandler);
 

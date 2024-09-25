@@ -34,8 +34,6 @@ import java.net.URL;
 public class BannerActivity extends AppCompatActivity {
 
     private static final String OPENWRAP_AD_UNIT_ID = "OpenWrapBannerAdUnit";
-    private static final String PUB_ID = "156276";
-    private static final int PROFILE_ID = 1165;
 
     private POBBannerView banner;
 
@@ -58,8 +56,8 @@ public class BannerActivity extends AppCompatActivity {
 
         // Initialise banner view
         banner = findViewById(R.id.banner);
-        banner.init(PUB_ID,
-                PROFILE_ID,
+        banner.init(Constants.PUB_ID,
+                Constants.PROFILE_ID,
                 OPENWRAP_AD_UNIT_ID, POBAdSize.BANNER_SIZE_320x50);
 
         //optional listener to listen banner events

@@ -49,8 +49,6 @@ import java.net.URL;
 public class GAMNativeBannerActivity extends AppCompatActivity {
 
     private static final String OPENWRAP_AD_UNIT_ID = "/15671365/pm_sdk/PMSDK-Demo-App-NativeAndBanner";
-    private static final String PUB_ID = "156276";
-    private static final int PROFILE_ID = 1165;
     private static final String DFP_AD_UNIT_ID = "/15671365/pm_sdk/PMSDK-Demo-App-NativeAndBanner";
     public static final String CUSTOM_NATIVE_FORMAT = "12051535";
 
@@ -90,7 +88,7 @@ public class GAMNativeBannerActivity extends AppCompatActivity {
         gamNativeEventHandler.configureNativeCustomFormatAd(CUSTOM_NATIVE_FORMAT, new POBCustomNativeListener(), null);
 
         // Initialise banner view
-        banner = new POBBannerView(this, PUB_ID, PROFILE_ID, OPENWRAP_AD_UNIT_ID, gamNativeEventHandler);
+        banner = new POBBannerView(this, Constants.PUB_ID, Constants.PROFILE_ID, OPENWRAP_AD_UNIT_ID, gamNativeEventHandler);
 
         //optional listener to listen banner events
         banner.setListener(new POBBannerViewListener());

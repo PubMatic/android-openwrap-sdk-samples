@@ -34,8 +34,6 @@ import java.net.URL
 class VideoInterstitialActivity : AppCompatActivity() {
 
     private val OPENWRAP_AD_UNIT_ID = "OpenWrapInterstitialAdUnit"
-    private val PUB_ID = "156276"
-    private val PROFILE_ID = 1757
 
     private var interstitial : POBInterstitial? = null
     private var loadAd: Button? = null
@@ -60,7 +58,7 @@ class VideoInterstitialActivity : AppCompatActivity() {
         OpenWrapSDK.setApplicationInfo(appInfo)
 
         // Initialise interstitial ad
-        interstitial = POBInterstitial(this, PUB_ID, PROFILE_ID, OPENWRAP_AD_UNIT_ID)
+        interstitial = POBInterstitial(this, Constants.PUB_ID, Constants.PROFILE_ID_FOR_VIDEO, OPENWRAP_AD_UNIT_ID)
 
         // Set optional listener
         interstitial?.setListener(POBInterstitialListener())

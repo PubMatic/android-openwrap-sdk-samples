@@ -39,8 +39,6 @@ public class RewardedActivity extends AppCompatActivity {
 
     private static final String TAG = "RewardedActivity";
     private static final String OPENWRAP_AD_UNIT_ONE = "OpenWrapRewardedAdUnit";
-    private static final String PUB_ID = "156276";
-    private static final int PROFILE_ID = 1757;
 
     private POBRewardedAd rewardedAd;
 
@@ -62,8 +60,8 @@ public class RewardedActivity extends AppCompatActivity {
         OpenWrapSDK.setApplicationInfo(appInfo);
 
         // Create rewarded ad instance by passing activity context and tag params
-        rewardedAd = POBRewardedAd.getRewardedAd(this, PUB_ID,
-                PROFILE_ID,
+        rewardedAd = POBRewardedAd.getRewardedAd(this, Constants.PUB_ID,
+                Constants.PROFILE_ID_FOR_VIDEO,
                 OPENWRAP_AD_UNIT_ONE);
 
         //Check if rewarded ad instance is null

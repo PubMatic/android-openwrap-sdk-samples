@@ -38,6 +38,9 @@ import java.net.URL
  */
 class RewardedActivity : AppCompatActivity() {
 
+    private val TAG = "RewardedActivity"
+    private val OPENWRAP_AD_UNIT_ID = "OpenWrapRewardedAdUnit"
+
     private var rewardedAd : POBRewardedAd? = null
     private var loadAd: Button? = null
     private var showAd: Button? = null
@@ -61,7 +64,7 @@ class RewardedActivity : AppCompatActivity() {
         OpenWrapSDK.setApplicationInfo(appInfo)
 
         // Initialise Rewarded ad
-        rewardedAd = POBRewardedAd.getRewardedAd(this, PUB_ID, PROFILE_ID,
+        rewardedAd = POBRewardedAd.getRewardedAd(this, Constants.PUB_ID, Constants.PROFILE_ID_FOR_VIDEO,
             OPENWRAP_AD_UNIT_ID
         )
 
@@ -182,10 +185,4 @@ class RewardedActivity : AppCompatActivity() {
         rewardedAd?.destroy()
     }
 
-    companion object {
-        private const val TAG = "RewardedActivity"
-        private const val OPENWRAP_AD_UNIT_ID = "OpenWrapRewardedAdUnit"
-        private const val PUB_ID = "156276"
-        private const val PROFILE_ID = 1757
-    }
 }

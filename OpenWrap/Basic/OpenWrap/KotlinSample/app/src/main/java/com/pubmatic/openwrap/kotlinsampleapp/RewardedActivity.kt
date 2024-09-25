@@ -38,8 +38,6 @@ class RewardedActivity : AppCompatActivity() {
     val TAG = "RewardedActivity"
 
     private val OPENWRAP_AD_UNIT_ID = "OpenWrapRewardedAdUnit"
-    private val PUB_ID = "156276"
-    private val PROFILE_ID = 1757
 
     private var rewardedAd : POBRewardedAd? = null
     private var loadAd: Button? = null
@@ -64,7 +62,7 @@ class RewardedActivity : AppCompatActivity() {
         OpenWrapSDK.setApplicationInfo(appInfo)
 
         // Create rewarded ad instance by passing activity context and Publisher Credentials
-        rewardedAd = POBRewardedAd.getRewardedAd(this, PUB_ID, PROFILE_ID, OPENWRAP_AD_UNIT_ID)
+        rewardedAd = POBRewardedAd.getRewardedAd(this, Constants.PUB_ID, Constants.PROFILE_ID_FOR_VIDEO, OPENWRAP_AD_UNIT_ID)
 
         // Set optional listener
         rewardedAd?.setListener(RewardedAdListener())

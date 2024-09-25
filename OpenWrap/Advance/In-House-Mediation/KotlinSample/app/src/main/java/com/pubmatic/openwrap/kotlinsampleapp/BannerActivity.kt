@@ -37,6 +37,9 @@ import java.net.URL
  */
 class BannerActivity : AppCompatActivity() {
 
+    private val TAG = "BannerActivity"
+    private val OPENWRAP_AD_UNIT_ID = "OpenWrapBannerAdUnit"
+
     private var banner: POBBannerView ? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,8 +63,8 @@ class BannerActivity : AppCompatActivity() {
         // Call init() to set tag information
         // For test IDs see - https://help.pubmatic.com/openwrap/docs/test-and-debug-your-integration#test-profileplacements
         banner = findViewById(R.id.banner)
-        banner?.init(PUB_ID,
-            PROFILE_ID, OPENWRAP_AD_UNIT_ID, POBAdSize.BANNER_SIZE_320x50)
+        banner?.init(Constants.PUB_ID,
+            Constants.PROFILE_ID, OPENWRAP_AD_UNIT_ID, POBAdSize.BANNER_SIZE_320x50)
 
         //optional listener to listen banner events
         banner?.setListener(POBBannerViewListener())
@@ -137,10 +140,4 @@ class BannerActivity : AppCompatActivity() {
         banner?.destroy()
     }
 
-    companion object {
-        private const val TAG = "BannerActivity"
-        private const val OPENWRAP_AD_UNIT_ID = "OpenWrapBannerAdUnit"
-        private const val PUB_ID = "156276"
-        private const val PROFILE_ID = 1165
-    }
 }

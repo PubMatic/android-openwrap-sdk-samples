@@ -37,8 +37,6 @@ class DFPMRECDisplayActivity : AppCompatActivity() {
 
     val TAG = "DFPBannerActivity"
     private val OPENWRAP_AD_UNIT_ID = "/15671365/pm_sdk/PMSDK-Demo-App-Banner"
-    private val PUB_ID = "156276"
-    private val PROFILE_ID = 1165
     private val DFP_AD_UNIT_ID = "/15671365/pm_sdk/PMSDK-Demo-App-Banner"
 
     private var banner: POBBannerView ? = null
@@ -68,7 +66,7 @@ class DFPMRECDisplayActivity : AppCompatActivity() {
         // Call init() to set tag information
         // For test IDs see - https://help.pubmatic.com/openwrap/docs/test-and-debug-your-integration-2#test-profileplacements
         banner = findViewById(R.id.banner)
-        banner?.init(PUB_ID, PROFILE_ID, OPENWRAP_AD_UNIT_ID, eventHandler)
+        banner?.init(Constants.PUB_ID, Constants.PROFILE_ID, OPENWRAP_AD_UNIT_ID, eventHandler)
 
         //optional listener to listen banner events
         banner?.setListener(POBBannerViewListener())
