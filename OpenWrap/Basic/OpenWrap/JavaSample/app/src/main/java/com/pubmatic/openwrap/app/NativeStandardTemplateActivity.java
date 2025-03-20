@@ -26,6 +26,7 @@ import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.pubmatic.sdk.common.OpenWrapSDK;
 import com.pubmatic.sdk.common.POBError;
@@ -61,6 +62,9 @@ public class NativeStandardTemplateActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_native);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle(R.string.native_standard_title);
 
         Button loadAd = findViewById(R.id.load_ad);
         renderAd = findViewById(R.id.render_ad);
@@ -72,7 +76,6 @@ public class NativeStandardTemplateActivity extends AppCompatActivity {
                 // Load the native ad
                 nativeAd = null;
                 container.removeAllViews();
-                renderAd.setEnabled(false);
                 nativeAdLoader.loadAd();
             }
         });
@@ -146,6 +149,7 @@ public class NativeStandardTemplateActivity extends AppCompatActivity {
             Log.d(TAG, "Ad Rendered");
             //Set the received rendered native ad view in your container
             container.addView(nativeAd.getAdView());
+            renderAd.setEnabled(false);
         }
 
         @Override

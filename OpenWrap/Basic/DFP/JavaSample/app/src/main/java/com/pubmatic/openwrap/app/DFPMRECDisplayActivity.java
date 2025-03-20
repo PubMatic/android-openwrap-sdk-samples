@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.ads.AdSize;
 import com.pubmatic.sdk.common.OpenWrapSDK;
@@ -45,6 +46,9 @@ public class DFPMRECDisplayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dfp_mrec_display);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle(R.string.mrec_display_title);
 
         // A valid Play Store Url of an Android application is required.
         POBApplicationInfo appInfo = new POBApplicationInfo();

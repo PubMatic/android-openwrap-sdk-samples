@@ -22,6 +22,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 
 import com.pubmatic.sdk.common.OpenWrapSDK
 import com.pubmatic.sdk.common.POBError
@@ -34,7 +35,6 @@ import com.pubmatic.sdk.nativead.datatype.POBNativeTemplateType
 import com.pubmatic.sdk.openwrap.core.POBBid
 import com.pubmatic.sdk.openwrap.core.POBBidEvent
 import com.pubmatic.sdk.openwrap.core.POBBidEventListener
-import kotlinx.android.synthetic.main.activity_native_ad.toolbar
 
 import java.net.MalformedURLException
 import java.net.URL
@@ -58,7 +58,10 @@ class NativeAdActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_native_ad)
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
+        toolbar.setTitle(R.string.title_activity_native)
+
         val loadAd = findViewById<Button>(R.id.load_ad)
         renderAd = findViewById(R.id.render_ad)
         container = findViewById(R.id.container)

@@ -19,13 +19,13 @@ package com.pubmatic.openwrap.kotlinsampleapp
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.google.android.gms.ads.AdSize
 import com.pubmatic.sdk.common.OpenWrapSDK
 import com.pubmatic.sdk.common.POBError
 import com.pubmatic.sdk.common.models.POBApplicationInfo
 import com.pubmatic.sdk.openwrap.banner.POBBannerView
 import com.pubmatic.sdk.openwrap.eventhandler.dfp.DFPBannerEventHandler
-import kotlinx.android.synthetic.main.activity_banner.*
 import java.net.MalformedURLException
 import java.net.URL
 
@@ -43,7 +43,10 @@ class DFPMRECVideoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mrec_video)
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
+        toolbar.setTitle(R.string.title_activity_mrec_video)
+
         OpenWrapSDK.setLogLevel(OpenWrapSDK.LogLevel.All)
 
         // A valid Play Store Url of an Android app. Required.

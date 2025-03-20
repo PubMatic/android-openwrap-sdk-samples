@@ -3,4 +3,12 @@
     <string name="load_ad">Load Ad</string>
     <string name="render_ad">Render Ad</string>
     <string name="show_ad">Show Ad</string>
+    <string name="banner_title">Banner</string>
+    <string name="interstitial_display_title">Interstitial Display</string>
+    <string name="interstitial_video_title">Interstitial Video</string>
+    <string name="mrec_display_title">MREC Display</string>
+    <string name="mrec_video_title">MREC Video</string>
+    <string name="rewarded_title">Rewarded</string>
+    <string name="native_standard_title">Native Ad - Standard Template</string>
+    <string name="native_custom_title">Native Ad - Custom Template</string>
 </resources>

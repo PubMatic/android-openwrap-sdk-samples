@@ -30,6 +30,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.ads.nativetemplates.NativeTemplateStyle;
 import com.google.android.ads.nativetemplates.TemplateView;
@@ -95,6 +96,9 @@ public class GAMNativeCustomizedTemplateActivity extends AppCompatActivity {
         Button loadAd = findViewById(R.id.load_ad);
         renderAd = findViewById(R.id.render_ad);
         container = findViewById(R.id.container);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle(R.string.native_custom_title);
 
         loadAd.setOnClickListener(new View.OnClickListener() {
             @Override

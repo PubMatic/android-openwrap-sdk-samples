@@ -23,6 +23,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.google.android.ads.nativetemplates.NativeTemplateStyle
 import com.google.android.ads.nativetemplates.TemplateView
 import com.google.android.gms.ads.AdSize
@@ -36,7 +37,6 @@ import com.pubmatic.sdk.openwrap.banner.POBBannerView
 import com.pubmatic.sdk.openwrap.eventhandler.dfp.GAMNativeBannerEventHandler
 import com.pubmatic.sdk.openwrap.eventhandler.dfp.GAMNativeBannerEventHandler.NativeAdListener
 import com.pubmatic.sdk.openwrap.eventhandler.dfp.GAMNativeBannerEventHandler.NativeCustomFormatAdListener
-import kotlinx.android.synthetic.main.activity_banner.*
 import java.net.MalformedURLException
 import java.net.URL
 
@@ -55,7 +55,10 @@ class GAMNativeBannerActivity : AppCompatActivity() {
         setContentView(R.layout.activity_native_banner)
         container = findViewById(R.id.container)
         template = findViewById(R.id.my_template)
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
+        toolbar.setTitle(R.string.title_activity_native_banner)
+
         OpenWrapSDK.setLogLevel(OpenWrapSDK.LogLevel.All)
 
         // A valid Play Store Url of an Android app. Required.

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="5dp"
-    >
+    android:fitsSystemWindows="true">
     <TextView
         android:id="@+id/ad_title"
         android:layout_width="match_parent"

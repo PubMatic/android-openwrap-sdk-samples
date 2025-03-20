@@ -20,6 +20,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.widget.Button
+import androidx.appcompat.widget.Toolbar
 import com.pubmatic.sdk.common.OpenWrapSDK
 import com.pubmatic.sdk.common.POBError
 import com.pubmatic.sdk.common.models.POBApplicationInfo
@@ -44,7 +45,9 @@ class InterstitialActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_interstitial)
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
+        toolbar.setTitle(R.string.title_activity_interstitial)
 
         // A valid Play Store Url of an Android app. Required.
         val appInfo = POBApplicationInfo()
@@ -76,7 +79,6 @@ class InterstitialActivity : AppCompatActivity() {
         showAd?.setOnClickListener {
             // check if the interstitial is ready
             showInterstitialAd()
-            showAd?.setEnabled(false)
         }
 
     }
@@ -126,6 +128,7 @@ class InterstitialActivity : AppCompatActivity() {
         // Callback method notifies that the interstitial ad has been animated off the screen.
         override fun onAdClosed(ad: POBInterstitial) {
             Log.d(TAG, "onAdClosed")
+            showAd?.setEnabled(false)
         }
 
         // Callback method notifies ad click

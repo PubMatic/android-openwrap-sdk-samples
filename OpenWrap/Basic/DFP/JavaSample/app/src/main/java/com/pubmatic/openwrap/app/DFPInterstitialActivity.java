@@ -22,6 +22,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.pubmatic.sdk.common.OpenWrapSDK;
 import com.pubmatic.sdk.common.POBError;
@@ -43,6 +44,9 @@ public class DFPInterstitialActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interstitial);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle(R.string.interstitial_display_title);
 
         // A valid Play Store Url of an Android application is required.
         POBApplicationInfo appInfo = new POBApplicationInfo();
@@ -170,6 +174,4 @@ public class DFPInterstitialActivity extends AppCompatActivity {
             Log.d(TAG, "onAdImpression");
         }
     }
-
-
 }

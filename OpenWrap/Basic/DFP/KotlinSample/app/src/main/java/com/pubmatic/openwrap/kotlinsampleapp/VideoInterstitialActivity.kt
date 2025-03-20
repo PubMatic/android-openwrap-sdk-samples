@@ -20,12 +20,12 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.pubmatic.sdk.common.OpenWrapSDK
 import com.pubmatic.sdk.common.POBError
 import com.pubmatic.sdk.common.models.POBApplicationInfo
 import com.pubmatic.sdk.openwrap.eventhandler.dfp.DFPInterstitialEventHandler
 import com.pubmatic.sdk.openwrap.interstitial.POBInterstitial
-import kotlinx.android.synthetic.main.activity_interstitial.*
 import java.net.MalformedURLException
 import java.net.URL
 
@@ -45,7 +45,9 @@ class VideoInterstitialActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_interstitial)
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
+        toolbar.setTitle(R.string.title_activity_video_interstitial)
 
         // A valid Play Store Url of an Android app. Required.
         val appInfo = POBApplicationInfo()

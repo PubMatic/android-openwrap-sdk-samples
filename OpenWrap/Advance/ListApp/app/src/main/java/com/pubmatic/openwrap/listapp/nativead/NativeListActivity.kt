@@ -20,6 +20,7 @@ package com.pubmatic.openwrap.listapp.nativead
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -58,6 +59,9 @@ class NativeListActivity : AppCompatActivity(), NativeFeedListAdapter.OnNativeAd
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_native_list)
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        toolbar.setTitle("Native Ad List")
 
         // Initialize the recycler view with necessary properties
         recyclerView = findViewById(R.id.feed_list)

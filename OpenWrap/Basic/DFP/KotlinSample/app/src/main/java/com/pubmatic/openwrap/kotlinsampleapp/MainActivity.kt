@@ -23,12 +23,12 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pubmatic.sdk.common.OpenWrapSDK
 import com.pubmatic.sdk.common.models.POBDSAComplianceStatus
-import kotlinx.android.synthetic.main.activity_home.*
 
 /**
  * This class host the list view to show the entry for the Ad types for demonstrating the respective
@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         recycler = findViewById(R.id.recycler_view)

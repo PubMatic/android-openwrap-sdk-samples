@@ -2,18 +2,25 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+        <include
+            layout="@layout/toolbar"
+            android:id="@+id/include_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
     <Button
         android:id="@+id/load_ad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/load_ad"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/include_toolbar"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="100dp"/>

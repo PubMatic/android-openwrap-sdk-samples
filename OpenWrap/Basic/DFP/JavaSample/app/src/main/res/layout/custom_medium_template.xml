@@ -2,7 +2,9 @@
 <com.pubmatic.sdk.nativead.views.POBNativeAdMediumTemplateView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/pob_dimen_300dp"
     android:layout_height="@dimen/pob_dimen_250dp"
+    android:fitsSystemWindows="true"
     android:background="@color/POBTemplateBackground">
+
 
     <ImageView
         android:id="@+id/ad_icon"

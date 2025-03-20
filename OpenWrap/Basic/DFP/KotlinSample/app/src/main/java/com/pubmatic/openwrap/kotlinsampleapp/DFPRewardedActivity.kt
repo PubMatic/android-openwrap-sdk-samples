@@ -21,13 +21,13 @@ import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.pubmatic.sdk.common.OpenWrapSDK
 import com.pubmatic.sdk.common.POBError
 import com.pubmatic.sdk.common.models.POBApplicationInfo
 import com.pubmatic.sdk.openwrap.core.POBReward
 import com.pubmatic.sdk.openwrap.eventhandler.dfp.DFPRewardedEventHandler
 import com.pubmatic.sdk.rewardedad.POBRewardedAd
-import kotlinx.android.synthetic.main.activity_dfp_rewarded.*
 import java.net.MalformedURLException
 import java.net.URL
 
@@ -46,7 +46,9 @@ class DFPRewardedActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dfp_rewarded)
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
+        toolbar.setTitle(R.string.title_activity_rewarded)
 
         // A valid Play Store Url of an Android app. Required.
         val appInfo = POBApplicationInfo()
