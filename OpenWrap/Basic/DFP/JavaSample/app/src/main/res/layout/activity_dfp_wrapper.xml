@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/parent"
     android:layout_width="match_parent"
@@ -14,13 +13,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <com.pubmatic.sdk.openwrap.banner.POBBannerView
-        android:id="@+id/banner"
-        android:layout_width="320dp"
-        android:layout_alignParentBottom="true"
-        android:layout_height="50dp"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="5dp"
-        android:layout_below="@+id/include_toolbar"
-        />
+    <include layout="@layout/ad_event_logs"
+        android:id="@+id/event_logs"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pob_dimen_300dp"
+        android:layout_below="@+id/include_toolbar"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_below="@+id/event_logs">
+
+        <com.pubmatic.sdk.openwrap.banner.POBBannerView
+            android:id="@+id/banner"
+            android:layout_width="320dp"
+            android:layout_alignParentBottom="true"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="5dp" />
+    </LinearLayout>
+
 </RelativeLayout>

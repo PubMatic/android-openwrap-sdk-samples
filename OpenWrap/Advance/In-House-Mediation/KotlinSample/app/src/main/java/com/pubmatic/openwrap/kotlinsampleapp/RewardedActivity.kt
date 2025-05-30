@@ -17,8 +17,8 @@
 package com.pubmatic.openwrap.kotlinsampleapp
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.pubmatic.sdk.common.OpenWrapSDK
@@ -29,7 +29,6 @@ import com.pubmatic.sdk.openwrap.core.POBBidEvent
 import com.pubmatic.sdk.openwrap.core.POBBidEventListener
 import com.pubmatic.sdk.openwrap.core.POBReward
 import com.pubmatic.sdk.rewardedad.POBRewardedAd
-import kotlinx.android.synthetic.main.activity_rewarded.*
 import java.net.MalformedURLException
 import java.net.URL
 
@@ -37,7 +36,7 @@ import java.net.URL
 /**
  * Activity to show Rewarded Ad Implementation for bid caching flow
  */
-class RewardedActivity : AppCompatActivity() {
+class RewardedActivity : AppCompatActivity(), LoggerListener {
 
     private val TAG = "RewardedActivity"
     private val OPENWRAP_AD_UNIT_ID = "OpenWrapRewardedAdUnit"
@@ -45,7 +44,7 @@ class RewardedActivity : AppCompatActivity() {
     private var rewardedAd : POBRewardedAd? = null
     private var loadAd: Button? = null
     private var showAd: Button? = null
-
+    private lateinit var logTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +52,14 @@ class RewardedActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         toolbar.setTitle(R.string.title_activity_rewarded)
+
+        logTextView = findViewById(R.id.ad_event_logs)
+        Logger.registerLoggerListener(this)
+        Logger.log(
+            Logger.LogType.INFO,
+            Constants.TAG_OWSDK,
+            Constants.OWSDK_VERSION_LOG + OpenWrapSDK.getVersion()
+        )
 
         // A valid Play Store Url of an Android app. Required.
         val appInfo = POBApplicationInfo()
@@ -78,13 +85,13 @@ class RewardedActivity : AppCompatActivity() {
         rewardedAd?.setBidEventListener(object : POBBidEventListener {
             override fun onBidReceived(bidEvent: POBBidEvent, bid: POBBid) {
                 // Make use of the received bid.
-                Log.d(TAG, "Bid received.")
+                Logger.log(Logger.LogType.DEBUG, TAG, "Bid received.")
                 // Notify rewarded ad to proceed to load the ad after using the bid.
                 useBidAndProceed()
             }
 
             override fun onBidFailed(bidEvent: POBBidEvent, error: POBError) {
-                Log.d(TAG, String.format("Bid receive failed with error : %s",  error.toString()))
+                Logger.log(Logger.LogType.DEBUG, TAG, String.format("Bid receive failed with error : %s",  error.toString()))
                 rewardedAd?.proceedOnError(POBBidEvent.BidEventError.CLIENT_SIDE_AUCTION_LOSS, "Bid lost client side auction.")
             }
         })
@@ -116,7 +123,7 @@ class RewardedActivity : AppCompatActivity() {
 
     private fun useBidAndProceed() {
         // Call rewardedAd?.proceedToLoadAd() to complete the flow
-        Log.d(TAG, "Proceeding with load ad.")
+        Logger.log(Logger.LogType.DEBUG, TAG, "Proceeding with load ad.")
         rewardedAd?.proceedToLoadAd()
     }
 
@@ -128,56 +135,56 @@ class RewardedActivity : AppCompatActivity() {
 
         // Callback method notifies that an ad has been received successfully.
         override fun onAdReceived(rewardedAd: POBRewardedAd) {
-            Log.d(TAG, "Rewarded Ad : Ad Received")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Rewarded Ad : Ad Received")
             // Method gets called when ad gets loaded in container
             // Here, you can show rewarded ad to user
             showAd?.isEnabled = true
         }
 
         override fun onAdFailedToLoad(rewardedAd: POBRewardedAd, error: POBError) {
-            Log.e(TAG, "Rewarded Ad : Ad failed with error - $error")
+            Logger.log(Logger.LogType.ERROR, TAG, "Rewarded Ad : Ad failed with error - $error")
         }
 
         // Callback method notifies ad is about to leave app
         override fun onAppLeaving(rewardedAd: POBRewardedAd) {
-            Log.d(TAG, "Rewarded Ad : App Leaving")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Rewarded Ad : App Leaving")
         }
 
         // Callback method notifies that the rewarded ad will be presented as a full screen modal on top of the current view.
         override fun onAdOpened(rewardedAd: POBRewardedAd) {
-            Log.d(TAG, "Rewarded Ad : Ad Opened")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Rewarded Ad : Ad Opened")
         }
 
         // Callback method notifies that the rewarded ad has been animated off the screen.
         override fun onAdClosed(rewardedAd: POBRewardedAd) {
-            Log.d(TAG, "Rewarded Ad : Ad Closed")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Rewarded Ad : Ad Closed")
         }
 
         // Callback method notifies ad click
         override fun onAdClicked(rewardedAd: POBRewardedAd) {
-            Log.d(TAG, "Rewarded Ad : Ad Clicked")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Rewarded Ad : Ad Clicked")
         }
 
         // Callback method notifies ad is about to expire
         override fun onAdExpired(rewardedAd: POBRewardedAd) {
             // Implement your custom logic
-            Log.d(TAG, "Rewarded Ad : Ad Expired")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Rewarded Ad : Ad Expired")
         }
 
         // Callback method notifies on Ad Impression
         override fun onAdImpression(rewardedAd: POBRewardedAd) {
             // Implement your custom logic
-            Log.d(TAG, "Rewarded Ad : Ad Impression")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Rewarded Ad : Ad Impression")
         }
 
         // Callback method notifies user will be rewarded once the ad is completely viewed
         override fun onReceiveReward(rewardedAd: POBRewardedAd, reward: POBReward) {
-            Log.d(TAG, "Rewarded Ad : Ad should reward - ${reward.amount}(${reward.currencyType})")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Rewarded Ad : Ad should reward - ${reward.amount}(${reward.currencyType})")
         }
 
         // Callback method notifies that the error encountered while rendering the ad
         override fun onAdFailedToShow(rewardedAd: POBRewardedAd, error: POBError) {
-            Log.d(TAG, "Rewarded Ad: Ad failed with error $error")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Rewarded Ad: Ad failed with error $error")
         }
     }
 
@@ -186,6 +193,12 @@ class RewardedActivity : AppCompatActivity() {
         super.onDestroy()
         // destroy rewarded
         rewardedAd?.destroy()
+        Logger.removeLoggerListener(this)
+    }
+
+    // Appends a log message to the log TextView.
+    override fun log(message: String) {
+        logTextView.append(message + "\n")
     }
 
 }

@@ -18,7 +18,12 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintTop_toBottomOf="@+id/include_toolbar"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="?attr/actionBarSize">
+
+        <include layout="@layout/ad_event_logs"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/banner"/>
 
         <com.pubmatic.sdk.openwrap.banner.POBBannerView
             android:id="@+id/banner"

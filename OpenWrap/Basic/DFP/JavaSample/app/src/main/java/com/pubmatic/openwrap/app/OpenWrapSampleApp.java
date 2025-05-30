@@ -54,4 +54,3 @@ public class OpenWrapSampleApp extends MultiDexApplication {
                 });
     }
 }
-

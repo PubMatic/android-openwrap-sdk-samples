@@ -17,8 +17,8 @@
 package com.pubmatic.openwrap.kotlinsampleapp
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -35,13 +35,14 @@ import java.net.URL
  * This class demonstrate the Rewarded Ad workflow via OW SDK where DFP / GAM SDK is integrated
  * as a primary ad SDK.
  */
-class DFPRewardedActivity : AppCompatActivity() {
+class DFPRewardedActivity : AppCompatActivity(), LoggerListener {
 
     private val OPENWRAP_AD_UNIT_ID = "/15671365/pm_sdk/PMSDK-Demo-App-RewardedAd"
     private val DFP_AD_UNIT = "/15671365/pm_sdk/PMSDK-Demo-App-RewardedAd"
     private var rewarded : POBRewardedAd? = null
     private var loadAd: Button? = null
     private var showAd: Button? = null
+    private lateinit var logTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +50,10 @@ class DFPRewardedActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         toolbar.setTitle(R.string.title_activity_rewarded)
+
+        logTextView = findViewById(R.id.ad_event_logs)
+        Logger.registerLoggerListener(this)
+        Logger.log(Logger.LogType.INFO, Constants.TAG_OWSDK, Constants.OWSDK_VERSION_LOG + OpenWrapSDK.getVersion())
 
         // A valid Play Store Url of an Android app. Required.
         val appInfo = POBApplicationInfo()
@@ -99,6 +104,12 @@ class DFPRewardedActivity : AppCompatActivity() {
         super.onDestroy()
         //Destroy Rewarded Ad
         rewarded?.destroy()
+        Logger.removeLoggerListener(this)
+    }
+
+    // Appends a log message to the log TextView.
+    override fun log(message: String) {
+        logTextView.append(message + "\n")
     }
 
     /**
@@ -110,7 +121,7 @@ class DFPRewardedActivity : AppCompatActivity() {
 
         // Callback method notifies that an ad has been received successfully.
         override fun onAdReceived(ad: POBRewardedAd) {
-            Log.d(TAG, "Rewarded:onAdReceived")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Rewarded:onAdReceived")
             //Method gets called when ad gets loaded in container
             //Here, you can show rewarded ad to user
             showAd?.setEnabled(true)
@@ -118,48 +129,48 @@ class DFPRewardedActivity : AppCompatActivity() {
 
         // Callback method notifies an error encountered while loading an ad.
         override fun onAdFailedToLoad(ad: POBRewardedAd, error: POBError) {
-            Log.e(TAG, "Rewarded:onAdFailedToLoad : Ad failed with load error - " + error.toString())
+            Logger.log(Logger.LogType.ERROR, TAG, "Rewarded:onAdFailedToLoad : Ad failed with load error - " + error.toString())
             //Method gets called when loadAd fails to load ad
             //Here, you can put logger and see why ad failed to load
         }
 
         // Callback method notifies an error encountered while rendering an ad.
         override fun onAdFailedToShow(ad: POBRewardedAd, error: POBError) {
-            Log.e(TAG, "Rewarded:onAdFailedToShow : Ad failed with show error - " + error.toString())
+            Logger.log(Logger.LogType.ERROR, TAG, "Rewarded:onAdFailedToShow : Ad failed with show error - " + error.toString())
             //Method gets called when loadAd fails to load ad
             //Here, you can put logger and see why ad failed to load
         }
 
         // Callback method notifies that a user interaction will open another app (for example, App Store), leaving the current app.
         override fun onAppLeaving(ad: POBRewardedAd) {
-            Log.d(TAG, "Rewarded:onAppLeaving")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Rewarded:onAppLeaving")
         }
 
         // Callback method notifies that the rewarded ad will be presented as a modal on top of the current view.
         override fun onAdOpened(ad: POBRewardedAd) {
-            Log.d(TAG, "Rewarded:onAdOpened")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Rewarded:onAdOpened")
         }
 
         // Callback method notifies that the rewarded ad has been animated off the screen.
         override fun onAdClosed(ad: POBRewardedAd) {
-            Log.d(TAG, "Rewarded:onAdClosed")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Rewarded:onAdClosed")
         }
 
         // Callback method notifies ad click
         override fun onAdClicked(ad: POBRewardedAd) {
-            Log.d(TAG, "Rewarded:onAdClicked")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Rewarded:onAdClicked")
         }
 
         // Callback method notifies on Ad Impression
         override fun onAdImpression(ad: POBRewardedAd) {
-            Log.d(TAG, "Rewarded:onAdImpression")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Rewarded:onAdImpression")
         }
 
         //Callback method notifies about rewards received
         override fun onReceiveReward(ad: POBRewardedAd, reward: POBReward){
 
             // As this is callback method, No action Required
-            Log.d(TAG, "Rewarded: Ad should Reward -"+reward.amount + "("+ reward.currencyType+")")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Rewarded: Ad should Reward -"+reward.amount + "("+ reward.currencyType+")")
             Toast.makeText(applicationContext, "Congratulation! You are rewarded with " + reward.getAmount().toString() + " " + reward.getCurrencyType(), Toast.LENGTH_LONG).show()
         }
     }

@@ -17,8 +17,8 @@
 package com.pubmatic.openwrap.app;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -39,12 +39,13 @@ import java.net.URL;
  * This class demonstrate the Rewarded Ad workflow via OW SDK where DFP / GAM SDK is integrated
  * as a primary ad SDK.
  */
-public class DFPRewardedActivity extends AppCompatActivity {
+public class DFPRewardedActivity extends AppCompatActivity implements LoggerListener {
 
     private static final String OPENWRAP_AD_UNIT_ID = "/15671365/pm_sdk/PMSDK-Demo-App-RewardedAd";
     private static final String DFP_AD_UNIT_ID = "/15671365/pm_sdk/PMSDK-Demo-App-RewardedAd";
 
     private POBRewardedAd rewarded;
+    private TextView logTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,10 @@ public class DFPRewardedActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(R.string.rewarded_title);
+
+        logTextView = findViewById(R.id.ad_event_logs);
+        Logger.registerLoggerListener(this);
+        Logger.log(Logger.LogType.INFO, Constants.TAG_OWSDK, Constants.OWSDK_VERSION_LOG + OpenWrapSDK.getVersion());
 
         // A valid Play Store Url of an Android application is required.
         POBApplicationInfo appInfo = new POBApplicationInfo();
@@ -117,6 +122,7 @@ public class DFPRewardedActivity extends AppCompatActivity {
         if(rewarded != null) {
             rewarded.destroy();
         }
+        Logger.removeLoggerListener(this);
     }
 
     class POBRewardedAdListenerImpl extends POBRewardedAd.POBRewardedAdListener {
@@ -125,7 +131,7 @@ public class DFPRewardedActivity extends AppCompatActivity {
         // Callback method notifies that an ad has been received successfully.
         @Override
         public void onAdReceived(@NonNull POBRewardedAd ad) {
-            Log.d(TAG, "Rewarded: onAdReceived");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Rewarded: onAdReceived");
             //Method gets called when ad gets loaded in container
             //Here, you can show Rewarded ad to user
             findViewById(R.id.showAdBtn).setEnabled(true);
@@ -134,8 +140,8 @@ public class DFPRewardedActivity extends AppCompatActivity {
         // Callback method notifies an error encountered while loading an ad.
         @Override
         public void onAdFailedToLoad(@NonNull POBRewardedAd ad, @NonNull POBError error) {
-            Log.d(TAG, "Rewarded : onAdFailedToLoad" );
-            Log.e(TAG,"Ad failed with load error - " + error.toString());
+            Logger.log(Logger.LogType.DEBUG, TAG, "Rewarded : onAdFailedToLoad" );
+            Logger.log(Logger.LogType.ERROR, TAG,"Ad failed with load error - " + error.toString());
             //Method gets called when sdk fails to load ad
             //Here, you can put logger and see why ad failed to load
         }
@@ -143,8 +149,8 @@ public class DFPRewardedActivity extends AppCompatActivity {
         // Callback method notifies an error encountered while rendering an ad.
         @Override
         public void onAdFailedToShow(@NonNull POBRewardedAd ad,@NonNull POBError error) {
-            Log.e(TAG, "Rewarded : onAdFailedToShow");
-            Log.e(TAG,"Ad failed with show error - " + error.toString());
+            Logger.log(Logger.LogType.ERROR, TAG, "Rewarded : onAdFailedToShow");
+            Logger.log(Logger.LogType.ERROR, TAG,"Ad failed with show error - " + error.toString());
             //Method gets called when sdk fails to show ad
             //Here, you can put logger and see why ad failed to show
         }
@@ -153,39 +159,44 @@ public class DFPRewardedActivity extends AppCompatActivity {
         // Callback method notifies that a user interaction will open another app (for example, App Store), leaving the current app.
         @Override
         public void onAppLeaving(@NonNull POBRewardedAd ad) {
-            Log.d(TAG, "Rewarded : onAppLeaving");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Rewarded : onAppLeaving");
         }
 
         // Callback method notifies that the rewarded ad will be presented as a modal on top of the current view controller
         @Override
         public void onAdOpened(@NonNull POBRewardedAd ad) {
-            Log.d(TAG, "Rewarded : onAdOpened");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Rewarded : onAdOpened");
         }
 
         // Callback method notifies that the rewarded ad has been animated off the screen.
         @Override
         public void onAdClosed(@NonNull POBRewardedAd ad) {
-            Log.d(TAG, "Rewarded : onAdClosed");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Rewarded : onAdClosed");
         }
 
         // Callback method notifies ad click
         @Override
         public void onAdClicked(@NonNull POBRewardedAd ad) {
-            Log.d(TAG, "Rewarded : onAdClicked");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Rewarded : onAdClicked");
         }
 
         @Override
         public void onReceiveReward(@NonNull POBRewardedAd ad, @NonNull POBReward reward) {
             // As this is callback method, No action Required
-            Log.d(TAG,"Rewarded : Ad should Reward -" + reward.getAmount() +"(" + reward.getCurrencyType()+")");
+            Logger.log(Logger.LogType.DEBUG, TAG,"Rewarded : Ad should Reward -" + reward.getAmount() +"(" + reward.getCurrencyType()+")");
             Toast.makeText(getApplicationContext(), "Congratulation! You are rewarded with "+reward.getAmount()+" "+reward.getCurrencyType(), Toast.LENGTH_LONG).show();
         }
 
         // Callback method for ad Impression
         @Override
         public void onAdImpression(@NonNull POBRewardedAd ad) {
-            Log.d(TAG, "Rewarded : onAdImpression");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Rewarded : onAdImpression");
         }
     }
 
+    // Appends a log message to the log TextView.
+    @Override
+    public void log(@NonNull String message) {
+        logTextView.append(message + "\n");
+    }
 }

@@ -35,6 +35,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.pubmatic.sdk.common.BuildConfig;
 import com.pubmatic.sdk.common.OpenWrapSDK;
 import com.pubmatic.sdk.common.models.POBDSAComplianceStatus;
 

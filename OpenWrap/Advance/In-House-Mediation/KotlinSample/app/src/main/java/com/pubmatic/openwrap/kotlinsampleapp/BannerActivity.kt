@@ -17,7 +17,7 @@
 package com.pubmatic.openwrap.kotlinsampleapp
 
 import android.os.Bundle
-import android.util.Log
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.pubmatic.sdk.common.OpenWrapSDK
@@ -28,7 +28,6 @@ import com.pubmatic.sdk.openwrap.banner.POBBannerView
 import com.pubmatic.sdk.openwrap.core.POBBid
 import com.pubmatic.sdk.openwrap.core.POBBidEvent
 import com.pubmatic.sdk.openwrap.core.POBBidEventListener
-import kotlinx.android.synthetic.main.activity_banner.*
 import java.net.MalformedURLException
 import java.net.URL
 
@@ -36,12 +35,13 @@ import java.net.URL
 /**
  * Activity to show Banner Implementation for bid caching flow
  */
-class BannerActivity : AppCompatActivity() {
+class BannerActivity : AppCompatActivity(), LoggerListener {
 
     private val TAG = "BannerActivity"
     private val OPENWRAP_AD_UNIT_ID = "OpenWrapBannerAdUnit"
 
     private var banner: POBBannerView ? = null
+    private lateinit var logTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +49,14 @@ class BannerActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         toolbar.setTitle(R.string.title_activity_banner)
+
+        logTextView = findViewById(R.id.ad_event_logs)
+        Logger.registerLoggerListener(this)
+        Logger.log(
+            Logger.LogType.INFO,
+            Constants.TAG_OWSDK,
+            Constants.OWSDK_VERSION_LOG + OpenWrapSDK.getVersion()
+        )
 
         OpenWrapSDK.setLogLevel(OpenWrapSDK.LogLevel.All)
 
@@ -77,13 +85,13 @@ class BannerActivity : AppCompatActivity() {
         banner?.setBidEventListener(object : POBBidEventListener {
             override fun onBidReceived(bidEvent: POBBidEvent, bid: POBBid) {
                 // Make use of the received bid,  e.g. perform auction with your setup
-                Log.d(TAG, "Bid received.")
+                Logger.log(Logger.LogType.DEBUG, TAG, "Bid received.")
                 // Notify banner view to proceed to load the ad after using the bid.
                 useBidAndProceed()
             }
 
             override fun onBidFailed(bidEvent: POBBidEvent, error: POBError) {
-                Log.d(TAG, String.format("Bid receive failed with error : %s",  error.toString()))
+                Logger.log(Logger.LogType.DEBUG, TAG, String.format("Bid receive failed with error : %s",  error.toString()))
                 banner?.proceedOnError(POBBidEvent.BidEventError.CLIENT_SIDE_AUCTION_LOSS , "Bid lost client side auction.")
             }
         })
@@ -94,7 +102,7 @@ class BannerActivity : AppCompatActivity() {
 
     private fun useBidAndProceed() {
         // Call banner?.proceedToLoadAd() to complete the flow
-        Log.d(TAG, "Proceeding with load ad.")
+        Logger.log(Logger.LogType.DEBUG, TAG, "Proceeding with load ad.")
         banner?.proceedToLoadAd()
     }
 
@@ -105,36 +113,36 @@ class BannerActivity : AppCompatActivity() {
 
         // Callback method Notifies that an  banner ad has been successfully loaded and rendered.
         override fun onAdReceived(view: POBBannerView) {
-            Log.d(TAG, "onAdReceived")
+            Logger.log(Logger.LogType.DEBUG, TAG, "onAdReceived")
         }
 
         // Callback method Notifies an error encountered while loading or rendering an ad.
         override fun onAdFailed(view: POBBannerView, error: POBError) {
-            Log.e(TAG, "onAdFailed : Ad failed with error - $error")
+            Logger.log(Logger.LogType.ERROR, TAG, "onAdFailed : Ad failed with error - $error")
         }
 
         // Callback method Notifies that the  banner ad will launch a dialog on top of the current view
         override fun onAdOpened(view: POBBannerView) {
-            Log.d(TAG, "onAdOpened")
+            Logger.log(Logger.LogType.DEBUG, TAG, "onAdOpened")
         }
 
         // Callback method Notifies that the banner ad view is clicked.
         override fun onAdClicked(view: POBBannerView) {
-            Log.d(TAG, "onAdClicked")
+            Logger.log(Logger.LogType.DEBUG, TAG, "onAdClicked")
         }
 
         // Callback method Notifies that the  banner ad has dismissed the modal on top of the current view
         override fun onAdClosed(view: POBBannerView) {
-            Log.d(TAG, "onAdClosed")
+            Logger.log(Logger.LogType.DEBUG, TAG, "onAdClosed")
         }
 
         override fun onAppLeaving(view: POBBannerView) {
-            Log.d(TAG, "Banner : App Leaving")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Banner : App Leaving")
         }
 
         // Callback method Notifies impression recorded on ad view
         override fun onAdImpression(view: POBBannerView) {
-            Log.d(TAG, "onAdImpression")
+            Logger.log(Logger.LogType.DEBUG, TAG, "onAdImpression")
         }
     }
 
@@ -142,6 +150,12 @@ class BannerActivity : AppCompatActivity() {
         // destroy banner before onDestroy of Activity lifeCycle
         super.onDestroy()
         banner?.destroy()
+        Logger.removeLoggerListener(this)
+    }
+
+    // Appends a log message to the log TextView.
+    override fun log(message: String) {
+        logTextView.append(message + "\n")
     }
 
 }

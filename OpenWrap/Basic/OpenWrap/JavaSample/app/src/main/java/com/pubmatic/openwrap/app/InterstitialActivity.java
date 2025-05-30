@@ -24,6 +24,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.pubmatic.sdk.common.OpenWrapSDK;
 import com.pubmatic.sdk.common.POBError;
@@ -33,11 +34,12 @@ import com.pubmatic.sdk.openwrap.interstitial.POBInterstitial;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class InterstitialActivity extends AppCompatActivity {
+public class InterstitialActivity extends AppCompatActivity implements LoggerListener {
 
     private static final String OPENWRAP_AD_UNIT_ID = "OpenWrapInterstitialAdUnit";
 
     private POBInterstitial interstitial;
+    private TextView logTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,10 @@ public class InterstitialActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(R.string.interstitial_display_title);
+
+        logTextView = findViewById(R.id.ad_event_logs);
+        Logger.registerLoggerListener(this);
+        Logger.log(Logger.LogType.INFO, Constants.TAG_OWSDK, Constants.OWSDK_VERSION_LOG + OpenWrapSDK.getVersion());
 
         // A valid Play Store Url of an Android application is required.
         POBApplicationInfo appInfo = new POBApplicationInfo();
@@ -107,7 +113,7 @@ public class InterstitialActivity extends AppCompatActivity {
         if (null != interstitial) {
             interstitial.destroy();
         }
-
+        Logger.removeLoggerListener(this);
     }
 
     // Interstitial Ad listener callbacks
@@ -116,7 +122,7 @@ public class InterstitialActivity extends AppCompatActivity {
         // Callback method notifies that an ad has been received successfully.
         @Override
         public void onAdReceived(@NonNull POBInterstitial ad) {
-            Log.d(TAG, "onAdReceived");
+            Logger.log(Logger.LogType.DEBUG, TAG, "onAdReceived");
             //Method gets called when ad gets loaded in container
             //Here, you can show interstitial ad to user
             findViewById(R.id.showAdBtn).setEnabled(true);
@@ -125,7 +131,7 @@ public class InterstitialActivity extends AppCompatActivity {
         // Callback method notifies an error encountered while loading an ad.
         @Override
         public void onAdFailedToLoad(@NonNull POBInterstitial ad, @NonNull POBError error) {
-            Log.e(TAG, "onAdFailedToLoad : Ad failed to load with error -" + error.toString());
+            Logger.log(Logger.LogType.ERROR, TAG, "onAdFailedToLoad : Ad failed to load with error -" + error.toString());
             //Method gets called when loadAd fails to load ad
             //Here, you can put logger and see why ad failed to load
         }
@@ -133,7 +139,7 @@ public class InterstitialActivity extends AppCompatActivity {
         // Callback method notifies an error encountered while showing an ad.
         @Override
         public void onAdFailedToShow(@NonNull POBInterstitial ad, @NonNull POBError error) {
-            Log.e(TAG, "onAdFailedToShow : Ad failed to show with error -" + error.toString());
+            Logger.log(Logger.LogType.ERROR, TAG, "onAdFailedToShow : Ad failed to show with error -" + error.toString());
             //Method gets called when loadAd fails to show ad
             //Here, you can put logger and see why ad failed to show
         }
@@ -141,31 +147,37 @@ public class InterstitialActivity extends AppCompatActivity {
         // Callback method notifies that the interstitial ad will be presented as a modal on top of the current view controller
         @Override
         public void onAdOpened(@NonNull POBInterstitial ad) {
-            Log.d(TAG, "onAdOpened");
+            Logger.log(Logger.LogType.DEBUG, TAG, "onAdOpened");
         }
 
         // Callback method notifies that the interstitial ad has been animated off the screen.
         @Override
         public void onAdClosed(@NonNull POBInterstitial ad) {
-            Log.d(TAG, "onAdClosed");
+            Logger.log(Logger.LogType.DEBUG, TAG, "onAdClosed");
         }
 
         // Callback method notifies ad click
         @Override
         public void onAdClicked(@NonNull POBInterstitial ad) {
-            Log.d(TAG, "onAdClicked");
+            Logger.log(Logger.LogType.DEBUG, TAG, "onAdClicked");
         }
 
         // Callback method Notifies whenever current app goes in the background due to user click
         @Override
         public void onAppLeaving(@NonNull POBInterstitial ad) {
             // Implement your custom logic
-            Log.d(TAG, "Interstitial : App Leaving");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Interstitial : App Leaving");
         }
 
         @Override
         public void onAdImpression(@NonNull POBInterstitial ad) {
-            Log.d(TAG, "onAdImpression");
+            Logger.log(Logger.LogType.DEBUG, TAG, "onAdImpression");
         }
+    }
+
+    // Appends a log message to the log TextView.
+    @Override
+    public void log(@NonNull String message) {
+        logTextView.append(message + "\n");
     }
 }

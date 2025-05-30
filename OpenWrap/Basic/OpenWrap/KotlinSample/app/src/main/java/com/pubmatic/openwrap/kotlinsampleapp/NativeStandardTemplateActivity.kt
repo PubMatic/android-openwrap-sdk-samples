@@ -18,9 +18,10 @@
 package com.pubmatic.openwrap.kotlinsampleapp
 
 import android.os.Bundle
-import android.util.Log
+import android.view.Gravity
 import android.widget.Button
 import android.widget.FrameLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 
@@ -39,7 +40,7 @@ import java.net.URL
 /**
  * Class representing Native standard small template.
  */
-class NativeStandardTemplateActivity : AppCompatActivity() {
+class NativeStandardTemplateActivity : AppCompatActivity(), LoggerListener {
 
 
     private lateinit var nativeAdLoader: POBNativeAdLoader
@@ -49,6 +50,7 @@ class NativeStandardTemplateActivity : AppCompatActivity() {
     private lateinit var renderAd: Button
 
     private lateinit var container: FrameLayout
+    private lateinit var logTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +58,10 @@ class NativeStandardTemplateActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         toolbar.setTitle(R.string.title_activity_native_standard_template)
+
+        logTextView = findViewById(R.id.ad_event_logs)
+        Logger.registerLoggerListener(this)
+        Logger.log(Logger.LogType.INFO, Constants.TAG_OWSDK, Constants.OWSDK_VERSION_LOG + OpenWrapSDK.getVersion())
 
         val loadAd = findViewById<Button>(R.id.load_ad)
         renderAd = findViewById(R.id.render_ad)
@@ -103,6 +109,7 @@ class NativeStandardTemplateActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         nativeAd?.destroy()
+        Logger.removeLoggerListener(this)
     }
 
     companion object {
@@ -117,7 +124,7 @@ class NativeStandardTemplateActivity : AppCompatActivity() {
      */
     inner class NativeAdLoaderListenerImpl : POBNativeAdLoaderListener {
         override fun onAdReceived(nativeAdLoader: POBNativeAdLoader, nativeAd: POBNativeAd) {
-            Log.d(TAG, "Ad Received")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Received")
             // Caching nativeAd instance to call renderAd method and also to destroy it when activity get 
             // destroyed.
             this@NativeStandardTemplateActivity.nativeAd = nativeAd
@@ -125,7 +132,7 @@ class NativeStandardTemplateActivity : AppCompatActivity() {
         }
 
         override fun onFailedToLoad(nativeAdLoader: POBNativeAdLoader, error: POBError) {
-            Log.e(TAG, error.toString())
+            Logger.log(Logger.LogType.ERROR, TAG, error.toString())
         }
     }
 
@@ -134,37 +141,47 @@ class NativeStandardTemplateActivity : AppCompatActivity() {
      */
     inner class NativeAdListenerImpl : POBNativeAdListener {
         override fun onNativeAdRendered(nativeAd: POBNativeAd) {
-            Log.d(TAG, "Ad Rendered")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Rendered")
             // Add the received rendered native ad view in your container
-            container.addView(nativeAd.adView)
+            val params = FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                Gravity.CENTER
+            )
+            container.addView(nativeAd.adView, params)
         }
 
         override fun onNativeAdRenderingFailed(nativeAd: POBNativeAd, error: POBError) {
-            Log.e(TAG, error.toString())
+            Logger.log(Logger.LogType.ERROR, TAG, error.toString())
         }
 
         override fun onNativeAdImpression(nativeAd: POBNativeAd) {
-            Log.d(TAG, "Ad recorded Impression")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad recorded Impression")
         }
 
         override fun onNativeAdClicked(nativeAd: POBNativeAd) {
-            Log.d(TAG, "Ad Clicked")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Clicked")
         }
 
         override fun onNativeAdClicked(nativeAd: POBNativeAd, assetId: String) {
-            Log.d(TAG, "Ad clicked for asset id - $assetId")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad clicked for asset id - $assetId")
         }
 
         override fun onNativeAdLeavingApplication(nativeAd: POBNativeAd) {
-            Log.d(TAG, "App Leaving")
+            Logger.log(Logger.LogType.DEBUG, TAG, "App Leaving")
         }
 
         override fun onNativeAdOpened(nativeAd: POBNativeAd) {
-            Log.d(TAG, "Ad Opened")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Opened")
         }
 
         override fun onNativeAdClosed(nativeAd: POBNativeAd) {
-            Log.d(TAG, "Ad Closed")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Closed")
         }
+    }
+
+    // Appends a log message to the log TextView.
+    override fun log(message: String) {
+        logTextView.append(message + "\n")
     }
 }

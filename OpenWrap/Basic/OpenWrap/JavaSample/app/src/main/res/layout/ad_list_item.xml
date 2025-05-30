@@ -15,5 +15,4 @@
         android:gravity="center_vertical"
         android:textSize="20sp"
         android:textStyle="bold"/>
-
 </RelativeLayout>

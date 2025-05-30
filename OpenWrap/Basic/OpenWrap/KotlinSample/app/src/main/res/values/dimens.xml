@@ -2,4 +2,8 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="pob_dimen_300dp">300dp</dimen>
     <dimen name="pob_dimen_250dp">250dp</dimen>
+    <dimen name="bottom_margin">15dp</dimen>
+    <dimen name="logs_height">400dp</dimen>
+    <dimen name="native_container_height">350dp</dimen>
+    <dimen name="top_margin">20dp</dimen>
 </resources>

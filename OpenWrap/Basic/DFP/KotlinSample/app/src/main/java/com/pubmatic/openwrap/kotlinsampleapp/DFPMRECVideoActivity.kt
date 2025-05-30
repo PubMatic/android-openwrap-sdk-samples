@@ -17,7 +17,7 @@
 package com.pubmatic.openwrap.kotlinsampleapp
 
 import android.os.Bundle
-import android.util.Log
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.google.android.gms.ads.AdSize
@@ -33,13 +33,15 @@ import java.net.URL
  * This class demonstrate the MREC Video Ad workflow via OW SDK where DFP / GAM SDK is integrated
  * as a primary ad SDK.
  */
-class DFPMRECVideoActivity : AppCompatActivity() {
+class DFPMRECVideoActivity : AppCompatActivity(), LoggerListener {
 
     val TAG = "DFPBannerActivity"
     private val OPENWRAP_AD_UNIT_ID = "/15671365/pm_sdk/PMSDK-Demo-App-Banner"
     private val DFP_AD_UNIT_ID = "/15671365/pm_sdk/PMSDK-Demo-App-Banner"
 
     private var banner: POBBannerView ? = null
+    private lateinit var logTextView: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mrec_video)
@@ -47,6 +49,9 @@ class DFPMRECVideoActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         toolbar.setTitle(R.string.title_activity_mrec_video)
 
+        logTextView = findViewById(R.id.ad_event_logs);
+        Logger.registerLoggerListener(this);
+        Logger.log(Logger.LogType.INFO, Constants.TAG_OWSDK, Constants.OWSDK_VERSION_LOG +  OpenWrapSDK.getVersion());
         OpenWrapSDK.setLogLevel(OpenWrapSDK.LogLevel.All)
 
         // A valid Play Store Url of an Android app. Required.
@@ -89,34 +94,34 @@ class DFPMRECVideoActivity : AppCompatActivity() {
 
         // Callback method Notifies that an  banner ad has been successfully loaded and rendered.
         override fun onAdReceived(view: POBBannerView) {
-            Log.d(TAG, "onAdReceived")
+            Logger.log(Logger.LogType.DEBUG, TAG, "onAdReceived")
         }
 
 
         // Callback method Notifies an error encountered while loading or rendering an ad.
         override fun onAdFailed(view: POBBannerView, error: POBError) {
-            Log.e(TAG, "onAdFailed : Ad failed with error - " + error.toString())
+            Logger.log(Logger.LogType.ERROR, TAG, "onAdFailed : Ad failed with error - " + error.toString())
         }
 
 
         // Callback method Notifies whenever current app goes in the background due to user click
         override fun onAppLeaving(view: POBBannerView) {
-            Log.d(TAG, "onAppLeaving")
+            Logger.log(Logger.LogType.DEBUG, TAG, "onAppLeaving")
         }
 
         // Callback method Notifies that the banner ad view is clicked.
         override fun onAdClicked(view: POBBannerView) {
-            Log.d(TAG, "onAdClicked")
+            Logger.log(Logger.LogType.DEBUG, TAG, "onAdClicked")
         }
 
         // Callback method Notifies that the  banner ad will launch a dialog on top of the current view
         override fun onAdOpened(view: POBBannerView) {
-            Log.d(TAG, "onAdOpened")
+            Logger.log(Logger.LogType.DEBUG, TAG, "onAdOpened")
         }
 
         // Callback method Notifies that the  banner ad has dismissed the modal on top of the current view
         override fun onAdClosed(view: POBBannerView) {
-            Log.d(TAG, "onAdClosed")
+            Logger.log(Logger.LogType.DEBUG, TAG, "onAdClosed")
         }
     }
 
@@ -125,5 +130,11 @@ class DFPMRECVideoActivity : AppCompatActivity() {
         // destroy banner before onDestroy of Activity lifeCycle
         super.onDestroy()
         banner?.destroy()
+        Logger.removeLoggerListener(this)
+    }
+
+    // Appends a log message to the log TextView.
+    override fun log(message: String) {
+        logTextView.append(message + "\n")
     }
 }

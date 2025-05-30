@@ -11,13 +11,20 @@
         android:id="@+id/include_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+    <include layout="@layout/ad_event_logs"
+        android:id="@+id/event_logs"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pob_dimen_300dp"
+        android:layout_below="@+id/include_toolbar"/>
+
     <RelativeLayout
         android:id="@+id/parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:layout_below="@+id/include_toolbar"
+        android:layout_below="@+id/event_logs"
         android:layout_marginBottom="10dp">
         <com.google.android.ads.nativetemplates.TemplateView
             android:id="@+id/my_template"

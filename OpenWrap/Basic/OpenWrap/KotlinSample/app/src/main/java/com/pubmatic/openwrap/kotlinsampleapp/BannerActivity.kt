@@ -17,8 +17,8 @@
 package com.pubmatic.openwrap.kotlinsampleapp
 
 import android.os.Bundle
-import android.os.Looper
-import android.util.Log
+
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.pubmatic.sdk.common.OpenWrapSDK
@@ -33,17 +33,23 @@ import java.net.URL
 /**
  * Activity to show Banner Implementation
  */
-class BannerActivity : AppCompatActivity() {
+class BannerActivity : AppCompatActivity(), LoggerListener {
 
     private val OPENWRAP_AD_UNIT_ID = "OpenWrapBannerAdUnit"
 
     private var banner: POBBannerView ? = null
+    private lateinit var logTextView: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_banner)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         toolbar.setTitle(R.string.title_activity_banner)
+
+        logTextView = findViewById(R.id.ad_event_logs)
+        Logger.registerLoggerListener(this)
+        Logger.log(Logger.LogType.INFO, Constants.TAG_OWSDK, Constants.OWSDK_VERSION_LOG + OpenWrapSDK.getVersion())
 
         OpenWrapSDK.setLogLevel(OpenWrapSDK.LogLevel.All)
 
@@ -81,38 +87,38 @@ class BannerActivity : AppCompatActivity() {
 
         // Callback method Notifies that an  banner ad has been successfully loaded and rendered.
         override fun onAdReceived(view: POBBannerView) {
-            Log.d(TAG, "onAdReceived")
+            Logger.log(Logger.LogType.DEBUG,TAG, "onAdReceived")
         }
 
         // Callback method Notifies an error encountered while loading or rendering an ad.
         override fun onAdFailed(view: POBBannerView, error: POBError) {
-            Log.e(TAG, "onAdFailed : Ad failed with error - " + error.toString())
+            Logger.log(Logger.LogType.ERROR,TAG, "onAdFailed : Ad failed with error - " + error.toString())
         }
 
         // Callback method Notifies that the  banner ad will launch a dialog on top of the current view
         override fun onAdOpened(view: POBBannerView) {
-            Log.d(TAG, "onAdOpened")
+            Logger.log(Logger.LogType.DEBUG,TAG, "onAdOpened")
         }
 
         // Callback method Notifies that the banner ad view is clicked.
         override fun onAdClicked(view: POBBannerView) {
-            Log.d(TAG, "onAdClicked")
+            Logger.log(Logger.LogType.DEBUG,TAG, "onAdClicked")
         }
 
 
         // Callback method Notifies that the  banner ad has dismissed the modal on top of the current view
         override fun onAdClosed(view: POBBannerView) {
-            Log.d(TAG, "onAdClosed")
+            Logger.log(Logger.LogType.DEBUG,TAG, "onAdClosed")
         }
 
         // Callback method Notifies whenever current app goes in the background due to user click
         override fun onAppLeaving(view: POBBannerView) {
-            Log.d(TAG, "onAppLeaving")
+            Logger.log(Logger.LogType.DEBUG,TAG, "onAppLeaving")
         }
 
         // Callback method Notifies impression recorded on ad view
         override fun onAdImpression(view: POBBannerView) {
-            Log.d(TAG, "onAdImpression")
+            Logger.log(Logger.LogType.DEBUG,TAG, "onAdImpression")
         }
 
 
@@ -123,5 +129,10 @@ class BannerActivity : AppCompatActivity() {
         // destroy banner before onDestroy of Activity lifeCycle
         super.onDestroy()
         banner?.destroy()
+        Logger.removeLoggerListener(this)
+    }
+
+    override fun log(message: String) {
+        logTextView.append(message + "\n")
     }
 }

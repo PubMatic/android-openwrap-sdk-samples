@@ -27,5 +27,7 @@ public class Constants {
     public static final int PROFILE_ID_FOR_VIDEO = 1757;
     public static final String OWSDK_INITIALIZATION_SUCCESSFUL = "OpenWrap SDK initialization successful";
     public static final String OWSDK_INITIALIZATION_FAILED = "OpenWrap SDK initialization failed with error : ";
+    public static final String TAG_OWSDK = "OpenWrapSdk";
+    public static final String OWSDK_VERSION_LOG = "OpenWrap SDK Version : ";
 
 }

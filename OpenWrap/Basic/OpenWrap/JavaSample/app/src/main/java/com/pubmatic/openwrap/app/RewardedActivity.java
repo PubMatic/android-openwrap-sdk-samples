@@ -19,6 +19,7 @@ package com.pubmatic.openwrap.app;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.pubmatic.sdk.common.OpenWrapSDK;
 import com.pubmatic.sdk.common.POBError;
@@ -36,12 +37,13 @@ import androidx.appcompat.widget.Toolbar;
 /**
  * Activity to show Rewarded Ad Implementation
  */
-public class RewardedActivity extends AppCompatActivity {
+public class RewardedActivity extends AppCompatActivity implements LoggerListener {
 
     private static final String TAG = "RewardedActivity";
     private static final String OPENWRAP_AD_UNIT_ONE = "OpenWrapRewardedAdUnit";
 
     private POBRewardedAd rewardedAd;
+    private TextView logTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,10 @@ public class RewardedActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(R.string.rewarded_title);
+
+        logTextView = findViewById(R.id.ad_event_logs);
+        Logger.registerLoggerListener(this);
+        Logger.log(Logger.LogType.INFO, Constants.TAG_OWSDK, Constants.OWSDK_VERSION_LOG + OpenWrapSDK.getVersion());
 
         // A valid Play Store Url of an Android application is required.
         POBApplicationInfo appInfo = new POBApplicationInfo();
@@ -113,6 +119,7 @@ public class RewardedActivity extends AppCompatActivity {
         if (rewardedAd != null) {
             rewardedAd.destroy();
         }
+        Logger.removeLoggerListener(this);
     }
 
     /**
@@ -123,7 +130,7 @@ public class RewardedActivity extends AppCompatActivity {
         // Callback method notifies that an ad has been received successfully.
         @Override
         public void onAdReceived(@NonNull POBRewardedAd rewardedAd) {
-            Log.d(TAG, "Rewarded Ad : Ad Received");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Rewarded Ad : Ad Received");
             // Method gets called when ad gets loaded in container
             // Here, you can show rewarded ad to user
             findViewById(R.id.showAdBtn).setEnabled(true);
@@ -132,55 +139,61 @@ public class RewardedActivity extends AppCompatActivity {
         // Callback method notifies an error encountered while loading or rendering an ad.
         @Override
         public void onAdFailedToLoad(@NonNull POBRewardedAd rewardedAd, @NonNull POBError error) {
-            Log.e(TAG, "Rewarded Ad : Ad failed with error - " + error);
+            Logger.log(Logger.LogType.ERROR, TAG, "Rewarded Ad : Ad failed with error - " + error);
         }
 
         // Callback method notifies ad is about to leave app
         @Override
         public void onAppLeaving(@NonNull POBRewardedAd rewardedAd) {
-            Log.d(TAG, "Rewarded Ad : App Leaving");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Rewarded Ad : App Leaving");
         }
 
         // Callback method notifies that the rewarded ad will be presented as a full screen modal on top of the current view.
         @Override
         public void onAdOpened(@NonNull POBRewardedAd rewardedAd) {
-            Log.d(TAG, "Rewarded Ad : Ad Opened");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Rewarded Ad : Ad Opened");
         }
 
         // Callback method notifies that the rewarded ad has been animated off the screen.
         @Override
         public void onAdClosed(@NonNull POBRewardedAd rewardedAd) {
-            Log.d(TAG, "Rewarded Ad : Ad Closed");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Rewarded Ad : Ad Closed");
         }
 
         // Callback method notifies ad click
         @Override
         public void onAdClicked(@NonNull POBRewardedAd rewardedAd) {
-            Log.d(TAG, "Rewarded Ad : Ad Clicked");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Rewarded Ad : Ad Clicked");
         }
 
         // Callback method notifies ad is about to expire
         @Override
         public void onAdExpired(@NonNull POBRewardedAd rewardedAd) {
-            Log.d(TAG, "Rewarded Ad : Ad Expired");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Rewarded Ad : Ad Expired");
         }
 
         // Callback method notifies on Ad Impression
         @Override
         public void onAdImpression(@NonNull POBRewardedAd rewardedAd) {
-            Log.d(TAG, "Rewarded Ad : Ad Impression");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Rewarded Ad : Ad Impression");
         }
 
         // Callback method notifies user will be rewarded once the ad is completely viewed
         @Override
         public void onReceiveReward(@NonNull POBRewardedAd rewardedAd, @NonNull POBReward reward) {
-            Log.d(TAG, "Rewarded Ad : Ad should reward - "+ reward.getAmount()+ "(" + reward.getCurrencyType()+ ")");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Rewarded Ad : Ad should reward - "+ reward.getAmount()+ "(" + reward.getCurrencyType()+ ")");
         }
 
         // Callback method notifies that error is encountered while rendering an ad
         @Override
         public void onAdFailedToShow(@NonNull POBRewardedAd rewardedAd, @NonNull POBError error) {
-            Log.d(TAG,"Rewarded Ad: Ad failed with error" + error.toString());
+            Logger.log(Logger.LogType.DEBUG, TAG,"Rewarded Ad: Ad failed with error" + error.toString());
         }
+    }
+
+    // Appends a log message to the log TextView.
+    @Override
+    public void log(@NonNull String message) {
+        logTextView.append(message + "\n");
     }
 }

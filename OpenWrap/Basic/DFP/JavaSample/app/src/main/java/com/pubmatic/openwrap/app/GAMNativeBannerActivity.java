@@ -17,7 +17,6 @@
 package com.pubmatic.openwrap.app;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -47,7 +46,7 @@ import com.pubmatic.sdk.openwrap.eventhandler.dfp.GAMNativeBannerEventHandler;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class GAMNativeBannerActivity extends AppCompatActivity {
+public class GAMNativeBannerActivity extends AppCompatActivity implements LoggerListener {
 
     private static final String OPENWRAP_AD_UNIT_ID = "/15671365/pm_sdk/PMSDK-Demo-App-NativeAndBanner";
     private static final String DFP_AD_UNIT_ID = "/15671365/pm_sdk/PMSDK-Demo-App-NativeAndBanner";
@@ -56,6 +55,7 @@ public class GAMNativeBannerActivity extends AppCompatActivity {
     private POBBannerView banner;
     private LinearLayout container;
     private TemplateView template;
+    private TextView logTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +64,10 @@ public class GAMNativeBannerActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(R.string.native_banner_title);
+
+        logTextView = findViewById(R.id.ad_event_logs);
+        Logger.registerLoggerListener(this);
+        Logger.log(Logger.LogType.INFO, Constants.TAG_OWSDK, Constants.OWSDK_VERSION_LOG +  OpenWrapSDK.getVersion());
 
         container = findViewById(R.id.container);
         template = findViewById(R.id.my_template);
@@ -109,6 +113,7 @@ public class GAMNativeBannerActivity extends AppCompatActivity {
         if (null != banner) {
             banner.destroy();
         }
+        Logger.removeLoggerListener(this);
     }
 
     private void renderNativeAd(@NonNull NativeAd nativeAd) {
@@ -190,12 +195,12 @@ public class GAMNativeBannerActivity extends AppCompatActivity {
         // Callback method Notifies that an ad has been successfully loaded and rendered.
         @Override
         public void onAdReceived(@NonNull POBBannerView view) {
-            Log.d(TAG, "Ad Received");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Received");
             template.setVisibility(View.GONE);
             container.setVisibility(View.VISIBLE);
             POBAdSize adSize = view.getCreativeSize();
             if (adSize != null) {
-                Log.d(TAG, "Banner : Ad Received with size {" + adSize.toString() + "}");
+                Logger.log(Logger.LogType.DEBUG, TAG, "Banner : Ad Received with size {" + adSize.toString() + "}");
                 int width = adSize.getAdWidth();
                 int height = adSize.getAdHeight();
                 width = POBUtils.convertDpToPixel(width);
@@ -209,30 +214,30 @@ public class GAMNativeBannerActivity extends AppCompatActivity {
         // Callback method Notifies an error encountered while loading or rendering an ad.
         @Override
         public void onAdFailed(@NonNull POBBannerView view, @NonNull POBError error) {
-            Log.e(TAG, error.toString());
+            Logger.log(Logger.LogType.ERROR, TAG, error.toString());
         }
 
         // Callback method Notifies whenever current app goes in the background due to user click
         @Override
         public void onAppLeaving(@NonNull POBBannerView view) {
-            Log.d(TAG, "App Leaving");
+            Logger.log(Logger.LogType.DEBUG, TAG, "App Leaving");
         }
 
         // Callback method Notifies that the banner ad view will launch a dialog on top of the current view
         @Override
         public void onAdOpened(@NonNull POBBannerView view) {
-            Log.d(TAG, "Ad Opened");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Opened");
         }
 
         // Callback method Notifies that the banner ad view has dismissed the modal on top of the current view
         @Override
         public void onAdClosed(@NonNull POBBannerView view) {
-            Log.d(TAG, "Ad Closed");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Closed");
         }
 
         @Override
         public void onAdImpression(@NonNull POBBannerView view) {
-            Log.d(TAG, "Ad Impression");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Impression");
         }
 
     }
@@ -247,32 +252,32 @@ public class GAMNativeBannerActivity extends AppCompatActivity {
         // Callback method notifies that GAM native ad has been successfully loaded.
         @Override
         public void onAdReceived(@NonNull NativeAd nativeAd) {
-            Log.d(TAG, "Native Ad Received");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Native Ad Received");
             renderNativeAd(nativeAd);
         }
 
         // Callback method notifies whenever GAM native ad has been clicked
         @Override
         public void onAdClicked(@NonNull NativeAd nativeAd) {
-            Log.d(TAG, "Native Ad Clicked");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Native Ad Clicked");
         }
 
         // Callback method notifies about GAM native ad impression occurred
         @Override
         public void onAdImpression(@NonNull NativeAd nativeAd) {
-            Log.d(TAG, "Native Ad Impression");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Native Ad Impression");
         }
 
         // Callback method notifies that the GAM native ad will launch a dialog on top of the current view
         @Override
         public void onAdOpened(@NonNull NativeAd nativeAd) {
-            Log.d(TAG, "Native Ad Opened");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Native Ad Opened");
         }
 
         // Callback method notifies that the  banner ad has dismissed the modal on top of the current view
         @Override
         public void onAdClosed(@NonNull NativeAd nativeAd) {
-            Log.d(TAG, "Native Ad Closed");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Native Ad Closed");
         }
     }
 
@@ -286,7 +291,7 @@ public class GAMNativeBannerActivity extends AppCompatActivity {
         // Callback method notifies that GAM custom native ad has been successfully loaded.
         @Override
         public void onAdReceived(@NonNull NativeCustomFormatAd nativeCustomFormatAd) {
-            Log.d(TAG, "Custom Native Ad Received");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Custom Native Ad Received");
             renderCustomNative(nativeCustomFormatAd);
             // Since this is custom native ad format, app is responsible for recording impressions and
             // reporting click events to the Google Mobile Ads SDK.
@@ -296,25 +301,31 @@ public class GAMNativeBannerActivity extends AppCompatActivity {
         // Callback method notifies whenever GAM native ad has been clicked
         @Override
         public void onAdClicked(@NonNull NativeCustomFormatAd nativeCustomFormatAd) {
-            Log.d(TAG, "Custom Native Ad Clicked");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Custom Native Ad Clicked");
         }
 
         // Callback method notifies about GAM native ad impression occurred
         @Override
         public void onAdImpression(@NonNull NativeCustomFormatAd nativeCustomFormatAd) {
-            Log.d(TAG, "Custom Native Ad Impression");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Custom Native Ad Impression");
         }
 
         // Callback method notifies that the GAM custom native ad will launch a dialog on top of the current view
         @Override
         public void onAdOpened(@NonNull NativeCustomFormatAd nativeCustomFormatAd) {
-            Log.d(TAG, "Custom Native Ad Opened");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Custom Native Ad Opened");
         }
 
         // Callback method notifies that the  banner ad has dismissed the modal on top of the current view
         @Override
         public void onAdClosed(@NonNull NativeCustomFormatAd nativeCustomFormatAd) {
-            Log.d(TAG, "Custom Native Ad Closed");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Custom Native Ad Closed");
         }
+    }
+
+    // Appends a log message to the log TextView.
+    @Override
+    public void log(@NonNull String message) {
+        logTextView.append(message + "\n");
     }
 }

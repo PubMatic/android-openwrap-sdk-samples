@@ -17,8 +17,8 @@
 package com.pubmatic.openwrap.kotlinsampleapp
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.pubmatic.sdk.common.OpenWrapSDK
@@ -28,7 +28,6 @@ import com.pubmatic.sdk.openwrap.core.POBBid
 import com.pubmatic.sdk.openwrap.core.POBBidEvent
 import com.pubmatic.sdk.openwrap.core.POBBidEventListener
 import com.pubmatic.sdk.openwrap.interstitial.POBInterstitial
-import kotlinx.android.synthetic.main.activity_interstitial.*
 import java.net.MalformedURLException
 import java.net.URL
 
@@ -36,7 +35,7 @@ import java.net.URL
 /**
  * Activity to show Interstitial Implementation for bid caching flow
  */
-class InterstitialActivity : AppCompatActivity() {
+class InterstitialActivity : AppCompatActivity(), LoggerListener {
 
     private val TAG = "InterstitialActivity"
     private val OPENWRAP_AD_UNIT_ID = "OpenWrapInterstitialAdUnit"
@@ -44,7 +43,7 @@ class InterstitialActivity : AppCompatActivity() {
     private var interstitial : POBInterstitial? = null
     private var loadAd: Button? = null
     private var showAd: Button? = null
-
+    private lateinit var logTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +51,14 @@ class InterstitialActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         toolbar.setTitle(R.string.title_activity_interstitial)
+
+        logTextView = findViewById(R.id.ad_event_logs)
+        Logger.registerLoggerListener(this)
+        Logger.log(
+            Logger.LogType.INFO,
+            Constants.TAG_OWSDK,
+            Constants.OWSDK_VERSION_LOG + OpenWrapSDK.getVersion()
+        )
 
         // A valid Play Store Url of an Android app. Required.
         val appInfo = POBApplicationInfo()
@@ -75,13 +82,13 @@ class InterstitialActivity : AppCompatActivity() {
         interstitial?.setBidEventListener(object : POBBidEventListener {
             override fun onBidReceived(bidEvent: POBBidEvent, bid: POBBid) {
                 // Make use of the received bid, e.g. perform auction with your setup
-                Log.d(TAG, "Bid received.")
+                Logger.log(Logger.LogType.DEBUG, TAG, "Bid received.")
                 // Notify banner view to proceed to load the ad after using the bid.
                 useBidAndProceed()
             }
 
             override fun onBidFailed(bidEvent: POBBidEvent, error: POBError) {
-                Log.d(TAG, "Bid receive failed with error : $error")
+                Logger.log(Logger.LogType.DEBUG, TAG, "Bid receive failed with error : $error")
                 interstitial?.proceedOnError(POBBidEvent.BidEventError.CLIENT_SIDE_AUCTION_LOSS , "Bid lost client side auction.")
             }
         })
@@ -113,7 +120,7 @@ class InterstitialActivity : AppCompatActivity() {
 
     private fun useBidAndProceed() {
         // Call interstitial?.proceedToLoadAd() to complete the flow
-        Log.d(TAG, "Proceeding with load ad.")
+        Logger.log(Logger.LogType.DEBUG, TAG, "Proceeding with load ad.")
         interstitial?.proceedToLoadAd()
     }
 
@@ -125,7 +132,7 @@ class InterstitialActivity : AppCompatActivity() {
 
         // Callback method notifies that an ad has been received successfully.
         override fun onAdReceived(ad: POBInterstitial) {
-            Log.d(TAG, "onAdReceived")
+            Logger.log(Logger.LogType.DEBUG, TAG, "onAdReceived")
             //Method gets called when ad gets loaded in container
             //Here, you can show interstitial ad to user
             showAd?.setEnabled(true)
@@ -133,40 +140,40 @@ class InterstitialActivity : AppCompatActivity() {
 
         // Callback method notifies an error encountered while loading an ad.
         override fun onAdFailedToLoad(ad: POBInterstitial, error: POBError) {
-            Log.e(TAG, "Interstitial : Ad failed to load with error - $error")
+            Logger.log(Logger.LogType.ERROR, TAG, "Interstitial : Ad failed to load with error - $error")
             //Method gets called when it fails to load ad
             //Here, you can put logger and see why ad failed to load
         }
 
         // Callback method notifies an error encountered while showing an ad.
         override fun onAdFailedToShow(ad: POBInterstitial, error: POBError) {
-            Log.e(TAG, "Interstitial : Ad failed to show with error - $error")
+            Logger.log(Logger.LogType.ERROR, TAG, "Interstitial : Ad failed to show with error - $error")
             //Method gets called when it fails to show ad
             //Here, you can put logger and see why ad failed to show
         }
 
         // Callback method notifies that the interstitial ad will be presented as a modal on top of the current view.
         override fun onAdOpened(ad: POBInterstitial) {
-            Log.d(TAG, "onAdOpened")
+            Logger.log(Logger.LogType.DEBUG, TAG, "onAdOpened")
         }
 
         // Callback method notifies that the interstitial ad has been animated off the screen.
         override fun onAdClosed(ad: POBInterstitial) {
-            Log.d(TAG, "onAdClosed")
+            Logger.log(Logger.LogType.DEBUG, TAG, "onAdClosed")
         }
 
         // Callback method notifies ad click
         override fun onAdClicked(ad: POBInterstitial) {
-            Log.d(TAG, "onAdClicked")
+            Logger.log(Logger.LogType.DEBUG, TAG, "onAdClicked")
         }
 
         override fun onAppLeaving(ad: POBInterstitial) {
-            Log.d(TAG, "Interstitial : App Leaving")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Interstitial : App Leaving")
         }
 
         // Callback method Notifies impression recorded on ad view
         override fun onAdImpression(ad: POBInterstitial) {
-            Log.d(TAG, "onAdImpression")
+            Logger.log(Logger.LogType.DEBUG, TAG, "onAdImpression")
         }
     }
 
@@ -175,6 +182,12 @@ class InterstitialActivity : AppCompatActivity() {
         super.onDestroy()
         // destroy interstitial
         interstitial?.destroy()
+        Logger.removeLoggerListener(this)
+    }
+
+    // Appends a log message to the log TextView.
+    override fun log(message: String) {
+        logTextView.append(message + "\n")
     }
 
 }

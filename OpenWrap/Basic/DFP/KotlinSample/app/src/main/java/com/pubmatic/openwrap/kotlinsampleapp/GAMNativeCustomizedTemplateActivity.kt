@@ -18,7 +18,7 @@
 package com.pubmatic.openwrap.kotlinsampleapp
 
 import android.os.Bundle
-import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
@@ -51,7 +51,7 @@ import java.net.URL
 /**
  * Class representing GAM NativeCustomFormatAd with OpenWrap Native Standard custom template ad.
  */
-class GAMNativeCustomizedTemplateActivity : AppCompatActivity() {
+class GAMNativeCustomizedTemplateActivity : AppCompatActivity(), LoggerListener{
 
     private lateinit var nativeAdLoader: POBNativeAdLoader
 
@@ -60,6 +60,7 @@ class GAMNativeCustomizedTemplateActivity : AppCompatActivity() {
     private lateinit var renderAd: Button
 
     private lateinit var container: FrameLayout
+    private lateinit var logTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,6 +68,10 @@ class GAMNativeCustomizedTemplateActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         toolbar.setTitle(R.string.title_activity_native_customized_template)
+
+        logTextView = findViewById(R.id.ad_event_logs)
+        Logger.registerLoggerListener(this)
+        Logger.log(Logger.LogType.INFO, Constants.TAG_OWSDK, Constants.OWSDK_VERSION_LOG + OpenWrapSDK.getVersion())
 
         val loadAd = findViewById<Button>(R.id.load_ad)
         renderAd = findViewById(R.id.render_ad)
@@ -79,7 +84,6 @@ class GAMNativeCustomizedTemplateActivity : AppCompatActivity() {
             renderAd.setEnabled(false)
             nativeAdLoader.loadAd()
         }
-
         renderAd.setOnClickListener{
             // Set the native ad listener to listen the event callback and also to receive the
             // rendered native ad view.
@@ -90,7 +94,6 @@ class GAMNativeCustomizedTemplateActivity : AppCompatActivity() {
         }
 
         OpenWrapSDK.setLogLevel(OpenWrapSDK.LogLevel.All)
-
         // A valid Play Store Url of an Android app. Required.
         val appInfo = POBApplicationInfo()
         try {
@@ -99,7 +102,6 @@ class GAMNativeCustomizedTemplateActivity : AppCompatActivity() {
         } catch (e: MalformedURLException) {
             e.printStackTrace()
         }
-
         // This app information is a global configuration & you
         // Need not set this for every ad request(of any ad type)
         OpenWrapSDK.setApplicationInfo(appInfo)
@@ -109,7 +111,6 @@ class GAMNativeCustomizedTemplateActivity : AppCompatActivity() {
             this, DFP_AD_UNIT_ID,
             OPENWRAP_CUSTOM_FORMAT_ID, GAMNativeConfiguration.GAMAdTypes.NativeCustomFormatAd
         )
-
         // This step is optional and you can the set the Custom Format Id List here
         nativeEventHandler.addNativeCustomFormatAd(GAM_NATIVE_CUSTOM_FORMAT_ID, null)
 
@@ -131,12 +132,9 @@ class GAMNativeCustomizedTemplateActivity : AppCompatActivity() {
             val height = POBUtils.convertDpToPixel(250)
             val layoutParams = FrameLayout.LayoutParams(width, height)
             adView.layoutParams = layoutParams
-
             populateNativeCustomAd(nativeCustomFormatAd, adView)
-
             adView
         })
-
 
         // Create nativeAdLoader to request ad from OpenWrap with GAM event handler
         nativeAdLoader = POBNativeAdLoader(
@@ -152,6 +150,12 @@ class GAMNativeCustomizedTemplateActivity : AppCompatActivity() {
         super.onDestroy()
         // Clean up native ad, helps releasing utilized resources.
         nativeAd?.destroy()
+        Logger.removeLoggerListener(this)
+    }
+
+    // Appends a log message to the log TextView.
+    override fun log(message: String) {
+        logTextView.append(message + "\n")
     }
 
     private fun getNativeTemplateView(): POBNativeTemplateView {
@@ -272,7 +276,7 @@ class GAMNativeCustomizedTemplateActivity : AppCompatActivity() {
      */
     inner class NativeAdLoaderListenerImpl : POBNativeAdLoaderListener {
         override fun onAdReceived(nativeAdLoader: POBNativeAdLoader, nativeAd: POBNativeAd) {
-            Log.d(TAG, "Ad Received")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Received")
             // Caching nativeAd instance to call renderAd method and also to destroy it when activity get 
             // destroyed.
             this@GAMNativeCustomizedTemplateActivity.nativeAd = nativeAd
@@ -280,7 +284,7 @@ class GAMNativeCustomizedTemplateActivity : AppCompatActivity() {
         }
 
         override fun onFailedToLoad(nativeAdLoader: POBNativeAdLoader, error: POBError) {
-            Log.e(TAG, error.toString())
+            Logger.log(Logger.LogType.ERROR, TAG, error.toString())
         }
     }
 
@@ -289,36 +293,41 @@ class GAMNativeCustomizedTemplateActivity : AppCompatActivity() {
      */
     inner class NativeAdListenerImpl : POBNativeAdListener {
         override fun onNativeAdRendered(nativeAd: POBNativeAd) {
-            Log.d(TAG, "Ad Rendered")
-            container.addView(nativeAd.adView)
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Rendered")
+            val params = FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT ,
+                Gravity.CENTER
+            )
+            container.addView(nativeAd.adView, params)
         }
 
         override fun onNativeAdRenderingFailed(nativeAd: POBNativeAd, error: POBError) {
-            Log.e(TAG, error.toString())
+            Logger.log(Logger.LogType.ERROR, TAG, error.toString())
         }
 
         override fun onNativeAdImpression(nativeAd: POBNativeAd) {
-            Log.d(TAG, "Ad recorded Impression")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad recorded Impression")
         }
 
         override fun onNativeAdClicked(nativeAd: POBNativeAd) {
-            Log.d(TAG, "Ad Clicked")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Clicked")
         }
 
         override fun onNativeAdClicked(nativeAd: POBNativeAd, assetId: String) {
-            Log.d(TAG, "Ad clicked for asset id - $assetId")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad clicked for asset id - $assetId")
         }
 
         override fun onNativeAdLeavingApplication(nativeAd: POBNativeAd) {
-            Log.d(TAG, "App Leaving")
+            Logger.log(Logger.LogType.DEBUG, TAG, "App Leaving")
         }
 
         override fun onNativeAdOpened(nativeAd: POBNativeAd) {
-            Log.d(TAG, "Ad Opened")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Opened")
         }
 
         override fun onNativeAdClosed(nativeAd: POBNativeAd) {
-            Log.d(TAG, "Ad Closed")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Closed")
         }
     }
 }

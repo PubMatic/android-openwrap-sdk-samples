@@ -19,7 +19,7 @@ package com.pubmatic.openwrap.app;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -55,7 +55,7 @@ import java.net.URL;
 /**
  * Class representing GAM Native Ad and OpenWrap SDK standard small template
  */
-public class GAMNativeStandardTemplateActivity extends AppCompatActivity {
+public class GAMNativeStandardTemplateActivity extends AppCompatActivity implements LoggerListener {
 
     private static final String TAG = "NativeStandardTemplate";
 
@@ -84,6 +84,7 @@ public class GAMNativeStandardTemplateActivity extends AppCompatActivity {
     private Button renderAd;
 
     private FrameLayout container;
+    private TextView logTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +93,10 @@ public class GAMNativeStandardTemplateActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(R.string.native_standard_title);
+
+        logTextView = findViewById(R.id.ad_event_logs);
+        Logger.registerLoggerListener(this);
+        Logger.log(Logger.LogType.INFO, Constants.TAG_OWSDK, Constants.OWSDK_VERSION_LOG +  OpenWrapSDK.getVersion());
 
         Button loadAd = findViewById(R.id.load_ad);
         renderAd = findViewById(R.id.render_ad);
@@ -166,7 +171,7 @@ public class GAMNativeStandardTemplateActivity extends AppCompatActivity {
 
                 int width = POBUtils.convertDpToPixel(300);
                 int height = POBUtils.convertDpToPixel(250);
-                FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(width, height);
+                FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(width, height, Gravity.CENTER);
                 adView.setLayoutParams(layoutParams);
 
                 populateNativeCustomAd(nativeCustomFormatAd, adView);
@@ -190,6 +195,7 @@ public class GAMNativeStandardTemplateActivity extends AppCompatActivity {
         if (nativeAd != null) {
             nativeAd.destroy();
         }
+        Logger.removeLoggerListener(this);
     }
 
     /**
@@ -259,7 +265,7 @@ public class GAMNativeStandardTemplateActivity extends AppCompatActivity {
 
         @Override
         public void onAdReceived(@NonNull POBNativeAdLoader nativeAdLoader, @NonNull POBNativeAd nativeAd) {
-            Log.d(TAG, "Ad Received");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Received");
             //Caching nativeAd instance to call renderAd method and to destroy it when activity get
             // destroyed.
             GAMNativeStandardTemplateActivity.this.nativeAd = nativeAd;
@@ -268,7 +274,7 @@ public class GAMNativeStandardTemplateActivity extends AppCompatActivity {
 
         @Override
         public void onFailedToLoad(@NonNull POBNativeAdLoader nativeAdLoader, @NonNull POBError error) {
-            Log.e(TAG, error.toString());
+            Logger.log(Logger.LogType.ERROR, TAG, error.toString());
         }
     }
 
@@ -279,43 +285,54 @@ public class GAMNativeStandardTemplateActivity extends AppCompatActivity {
 
         @Override
         public void onNativeAdRendered(@NonNull POBNativeAd nativeAd) {
-            Log.d(TAG, "Ad Rendered");
-            container.addView(nativeAd.getAdView());
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Rendered");
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.WRAP_CONTENT,
+                    FrameLayout.LayoutParams.WRAP_CONTENT,
+                    Gravity.CENTER
+            );
+            container.addView(nativeAd.getAdView(), params);
         }
 
         @Override
         public void onNativeAdRenderingFailed(@NonNull POBNativeAd nativeAd, @NonNull POBError error) {
-            Log.e(TAG, error.toString());
+            Logger.log(Logger.LogType.ERROR, TAG, error.toString());
         }
 
         @Override
         public void onNativeAdImpression(@NonNull POBNativeAd nativeAd) {
-            Log.d(TAG, "Ad recorded Impression");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad recorded Impression");
         }
 
         @Override
         public void onNativeAdClicked(@NonNull POBNativeAd nativeAd) {
-            Log.d(TAG, "Ad Clicked");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Clicked");
         }
 
         @Override
         public void onNativeAdClicked(@NonNull POBNativeAd nativeAd, @NonNull String assetId) {
-            Log.d(TAG, "Ad clicked for asset id - "+assetId);
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad clicked for asset id - "+assetId);
         }
 
         @Override
         public void onNativeAdLeavingApplication(@NonNull POBNativeAd nativeAd) {
-            Log.d(TAG, "App Leaving");
+            Logger.log(Logger.LogType.DEBUG, TAG, "App Leaving");
         }
 
         @Override
         public void onNativeAdOpened(@NonNull POBNativeAd nativeAd) {
-            Log.d(TAG, "Ad Opened");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Opened");
         }
 
         @Override
         public void onNativeAdClosed(@NonNull POBNativeAd nativeAd) {
-            Log.d(TAG, "Ad Closed");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Closed");
         }
+    }
+
+    // Appends a log message to the log TextView.
+    @Override
+    public void log(@NonNull String message) {
+        logTextView.append(message + "\n");
     }
 }

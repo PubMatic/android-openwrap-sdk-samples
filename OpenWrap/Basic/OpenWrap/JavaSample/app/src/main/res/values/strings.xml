@@ -11,4 +11,5 @@
     <string name="rewarded_title">Rewarded</string>
     <string name="native_standard_title">Native Ad - Standard Template</string>
     <string name="native_custom_title">Native Ad - Custom Template</string>
+    <string name="ad_event_hint">Ad events will be shown here:</string>
 </resources>

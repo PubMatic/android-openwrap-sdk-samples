@@ -14,4 +14,5 @@
     <string name="load_ad">Load Ad</string>
     <string name="render_ad">Render Ad</string>
     <string name="show_ad">Show Ad</string>
+    <string name="ad_event_hint">Ad events will be shown here:</string>
 </resources>

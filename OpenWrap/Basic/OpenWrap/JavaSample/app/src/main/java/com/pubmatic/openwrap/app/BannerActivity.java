@@ -21,6 +21,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.TextView;
+
 import androidx.appcompat.widget.Toolbar;
 
 import com.pubmatic.sdk.common.OpenWrapSDK;
@@ -32,11 +34,12 @@ import com.pubmatic.sdk.openwrap.banner.POBBannerView;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class BannerActivity extends AppCompatActivity {
+public class BannerActivity extends AppCompatActivity implements LoggerListener {
 
     private static final String OPENWRAP_AD_UNIT_ID = "OpenWrapBannerAdUnit";
 
     private POBBannerView banner;
+    private TextView logTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,10 @@ public class BannerActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(R.string.banner_title);
+
+        logTextView = findViewById(R.id.ad_event_logs);
+        Logger.registerLoggerListener(this);
+        Logger.log(Logger.LogType.INFO, Constants.TAG_OWSDK, Constants.OWSDK_VERSION_LOG + OpenWrapSDK.getVersion());
 
         // A valid Play Store Url of an Android application is required.
         POBApplicationInfo appInfo = new POBApplicationInfo();
@@ -71,7 +78,6 @@ public class BannerActivity extends AppCompatActivity {
         banner.loadAd();
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -79,8 +85,14 @@ public class BannerActivity extends AppCompatActivity {
         if (null != banner) {
             banner.destroy();
         }
+        Logger.removeLoggerListener(this);
     }
 
+    // Appends a log message to the log TextView.
+    @Override
+    public void log(@NonNull String message) {
+        logTextView.append(message + "\n");
+    }
 
     class POBBannerViewListener extends POBBannerView.POBBannerViewListener {
         private final String TAG = "POBBannerViewListener";
@@ -88,42 +100,42 @@ public class BannerActivity extends AppCompatActivity {
         // Callback method Notifies that an ad has been successfully loaded and rendered.
         @Override
         public void onAdReceived(@NonNull POBBannerView view) {
-            Log.d(TAG, "Ad Received");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Received");
         }
 
         // Callback method Notifies an error encountered while loading or rendering an ad.
         @Override
         public void onAdFailed(@NonNull POBBannerView view, @NonNull POBError error) {
-            Log.e(TAG, error.toString());
+            Logger.log(Logger.LogType.ERROR, TAG, error.toString());
         }
 
         // Callback method Notifies that the banner ad view will launch a dialog on top of the current view
         @Override
         public void onAdOpened(@NonNull POBBannerView view) {
-            Log.d(TAG, "Ad Opened");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Opened");
         }
 
         // Callback method Notifies that the banner ad view is clicked.
         @Override
         public void onAdClicked(@NonNull POBBannerView view) {
-            Log.d(TAG, "Ad Clicked");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Clicked");
         }
 
         // Callback method Notifies that the banner ad view has dismissed the modal on top of the current view
         @Override
         public void onAdClosed(@NonNull POBBannerView view) {
-            Log.d(TAG, "Ad Closed");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Closed");
         }
 
         @Override
         public void onAppLeaving(@NonNull POBBannerView view) {
             // Implement your custom logic
-            Log.d(TAG, "Banner : App Leaving");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Banner : App Leaving");
         }
 
         @Override
         public void onAdImpression(@NonNull POBBannerView view) {
-            Log.d(TAG, "Ad Impression");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Impression");
         }
 
     }

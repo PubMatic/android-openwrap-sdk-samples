@@ -17,8 +17,8 @@
 package com.pubmatic.openwrap.kotlinsampleapp
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.pubmatic.sdk.common.OpenWrapSDK
@@ -34,14 +34,14 @@ import java.net.URL
  * This class demonstrate the Interstitial Ad workflow via OW SDK where DFP / GAM SDK is integrated
  * as a primary ad SDK.
  */
-class DFPInterstitialActivity : AppCompatActivity() {
+class DFPInterstitialActivity : AppCompatActivity(), LoggerListener {
 
     private val OPENWRAP_AD_UNIT_ID = "/15671365/pm_sdk/PMSDK-Demo-App-Interstitial"
     private val DFP_AD_UNIT = "/15671365/pm_sdk/PMSDK-Demo-App-Interstitial"
     private var interstitial : POBInterstitial? = null
     private var loadAd: Button? = null
     private var showAd: Button? = null
-
+    private lateinit var logTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +49,10 @@ class DFPInterstitialActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         toolbar.setTitle(R.string.title_activity_interstitial)
+
+        logTextView = findViewById(R.id.ad_event_logs)
+        Logger.registerLoggerListener(this)
+        Logger.log(Logger.LogType.INFO, Constants.TAG_OWSDK, Constants.OWSDK_VERSION_LOG + OpenWrapSDK.getVersion())
 
         // A valid Play Store Url of an Android app. Required.
         val appInfo = POBApplicationInfo()
@@ -113,7 +117,7 @@ class DFPInterstitialActivity : AppCompatActivity() {
 
         // Callback method notifies that an ad has been received successfully.
         override fun onAdReceived(ad: POBInterstitial) {
-            Log.d(TAG, "onAdReceived")
+            Logger.log(Logger.LogType.DEBUG, TAG, "onAdReceived")
             //Method gets called when ad gets loaded in container
             //Here, you can show interstitial ad to user
             showAd?.setEnabled(true)
@@ -121,36 +125,36 @@ class DFPInterstitialActivity : AppCompatActivity() {
 
         // Callback method notifies an error encountered while loading an ad.
         override fun onAdFailedToLoad(ad: POBInterstitial, error: POBError) {
-            Log.e(TAG, "Interstitial : Ad failed to load with error - " + error.toString())
+            Logger.log(Logger.LogType.ERROR, TAG, "Interstitial : Ad failed to load with error - " + error.toString())
             //Method gets called when it fails to load ad
             //Here, you can put logger and see why ad failed to load
         }
 
         // Callback method notifies an error encountered while showing an ad.
         override fun onAdFailedToShow(ad: POBInterstitial, error: POBError) {
-            Log.e(TAG, "Interstitial : Ad failed to show with error - " + error.toString())
+            Logger.log(Logger.LogType.ERROR, TAG, "Interstitial : Ad failed to show with error - " + error.toString())
             //Method gets called when it fails to load ad
             //Here, you can put logger and see why ad failed to load
         }
 
         // Callback method notifies that a user interaction will open another app (for example, App Store), leaving the current app.
         override fun onAppLeaving(ad: POBInterstitial) {
-            Log.d(TAG, "onAppLeaving")
+            Logger.log(Logger.LogType.DEBUG, TAG, "onAppLeaving")
         }
 
         // Callback method notifies that the interstitial ad will be presented as a modal on top of the current view.
         override fun onAdOpened(ad: POBInterstitial) {
-            Log.d(TAG, "onAdOpened")
+            Logger.log(Logger.LogType.DEBUG, TAG, "onAdOpened")
         }
 
         // Callback method notifies that the interstitial ad has been animated off the screen.
         override fun onAdClosed(ad: POBInterstitial) {
-            Log.d(TAG, "onAdClosed")
+            Logger.log(Logger.LogType.DEBUG, TAG, "onAdClosed")
         }
 
         // Callback method notifies ad click
         override fun onAdClicked(ad: POBInterstitial) {
-            Log.d(TAG, "onAdClicked")
+            Logger.log(Logger.LogType.DEBUG, TAG, "onAdClicked")
         }
     }
 
@@ -158,5 +162,11 @@ class DFPInterstitialActivity : AppCompatActivity() {
         super.onDestroy()
         // destroy interstitial
         interstitial?.destroy()
+        Logger.removeLoggerListener(this)
+    }
+
+    // Appends a log message to the log TextView.
+    override fun log(message: String) {
+        logTextView.append(message + "\n")
     }
 }

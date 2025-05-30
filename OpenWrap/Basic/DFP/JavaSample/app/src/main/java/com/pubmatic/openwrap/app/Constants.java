@@ -31,4 +31,6 @@ public class Constants {
 
     public static final String OWSDK_INITIALIZATION_FAILED = "OpenWrap SDK initialization failed with error : ";
 
+    public static final String TAG_OWSDK = "OpenWrapSdk";
+    public static final String OWSDK_VERSION_LOG = "OpenWrap SDK Version : ";
 }

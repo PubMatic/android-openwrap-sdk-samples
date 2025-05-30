@@ -26,4 +26,6 @@ object Constants {
     const val PROFILE_ID_FOR_VIDEO = 1757
     const val OWSDK_INITIALIZATION_SUCCESSFUL = "OpenWrap SDK initialization successful"
     const val OWSDK_INITIALIZATION_FAILED = "OpenWrap SDK initialization failed with error : "
+    const val TAG_OWSDK = "OpenWrapSdk"
+    const val OWSDK_VERSION_LOG = "OpenWrap SDK Version : "
 }

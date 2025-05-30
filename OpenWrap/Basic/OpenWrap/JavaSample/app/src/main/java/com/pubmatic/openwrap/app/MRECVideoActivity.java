@@ -18,6 +18,7 @@ package com.pubmatic.openwrap.app;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.pubmatic.sdk.common.OpenWrapSDK;
 import com.pubmatic.sdk.common.POBAdSize;
@@ -32,11 +33,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class MRECVideoActivity extends AppCompatActivity {
+public class MRECVideoActivity extends AppCompatActivity implements LoggerListener {
 
     private static final String OPENWRAP_AD_UNIT_ID = "OpenWrapBannerAdUnit";
 
     private POBBannerView banner;
+    private TextView logTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,10 @@ public class MRECVideoActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(R.string.mrec_video_title);
+
+        logTextView = findViewById(R.id.ad_event_logs);
+        Logger.registerLoggerListener(this);
+        Logger.log(Logger.LogType.INFO, Constants.TAG_OWSDK, Constants.OWSDK_VERSION_LOG + OpenWrapSDK.getVersion());
 
         // A valid Play Store Url of an Android application is required.
         POBApplicationInfo appInfo = new POBApplicationInfo();
@@ -79,6 +85,7 @@ public class MRECVideoActivity extends AppCompatActivity {
         if (null != banner) {
             banner.destroy();
         }
+        Logger.removeLoggerListener(this);
     }
 
 
@@ -88,44 +95,50 @@ public class MRECVideoActivity extends AppCompatActivity {
         // Callback method Notifies that an ad has been successfully loaded and rendered.
         @Override
         public void onAdReceived(@NonNull POBBannerView view) {
-            Log.d(TAG, "Ad Received");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Received");
         }
 
         // Callback method Notifies an error encountered while loading or rendering an ad.
         @Override
         public void onAdFailed(@NonNull POBBannerView view, @NonNull POBError error) {
-            Log.e(TAG, error.toString());
+            Logger.log(Logger.LogType.ERROR, TAG, error.toString());
         }
 
         // Callback method Notifies that the banner ad view will launch a dialog on top of the current view
         @Override
         public void onAdOpened(@NonNull POBBannerView view) {
-            Log.d(TAG, "Ad Opened");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Opened");
         }
 
         // Callback method Notifies that the banner ad view is clicked.
         @Override
         public void onAdClicked(@NonNull POBBannerView view) {
-            Log.d(TAG, "Ad Clicked");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Clicked");
         }
 
         // Callback method Notifies that the banner ad view has dismissed the modal on top of the current view
         @Override
         public void onAdClosed(@NonNull POBBannerView view) {
-            Log.d(TAG, "Ad Closed");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Closed");
         }
 
         @Override
         public void onAppLeaving(@NonNull POBBannerView view) {
             // Implement your custom logic
-            Log.d(TAG, "Banner : App Leaving");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Banner : App Leaving");
         }
 
         @Override
         public void onAdImpression(@NonNull POBBannerView view) {
             // Implement your custom logic
-            Log.d(TAG, "Ad Impression");
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Impression");
         }
 
+    }
+
+    // Appends a log message to the log TextView.
+    @Override
+    public void log(@NonNull String message) {
+        logTextView.append(message + "\n");
     }
 }

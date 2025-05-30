@@ -34,6 +34,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.pubmatic.sdk.common.BuildConfig;
 import com.pubmatic.sdk.common.OpenWrapSDK;
 import com.pubmatic.sdk.common.models.POBDSAComplianceStatus;
 

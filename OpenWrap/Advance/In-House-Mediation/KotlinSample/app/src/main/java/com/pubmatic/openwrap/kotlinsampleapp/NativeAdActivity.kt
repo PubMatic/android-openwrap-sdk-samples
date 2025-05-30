@@ -18,9 +18,9 @@
 package com.pubmatic.openwrap.kotlinsampleapp
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.FrameLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 
@@ -42,7 +42,7 @@ import java.net.URL
 /**
  * Activity to show NativeAd Implementation for bid caching flow.
  */
-class NativeAdActivity : AppCompatActivity() {
+class NativeAdActivity : AppCompatActivity(), LoggerListener {
 
     private val TAG = "NativeAdActivity"
     private val OPENWRAP_AD_UNIT_ID = "OpenWrapNativeAdUnit"
@@ -54,6 +54,7 @@ class NativeAdActivity : AppCompatActivity() {
     private lateinit var renderAd: Button
 
     private lateinit var container: FrameLayout
+    private lateinit var logTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +62,14 @@ class NativeAdActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         toolbar.setTitle(R.string.title_activity_native)
+
+        logTextView = findViewById(R.id.ad_event_logs)
+        Logger.registerLoggerListener(this)
+        Logger.log(
+            Logger.LogType.INFO,
+            Constants.TAG_OWSDK,
+            Constants.OWSDK_VERSION_LOG + OpenWrapSDK.getVersion()
+        )
 
         val loadAd = findViewById<Button>(R.id.load_ad)
         renderAd = findViewById(R.id.render_ad)
@@ -110,14 +119,14 @@ class NativeAdActivity : AppCompatActivity() {
         nativeAdLoader.setBidEventListener(object : POBBidEventListener {
             override fun onBidReceived(bidEvent: POBBidEvent, bid: POBBid) {
                 // Make use of the received bid,  e.g. perform auction with your setup
-                Log.d(TAG, "Bid received.")
+                Logger.log(Logger.LogType.DEBUG, TAG, "Bid received.")
                 // Notify native ad to proceed to load the ad after using the bid.
-                Log.d(TAG, "Proceeding with load ad.")
+                Logger.log(Logger.LogType.DEBUG, TAG, "Proceeding with load ad.")
                 bidEvent.proceedToLoadAd()
             }
 
             override fun onBidFailed(bidEvent: POBBidEvent, error: POBError) {
-                Log.d(TAG, String.format("Bid receive failed with error : %s", error.toString()))
+                Logger.log(Logger.LogType.DEBUG, TAG, String.format("Bid receive failed with error : %s", error.toString()))
                 bidEvent.proceedOnError(
                     POBBidEvent.BidEventError.CLIENT_SIDE_AUCTION_LOSS,
                     "Bid lost client side auction."
@@ -129,15 +138,20 @@ class NativeAdActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         nativeAd?.destroy()
+        Logger.removeLoggerListener(this)
     }
 
+    // Appends a log message to the log TextView.
+    override fun log(message: String) {
+        logTextView.append(message + "\n")
+    }
 
     /**
      * Listener to get callback for ad received and ad failed.
      */
     inner class NativeAdLoaderListenerImpl : POBNativeAdLoaderListener {
         override fun onAdReceived(nativeAdLoader: POBNativeAdLoader, nativeAd: POBNativeAd) {
-            Log.d(TAG, "Ad Received")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Received")
             //Caching nativeAd instance to call renderAd method and to destroy it when activity get
             // destroyed.
             this@NativeAdActivity.nativeAd = nativeAd
@@ -145,7 +159,7 @@ class NativeAdActivity : AppCompatActivity() {
         }
 
         override fun onFailedToLoad(nativeAdLoader: POBNativeAdLoader, error: POBError) {
-            Log.e(TAG, error.toString())
+            Logger.log(Logger.LogType.ERROR, TAG, error.toString())
         }
     }
 
@@ -154,37 +168,37 @@ class NativeAdActivity : AppCompatActivity() {
      */
     inner class NativeAdListenerImpl : POBNativeAdListener {
         override fun onNativeAdRendered(nativeAd: POBNativeAd) {
-            Log.d(TAG, "Ad Rendered")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Rendered")
             // Add the received rendered native ad view in your container
             container.addView(nativeAd.adView)
         }
 
         override fun onNativeAdRenderingFailed(nativeAd: POBNativeAd, error: POBError) {
-            Log.e(TAG, error.toString())
+            Logger.log(Logger.LogType.ERROR, TAG, error.toString())
         }
 
         override fun onNativeAdImpression(nativeAd: POBNativeAd) {
-            Log.d(TAG, "Ad recorded Impression")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad recorded Impression")
         }
 
         override fun onNativeAdClicked(nativeAd: POBNativeAd) {
-            Log.d(TAG, "Ad Clicked")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Clicked")
         }
 
         override fun onNativeAdClicked(nativeAd: POBNativeAd, assetId: String) {
-            Log.d(TAG, "Ad clicked for asset id - $assetId")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad clicked for asset id - $assetId")
         }
 
         override fun onNativeAdLeavingApplication(nativeAd: POBNativeAd) {
-            Log.d(TAG, "App Leaving")
+            Logger.log(Logger.LogType.DEBUG, TAG, "App Leaving")
         }
 
         override fun onNativeAdOpened(nativeAd: POBNativeAd) {
-            Log.d(TAG, "Ad Opened")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Opened")
         }
 
         override fun onNativeAdClosed(nativeAd: POBNativeAd) {
-            Log.d(TAG, "Ad Closed")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Closed")
         }
     }
 }

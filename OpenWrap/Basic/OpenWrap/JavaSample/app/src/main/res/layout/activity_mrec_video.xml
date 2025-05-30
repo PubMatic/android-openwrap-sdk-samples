@@ -13,6 +13,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+    <include
+        layout="@layout/ad_event_logs"
+        android:id="@+id/include_ad_event_logs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/include_toolbar"
+        android:layout_above="@id/banner" />
+
     <com.pubmatic.sdk.openwrap.banner.POBBannerView
         android:id="@+id/banner"
         android:layout_width="300dp"

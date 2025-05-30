@@ -18,7 +18,6 @@
 package com.pubmatic.openwrap.kotlinsampleapp
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -40,7 +39,11 @@ import com.pubmatic.sdk.openwrap.eventhandler.dfp.GAMNativeBannerEventHandler.Na
 import java.net.MalformedURLException
 import java.net.URL
 
-class GAMNativeBannerActivity : AppCompatActivity() {
+/**
+ * This class demonstrates the Native Banner Ad workflow via the OpenWrap SDK where the DFP/GAM SDK is integrated
+ * as a primary ad SDK. It handles the initialization, configuration, and loading of native banner ads.
+ */
+class GAMNativeBannerActivity : AppCompatActivity(), LoggerListener{
 
     private val OPENWRAP_AD_UNIT_ID = "/15671365/pm_sdk/PMSDK-Demo-App-NativeAndBanner"
     private val DFP_AD_UNIT_ID = "/15671365/pm_sdk/PMSDK-Demo-App-NativeAndBanner"
@@ -49,6 +52,7 @@ class GAMNativeBannerActivity : AppCompatActivity() {
     private var banner: POBBannerView? = null
     private var container: LinearLayout? = null
     private var template: TemplateView? = null
+    private lateinit var logTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +62,10 @@ class GAMNativeBannerActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         toolbar.setTitle(R.string.title_activity_native_banner)
+
+        logTextView = findViewById(R.id.ad_event_logs)
+        Logger.registerLoggerListener(this)
+        Logger.log(Logger.LogType.INFO, Constants.TAG_OWSDK, Constants.OWSDK_VERSION_LOG + OpenWrapSDK.getVersion())
 
         OpenWrapSDK.setLogLevel(OpenWrapSDK.LogLevel.All)
 
@@ -156,12 +164,12 @@ class GAMNativeBannerActivity : AppCompatActivity() {
 
         // Callback method Notifies that a banner ad has been successfully loaded and rendered.
         override fun onAdReceived(view: POBBannerView) {
-            Log.d(TAG, "onAdReceived")
+            Logger.log(Logger.LogType.DEBUG, TAG, "onAdReceived")
             template?.visibility = View.GONE
             container?.visibility = View.VISIBLE
             val adSize = view.creativeSize
             if (adSize != null) {
-                Log.d(TAG, "Banner : Ad Received with size {$adSize}")
+                Logger.log(Logger.LogType.DEBUG, TAG, "Banner : Ad Received with size {$adSize}")
                 var width = adSize.adWidth
                 var height = adSize.adHeight
                 width = POBUtils.convertDpToPixel(width)
@@ -175,29 +183,29 @@ class GAMNativeBannerActivity : AppCompatActivity() {
 
         // Callback method Notifies an error encountered while loading or rendering an ad.
         override fun onAdFailed(view: POBBannerView, error: POBError) {
-            Log.e(TAG, "onAdFailed : Ad failed with error - $error")
+            Logger.log(Logger.LogType.ERROR, TAG, "onAdFailed : Ad failed with error - $error")
         }
 
 
         // Callback method Notifies whenever current app goes in the background due to user click
         override fun onAppLeaving(view: POBBannerView) {
-            Log.d(TAG, "onAppLeaving")
+            Logger.log(Logger.LogType.DEBUG, TAG, "onAppLeaving")
         }
 
 
         // Callback method Notifies that the  banner ad will launch a dialog on top of the current view
         override fun onAdOpened(view: POBBannerView) {
-            Log.d(TAG, "onAdOpened")
+            Logger.log(Logger.LogType.DEBUG, TAG, "onAdOpened")
         }
 
         // Callback method Notifies that the banner ad view is clicked.
         override fun onAdClicked(view: POBBannerView) {
-            Log.d(TAG, "onAdClicked")
+            Logger.log(Logger.LogType.DEBUG, TAG, "onAdClicked")
         }
 
         // Callback method Notifies that the  banner ad has dismissed the modal on top of the current view
         override fun onAdClosed(view: POBBannerView) {
-            Log.d(TAG, "onAdClosed")
+            Logger.log(Logger.LogType.DEBUG, TAG, "onAdClosed")
         }
 
     }
@@ -210,28 +218,28 @@ class GAMNativeBannerActivity : AppCompatActivity() {
 
         // Callback method notifies that GAM native ad has been successfully loaded.
         override fun onAdReceived(nativeAd: NativeAd) {
-            Log.d(TAG, "Native Ad Received")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Native Ad Received")
             renderNativeAd(nativeAd)
         }
 
         // Callback method notifies whenever GAM native ad has been clicked
         override fun onAdClicked(nativeAd: NativeAd) {
-            Log.d(TAG, "Native Ad Clicked")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Native Ad Clicked")
         }
 
         // Callback method notifies about GAM native ad impression occurred
         override fun onAdImpression(nativeAd: NativeAd) {
-            Log.d(TAG, "Native Ad Impression")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Native Ad Impression")
         }
 
         // Callback method notifies that the GAM native ad will launch a dialog on top of the current view
         override fun onAdOpened(nativeAd: NativeAd) {
-            Log.d(TAG, "Native Ad Opened")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Native Ad Opened")
         }
 
         // Callback method notifies that the  banner ad has dismissed the modal on top of the current view
         override fun onAdClosed(nativeAd: NativeAd) {
-            Log.d(TAG, "Native Ad Closed")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Native Ad Closed")
         }
     }
 
@@ -244,7 +252,7 @@ class GAMNativeBannerActivity : AppCompatActivity() {
 
         // Callback method notifies that GAM custom native ad has been successfully loaded.
         override fun onAdReceived(nativeCustomFormatAd: NativeCustomFormatAd) {
-            Log.d(TAG, "Custom Native Ad Received")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Custom Native Ad Received")
             renderCustomNative(nativeCustomFormatAd)
             // Since this is custom native ad format, app is responsible for recording impressions and
             // reporting click events to the Google Mobile Ads SDK.
@@ -253,22 +261,22 @@ class GAMNativeBannerActivity : AppCompatActivity() {
 
         // Callback method notifies whenever GAM native ad has been clicked
         override fun onAdClicked(nativeCustomFormatAd: NativeCustomFormatAd) {
-            Log.d(TAG, "Custom Native Ad Clicked")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Custom Native Ad Clicked")
         }
 
         // Callback method notifies about GAM native ad impression occurred
         override fun onAdImpression(nativeCustomFormatAd: NativeCustomFormatAd) {
-            Log.d(TAG, "Custom Native Ad Impression")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Custom Native Ad Impression")
         }
 
         // Callback method notifies that the GAM custom native ad will launch a dialog on top of the current view
         override fun onAdOpened(nativeCustomFormatAd: NativeCustomFormatAd) {
-            Log.d(TAG, "Custom Native Ad Opened")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Custom Native Ad Opened")
         }
 
         // Callback method notifies that the  banner ad has dismissed the modal on top of the current view
         override fun onAdClosed(nativeCustomFormatAd: NativeCustomFormatAd) {
-            Log.d(TAG, "Custom Native Ad Closed")
+            Logger.log(Logger.LogType.DEBUG, TAG, "Custom Native Ad Closed")
         }
 
     }
@@ -278,6 +286,11 @@ class GAMNativeBannerActivity : AppCompatActivity() {
         // destroy banner before onDestroy of Activity lifeCycle
         super.onDestroy()
         banner?.destroy()
+        Logger.removeLoggerListener(this)
     }
 
+    // Appends a log message to the log TextView.
+    override fun log(message: String) {
+        logTextView.append(message + "\n")
+    }
 }

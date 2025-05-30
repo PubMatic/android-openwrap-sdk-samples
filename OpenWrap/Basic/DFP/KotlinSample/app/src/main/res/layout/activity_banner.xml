@@ -18,6 +18,10 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/include_toolbar">
 
+        <include layout="@layout/ad_event_logs"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/banner"/>
+
         <com.pubmatic.sdk.openwrap.banner.POBBannerView
             android:id="@+id/banner"
             android:layout_width="320dp"
