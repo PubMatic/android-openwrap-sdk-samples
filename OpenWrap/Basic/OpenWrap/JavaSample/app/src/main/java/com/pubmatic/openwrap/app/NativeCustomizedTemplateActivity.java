@@ -143,8 +143,8 @@ public class NativeCustomizedTemplateActivity extends AppCompatActivity implemen
         POBNativeAdMediumTemplateView adview = (POBNativeAdMediumTemplateView) inflater.inflate(R.layout.custom_medium_template, null);
 
         // Set the reference of asset views your inflated adView
-        ImageView mainImage = adview.findViewById(R.id.main_image);
-        adview.setMainImage(mainImage);
+        FrameLayout mediaView = adview.findViewById(R.id.media_view);
+        adview.setMediaView(mediaView);
 
         TextView title = adview.findViewById(R.id.title);
         adview.setTitle(title);

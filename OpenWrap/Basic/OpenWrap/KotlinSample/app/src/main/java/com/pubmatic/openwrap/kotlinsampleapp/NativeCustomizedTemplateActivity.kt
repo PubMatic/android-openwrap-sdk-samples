@@ -126,8 +126,8 @@ class NativeCustomizedTemplateActivity : AppCompatActivity(), LoggerListener {
         ) as POBNativeAdMediumTemplateView
 
         // Set the reference of asset views your inflated adView
-        val mainImage = adview.findViewById<ImageView>(R.id.main_image)
-        adview.mainImage = mainImage
+        val mediaView = adview.findViewById<FrameLayout>(R.id.media_view)
+        adview.setMediaView(mediaView)
 
         val title = adview.findViewById<TextView>(R.id.title)
         adview.title = title

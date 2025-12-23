@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.pubmatic.sdk.nativead.views.POBNativeAdMediumTemplateView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/pob_dimen_300dp"
     android:layout_height="@dimen/pob_dimen_250dp"
-    android:background="@color/POBTemplateBackground">
+    android:background="@color/POBTemplateBackground"
+    tools:ignore="SpUsage">
 
     <ImageView
         android:id="@+id/ad_icon"
@@ -52,7 +54,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="@dimen/pob_dimen_8dp"
         android:layout_marginTop="@dimen/pob_dimen_5dp"
-        android:textSize="@dimen/pob_dimen_12sp"
+        android:textSize="@dimen/pob_dimen_12dp"
         android:maxLines="@string/template_title_max_lines"
         android:ellipsize="end"
         android:textStyle="bold" />
@@ -68,12 +70,12 @@
         android:maxLines="@string/template_desc_max_lines"
         android:textStyle="normal"
         android:textColor="@color/POBTemplateTextColor"
-        android:textSize="@dimen/pob_dimen_10sp"
+        android:textSize="@dimen/pob_dimen_10dp"
         android:ellipsize="end"
         />
 
-    <ImageView
-        android:id="@+id/main_image"
+    <FrameLayout
+        android:id="@+id/media_view"
         android:layout_width="@dimen/pob_dimen_284dp"
         android:layout_height="@dimen/pob_dimen_144dp"
         android:layout_below="@id/icon_image"
@@ -88,7 +90,7 @@
         android:id="@+id/cta_text"
         android:layout_width="@dimen/pob_dimen_284dp"
         android:layout_height="@dimen/pob_dimen_32dp"
-        android:layout_below="@id/main_image"
+        android:layout_below="@id/media_view"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
@@ -99,7 +101,7 @@
         android:background="@drawable/pob_template_button_drawable"
         android:maxLines="@string/template_cta_max_lines"
         android:textColor="#FBFBFB"
-        android:textSize="11sp"
+        android:textSize="@dimen/btn_text_size"
         android:textStyle="normal" />
 
 </com.pubmatic.sdk.nativead.views.POBNativeAdMediumTemplateView>
