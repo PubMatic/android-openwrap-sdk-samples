@@ -22,7 +22,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -58,7 +57,7 @@ public class InterstitialActivity extends AppCompatActivity implements LoggerLis
         try {
             appInfo.setStoreURL(new URL("https://play.google.com/store/apps/details?id=com.example.android&hl=en"));
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            Logger.log(Logger.LogType.ERROR, Constants.TAG_OWSDK, "Failed to set Store URL, "+ e.getMessage());
         }
 
         // This app information is a global configuration & you

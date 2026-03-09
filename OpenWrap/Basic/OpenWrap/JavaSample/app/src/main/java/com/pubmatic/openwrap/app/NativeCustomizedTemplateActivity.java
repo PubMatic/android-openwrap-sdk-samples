@@ -19,7 +19,6 @@ package com.pubmatic.openwrap.app;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +39,7 @@ import com.pubmatic.sdk.nativead.POBNativeAd;
 import com.pubmatic.sdk.nativead.POBNativeAdListener;
 import com.pubmatic.sdk.nativead.POBNativeAdLoader;
 import com.pubmatic.sdk.nativead.POBNativeAdLoaderListener;
+import com.pubmatic.sdk.nativead.POBNativeAdVideoEventListener;
 import com.pubmatic.sdk.nativead.datatype.POBNativeTemplateType;
 import com.pubmatic.sdk.nativead.views.POBNativeAdMediumTemplateView;
 import com.pubmatic.sdk.nativead.views.POBNativeTemplateView;
@@ -98,9 +98,12 @@ public class NativeCustomizedTemplateActivity extends AppCompatActivity implemen
         renderAd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Set the native ad listener to listen the event callback and also to receive the
-                // rendered native ad view.
                 if (nativeAd != null) {
+                    // Set optional video event listener to listen video specific events.
+                    nativeAd.setVideoEventListener(new NativeAdVideoEventListenerImpl());
+
+                    // Set the native ad listener to listen the event callback and also to receive the
+                    // rendered native ad view.
                     nativeAd.renderAd(getNativeTemplateView(), new NativeAdListenerImpl());
                 }
             }
@@ -111,7 +114,7 @@ public class NativeCustomizedTemplateActivity extends AppCompatActivity implemen
         try {
             appInfo.setStoreURL(new URL("https://play.google.com/store/apps/details?id=com.example.android&hl=en"));
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            Logger.log(Logger.LogType.ERROR, Constants.TAG_OWSDK, "Failed to set Store URL, "+ e.getMessage());
         }
 
         // This app information is a global configuration & you
@@ -161,8 +164,8 @@ public class NativeCustomizedTemplateActivity extends AppCompatActivity implemen
         ImageView privacyIcon = adview.findViewById(R.id.privacy_icon);
         adview.setPrivacyIcon(privacyIcon);
 
-        ImageView dsaIcon = adview.findViewById(R.id.dsa_icon);
-        adview.setDSAIcon(dsaIcon);
+        ImageView adInfoIcon = adview.findViewById(R.id.ad_info_icon);
+        adview.setAdInfoIcon(adInfoIcon);
 
         // Set the layout params to your ad view with inflated xml width and height
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
@@ -242,6 +245,40 @@ public class NativeCustomizedTemplateActivity extends AppCompatActivity implemen
         }
     }
 
+    /**
+    * Listener to get callback for rendered native video and native events.
+    */
+    private class NativeAdVideoEventListenerImpl implements POBNativeAdVideoEventListener{
+
+        @Override
+        public void onAudioStateChanged(@NonNull POBNativeAd pobNativeAd, boolean isMuted) {
+            if (isMuted){
+                Logger.log(Logger.LogType.DEBUG, TAG, "Native : Video muted");
+            } else {
+                Logger.log(Logger.LogType.DEBUG, TAG, "Native : Video unmuted");
+            }
+        }
+
+        @Override
+        public void onVideoStarted(@NonNull POBNativeAd pobNativeAd) {
+            Logger.log(Logger.LogType.DEBUG, TAG, "Native : Video started");
+        }
+
+        @Override
+        public void onVideoPaused(@NonNull POBNativeAd pobNativeAd) {
+            Logger.log(Logger.LogType.DEBUG, TAG, "Native : Video paused");
+        }
+
+        @Override
+        public void onVideoResumed(@NonNull POBNativeAd pobNativeAd) {
+            Logger.log(Logger.LogType.DEBUG, TAG, "Native : Video resumed");
+        }
+
+        @Override
+        public void onVideoCompleted(@NonNull POBNativeAd pobNativeAd) {
+            Logger.log(Logger.LogType.DEBUG, TAG, "Native : Video playback finished");
+        }
+    }
     // Appends a log message to the log TextView.
     @Override
     public void log(@NonNull String message) {

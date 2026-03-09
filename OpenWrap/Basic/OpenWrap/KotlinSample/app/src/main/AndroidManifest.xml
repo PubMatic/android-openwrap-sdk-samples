@@ -74,6 +74,18 @@
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout">
         </activity>
         <activity
+            android:name="com.pubmatic.openwrap.kotlinsampleapp.AppOpenAdActivity"
+            android:label="@string/title_activity_app_open_ad_template"
+            android:exported="false"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout">
+        </activity>
+        <activity
+            android:name="com.pubmatic.openwrap.kotlinsampleapp.VideoAppOpenAdActivity"
+            android:label="@string/title_activity_video_app_open_ad_template"
+            android:exported="false"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout">
+        </activity>
+        <activity
             android:name="com.pubmatic.openwrap.kotlinsampleapp.MainActivity"
             android:label="@string/title_activity_home"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"

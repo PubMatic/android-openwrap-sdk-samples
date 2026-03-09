@@ -27,7 +27,7 @@
         android:layout_marginTop="@dimen/pob_dimen_6.5dp"/>
 
     <ImageView
-        android:id="@+id/dsa_icon"
+        android:id="@+id/ad_info_icon"
         android:layout_width="@dimen/pob_dimen_16dp"
         android:layout_height="@dimen/pob_dimen_15dp"
         android:layout_alignParentEnd="true"

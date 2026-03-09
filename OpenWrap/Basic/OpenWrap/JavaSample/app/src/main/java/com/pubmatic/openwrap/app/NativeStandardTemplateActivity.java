@@ -36,6 +36,7 @@ import com.pubmatic.sdk.nativead.POBNativeAd;
 import com.pubmatic.sdk.nativead.POBNativeAdListener;
 import com.pubmatic.sdk.nativead.POBNativeAdLoader;
 import com.pubmatic.sdk.nativead.POBNativeAdLoaderListener;
+import com.pubmatic.sdk.nativead.POBNativeAdVideoEventListener;
 import com.pubmatic.sdk.nativead.datatype.POBNativeTemplateType;
 
 import java.net.MalformedURLException;
@@ -89,9 +90,12 @@ public class NativeStandardTemplateActivity extends AppCompatActivity implements
         renderAd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Set the native ad listener to listen the event callback and also to receive the
-                // rendered native ad view.
                 if (nativeAd != null) {
+                    // Set optional video event listener to listen video specific events.
+                    nativeAd.setVideoEventListener(new NativeAdVideoEventListenerImpl());
+
+                    // Set the native ad listener to listen the event callback and also to receive the
+                    // rendered native ad view.
                     nativeAd.renderAd(new NativeAdListenerImpl());
                 }
             }
@@ -102,7 +106,7 @@ public class NativeStandardTemplateActivity extends AppCompatActivity implements
         try {
             appInfo.setStoreURL(new URL("https://play.google.com/store/apps/details?id=com.example.android&hl=en"));
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            Logger.log(Logger.LogType.ERROR, Constants.TAG_OWSDK, "Failed to set Store URL, "+ e.getMessage());
         }
 
         // This app information is a global configuration & you
@@ -196,6 +200,41 @@ public class NativeStandardTemplateActivity extends AppCompatActivity implements
         @Override
         public void onNativeAdClosed(@NonNull POBNativeAd nativeAd) {
             Logger.log(Logger.LogType.DEBUG, TAG, "Ad Closed");
+        }
+    }
+
+    /**
+     * Listener to get callback for rendered native video and native events.
+     */
+    private class NativeAdVideoEventListenerImpl implements POBNativeAdVideoEventListener{
+
+        @Override
+        public void onAudioStateChanged(@NonNull POBNativeAd pobNativeAd, boolean isMuted) {
+            if (isMuted){
+                Logger.log(Logger.LogType.DEBUG, TAG, "Native : Video muted");
+            } else {
+                Logger.log(Logger.LogType.DEBUG, TAG, "Native : Video unmuted");
+            }
+        }
+
+        @Override
+        public void onVideoStarted(@NonNull POBNativeAd pobNativeAd) {
+            Logger.log(Logger.LogType.DEBUG, TAG, "Native : Video started");
+        }
+
+        @Override
+        public void onVideoPaused(@NonNull POBNativeAd pobNativeAd) {
+            Logger.log(Logger.LogType.DEBUG, TAG, "Native : Video paused");
+        }
+
+        @Override
+        public void onVideoResumed(@NonNull POBNativeAd pobNativeAd) {
+            Logger.log(Logger.LogType.DEBUG, TAG, "Native : Video resumed");
+        }
+
+        @Override
+        public void onVideoCompleted(@NonNull POBNativeAd pobNativeAd) {
+            Logger.log(Logger.LogType.DEBUG, TAG, "Native : Video playback finished");
         }
     }
 

@@ -135,8 +135,9 @@ public class MainActivity extends AppCompatActivity {
         MREC_VIDEO(MRECVideoActivity.class, "MREC Video"),
         REWARDED(RewardedActivity.class, "Rewarded"),
         NATIVE_STANDARD_SMALL(NativeStandardTemplateActivity.class, "Native Ad - Standard Template"),
-        NATIVE_CUSTOM(NativeCustomizedTemplateActivity.class, "Native Ad - Customized Template");
-
+        NATIVE_CUSTOM(NativeCustomizedTemplateActivity.class, "Native Ad - Customized Template"),
+        APP_OPEN_AD(AppOpenAdActivity.class, "App Open Ad Display"),
+        VIDEO_APP_OPEN_AD(VideoAppOpenAdActivity.class, "App Open Ad Video");
 
         private final Class activity;
         private final String displayName;

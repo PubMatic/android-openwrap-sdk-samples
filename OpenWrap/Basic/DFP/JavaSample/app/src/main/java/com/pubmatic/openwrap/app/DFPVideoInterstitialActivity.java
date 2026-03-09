@@ -58,7 +58,7 @@ public class DFPVideoInterstitialActivity extends AppCompatActivity implements L
         try {
             appInfo.setStoreURL(new URL("https://play.google.com/store/apps/details?id=com.example.android&hl=en"));
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            Logger.log(Logger.LogType.ERROR, Constants.TAG_OWSDK, "Failed to set Store URL, "+ e.getMessage());
         }
 
         // This app information is a global configuration & you

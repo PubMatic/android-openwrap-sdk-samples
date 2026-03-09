@@ -32,6 +32,7 @@ import com.pubmatic.sdk.nativead.POBNativeAd
 import com.pubmatic.sdk.nativead.POBNativeAdListener
 import com.pubmatic.sdk.nativead.POBNativeAdLoader
 import com.pubmatic.sdk.nativead.POBNativeAdLoaderListener
+import com.pubmatic.sdk.nativead.POBNativeAdVideoEventListener
 import com.pubmatic.sdk.nativead.datatype.POBNativeTemplateType
 
 /**
@@ -120,6 +121,7 @@ class NativeListActivity : AppCompatActivity(), NativeFeedListAdapter.OnNativeAd
         nativeAdLoader.setAdLoaderListener(object: POBNativeAdLoaderListener{
             override fun onAdReceived(adLoader: POBNativeAdLoader, nativeAd: POBNativeAd) {
                 //Render native ad
+                nativeAd.setVideoEventListener(NativeAdVideoEventListenerImpl())
                 nativeAd.renderAd(POBNativeAdListenerImp())
             }
 
@@ -131,6 +133,56 @@ class NativeListActivity : AppCompatActivity(), NativeFeedListAdapter.OnNativeAd
         return nativeAdLoader;
     }
 
+    /**
+     * Listener to get callback for rendered native ad view and native events.
+     */
+    private inner class NativeAdVideoEventListenerImpl: POBNativeAdVideoEventListener{
+        override fun onAudioStateChanged(
+            nativeAd: POBNativeAd,
+            isMuted: Boolean
+        ) {
+            if (isMuted) {
+                Log.d(
+                    TAG,
+                    "Native : Video muted"
+                )
+            } else {
+                Log.d(
+                    TAG,
+                    "Native : Video unmuted"
+                )
+            }
+        }
+
+        override fun onVideoCompleted(nativeAd: POBNativeAd) {
+            Log.d(
+                TAG,
+                "Native : Video playback finished"
+            )
+        }
+
+        override fun onVideoPaused(nativeAd: POBNativeAd) {
+            Log.d(
+                TAG,
+                "Native : Video paused"
+            )
+        }
+
+        override fun onVideoResumed(nativeAd: POBNativeAd) {
+            Log.d(
+                TAG,
+                "Native : Video resumed");
+        }
+
+        override fun onVideoStarted(nativeAd: POBNativeAd) {
+            Log.d(
+                TAG,
+                "Native : Video started"
+            )
+        }
+
+
+    }
 
 
     private inner class POBNativeAdListenerImp: POBNativeAdListener{

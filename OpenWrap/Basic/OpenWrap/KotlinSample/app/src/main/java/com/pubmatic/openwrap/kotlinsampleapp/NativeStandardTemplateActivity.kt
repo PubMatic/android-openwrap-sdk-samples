@@ -24,7 +24,6 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-
 import com.pubmatic.sdk.common.OpenWrapSDK
 import com.pubmatic.sdk.common.POBError
 import com.pubmatic.sdk.common.models.POBApplicationInfo
@@ -32,8 +31,8 @@ import com.pubmatic.sdk.nativead.POBNativeAd
 import com.pubmatic.sdk.nativead.POBNativeAdListener
 import com.pubmatic.sdk.nativead.POBNativeAdLoader
 import com.pubmatic.sdk.nativead.POBNativeAdLoaderListener
+import com.pubmatic.sdk.nativead.POBNativeAdVideoEventListener
 import com.pubmatic.sdk.nativead.datatype.POBNativeTemplateType
-
 import java.net.MalformedURLException
 import java.net.URL
 
@@ -76,6 +75,9 @@ class NativeStandardTemplateActivity : AppCompatActivity(), LoggerListener {
         }
 
         renderAd.setOnClickListener {
+            // Set optional video event listener to listen video specific events.
+            nativeAd?.setVideoEventListener(NativeAdVideoListenerImpl())
+
             // Set the native ad listener to listen the event callback and also to receive the
             // rendered native ad view.
             nativeAd?.renderAd(NativeAdListenerImpl())
@@ -178,6 +180,59 @@ class NativeStandardTemplateActivity : AppCompatActivity(), LoggerListener {
         override fun onNativeAdClosed(nativeAd: POBNativeAd) {
             Logger.log(Logger.LogType.DEBUG, TAG, "Ad Closed")
         }
+    }
+
+    /**
+     * Listener to get callback for rendered native video ad view and native events.
+     */
+    inner class NativeAdVideoListenerImpl : POBNativeAdVideoEventListener{
+        override fun onAudioStateChanged(
+            nativeAd: POBNativeAd,
+            isMuted: Boolean
+        ) {
+            if (isMuted) {
+                Logger.log(
+                    Logger.LogType.DEBUG,
+                    TAG,
+                    "Native : Video muted"
+                )
+            } else {
+                Logger.log(
+                    Logger.LogType.DEBUG,
+                    TAG,
+                    "Native : Video unmuted"
+                )
+            }
+        }
+
+        override fun onVideoCompleted(nativeAd: POBNativeAd) {
+            Logger.log(
+                Logger.LogType.DEBUG,
+                TAG,
+                "Native : Video playback finished"
+            )
+        }
+
+        override fun onVideoPaused(nativeAd: POBNativeAd) {
+            Logger.log(
+                Logger.LogType.DEBUG,
+                TAG,
+                "Native : Video paused"
+            )
+        }
+
+        override fun onVideoResumed(nativeAd: POBNativeAd) {
+            Logger.log(Logger.LogType.DEBUG, TAG, "Native : Video resumed");
+        }
+
+        override fun onVideoStarted(nativeAd: POBNativeAd) {
+            Logger.log(
+                Logger.LogType.DEBUG,
+                TAG,
+                "Native : Video started"
+            )
+        }
+
     }
 
     // Appends a log message to the log TextView.

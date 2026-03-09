@@ -20,7 +20,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
@@ -58,7 +57,7 @@ public class BannerActivity extends AppCompatActivity implements LoggerListener 
         try {
             appInfo.setStoreURL(new URL("https://play.google.com/store/apps/details?id=com.example.android&hl=en"));
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            Logger.log(Logger.LogType.ERROR, Constants.TAG_OWSDK, "Failed to set Store URL, "+ e.getMessage());
         }
 
         // This app information is a global configuration & you

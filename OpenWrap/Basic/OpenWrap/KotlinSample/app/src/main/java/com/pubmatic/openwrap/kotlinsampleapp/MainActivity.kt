@@ -114,7 +114,9 @@ class MainActivity : AppCompatActivity()  {
         MREC_VIDEO(MRECVideoActivity::class.java, "MREC Video"),
         REWARDED(RewardedActivity::class.java, "Rewarded"),
         NATIVE_STANDARD_SMALL(NativeStandardTemplateActivity::class.java, "Native Ad - Standard Template"),
-        NATIVE_STANDARD_CUSTOM(NativeCustomizedTemplateActivity::class.java, "Native Ad - Customized Template")
+        NATIVE_STANDARD_CUSTOM(NativeCustomizedTemplateActivity::class.java, "Native Ad - Customized Template"),
+        APP_OPEN_AD(AppOpenAdActivity::class.java, "App Open Ad Display"),
+        VIDEO_APP_OPEN_AD(VideoAppOpenAdActivity::class.java, "App Open Ad Video")
     }
 
     /**

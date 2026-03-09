@@ -67,6 +67,16 @@
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
             android:exported="false"
             android:label="Native Ad - Customized Template" />
+        <activity
+            android:name="com.pubmatic.openwrap.app.AppOpenAdActivity"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
+            android:exported="false"
+            android:label="App Open Ad" />
+        <activity
+            android:name="com.pubmatic.openwrap.app.VideoAppOpenAdActivity"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
+            android:exported="false"
+            android:label="App Open Ad Video" />
     </application>
 
 </manifest>
