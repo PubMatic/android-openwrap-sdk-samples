@@ -1,7 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 34
+    namespace 'com.pubmatic.appapp'
+    compileSdkVersion 36
 
     compileOptions {
         sourceCompatibility 1.8
@@ -11,19 +12,19 @@ android {
     defaultConfig {
         applicationId "com.pubmatic.appapp"
         minSdkVersion 21
-        targetSdkVersion 34
+        targetSdkVersion 36
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
     }
 
-    lintOptions {
+    lint {
         abortOnError false
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

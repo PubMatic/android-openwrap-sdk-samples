@@ -52,7 +52,7 @@ public class AppOpenAdActivity extends AppCompatActivity implements LoggerListen
         toolbar.setTitle(R.string.app_open_ad);
 
         logTextView = findViewById(R.id.ad_event_logs);
-        showAdBtn = findViewById(R.id.showAdBtn);
+        showAdBtn = findViewById(R.id.show_ad);
         Logger.registerLoggerListener(this);
         Logger.log(Logger.LogType.INFO, Constants.TAG_OWSDK, Constants.OWSDK_VERSION_LOG + OpenWrapSDK.getVersion());
 
@@ -76,7 +76,7 @@ public class AppOpenAdActivity extends AppCompatActivity implements LoggerListen
         appOpenAd.setVideoListener(new POBAppOpenAdVideoListener());
 
         // Load Ad button
-        findViewById(R.id.loadAdBtn).setOnClickListener(v -> {
+        findViewById(R.id.load_ad).setOnClickListener(v -> {
             if (showAdBtn != null) {
                 showAdBtn.setEnabled(false);
             }

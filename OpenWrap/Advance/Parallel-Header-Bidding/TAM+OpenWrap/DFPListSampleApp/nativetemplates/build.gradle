@@ -1,11 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 34
+    namespace 'com.google.android.ads.nativetemplates'
+    compileSdkVersion 36
 
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 34
+        targetSdkVersion 36
         versionCode 1
         versionName "1.0"
     }
@@ -18,7 +19,7 @@ android {
         }
     }
 
-    lintOptions {
+    lint {
         resourcePrefix 'gnt_'
     }
 }

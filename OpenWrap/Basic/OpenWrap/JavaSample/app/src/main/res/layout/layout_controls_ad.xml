@@ -12,13 +12,13 @@
         android:orientation="horizontal"
         android:gravity="center">
         <Button
-            android:id="@+id/loadAdBtn"
+            android:id="@+id/load_ad"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/load_ad"/>
 
         <Button
-            android:id="@+id/showAdBtn"
+            android:id="@+id/show_ad"
             android:layout_marginLeft="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

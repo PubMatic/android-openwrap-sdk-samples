@@ -81,10 +81,10 @@ public class RewardedActivity extends AppCompatActivity implements LoggerListene
         }
 
         // Load Ad button
-        findViewById(R.id.loadAdBtn).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.load_ad).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                findViewById(R.id.showAdBtn).setEnabled(false);
+                findViewById(R.id.show_ad).setEnabled(false);
                 if(rewardedAd != null) {
                     rewardedAd.loadAd();
                 }
@@ -92,7 +92,7 @@ public class RewardedActivity extends AppCompatActivity implements LoggerListene
         });
 
         // Show button
-        findViewById(R.id.showAdBtn).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.show_ad).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showRewardedAd();
@@ -133,7 +133,7 @@ public class RewardedActivity extends AppCompatActivity implements LoggerListene
             Logger.log(Logger.LogType.DEBUG, TAG, "Rewarded Ad : Ad Received");
             // Method gets called when ad gets loaded in container
             // Here, you can show rewarded ad to user
-            findViewById(R.id.showAdBtn).setEnabled(true);
+            findViewById(R.id.show_ad).setEnabled(true);
         }
 
         // Callback method notifies an error encountered while loading or rendering an ad.

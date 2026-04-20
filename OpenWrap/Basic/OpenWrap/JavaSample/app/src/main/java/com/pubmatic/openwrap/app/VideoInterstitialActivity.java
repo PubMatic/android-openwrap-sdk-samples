@@ -78,17 +78,17 @@ public class VideoInterstitialActivity extends AppCompatActivity implements Logg
         interstitial.setVideoListener(new POBInterstitialVideoListener());
 
         // Load Ad button
-        findViewById(R.id.loadAdBtn).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.load_ad).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                findViewById(R.id.showAdBtn).setEnabled(false);
+                findViewById(R.id.show_ad).setEnabled(false);
                 interstitial.loadAd();
 
             }
         });
 
         // Show button
-        findViewById(R.id.showAdBtn).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.show_ad).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showInterstitialAd();
@@ -143,7 +143,7 @@ public class VideoInterstitialActivity extends AppCompatActivity implements Logg
             Logger.log(Logger.LogType.DEBUG, TAG, "onAdReceived");
             //Method gets called when ad gets loaded in container
             //Here, you can show interstitial ad to user
-            findViewById(R.id.showAdBtn).setEnabled(true);
+            findViewById(R.id.show_ad).setEnabled(true);
         }
 
         // Callback method notifies an error encountered while loading an ad.

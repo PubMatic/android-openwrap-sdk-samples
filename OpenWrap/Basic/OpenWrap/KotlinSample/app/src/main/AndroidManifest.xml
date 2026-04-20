@@ -18,7 +18,9 @@
         android:roundIcon="@mipmap/icon_app_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="GoogleAppIndexingWarning"
+        android:intentMatchingFlags="enforceIntentFilter"
+        tools:targetApi="36">
 
         <activity
             android:name="com.pubmatic.openwrap.kotlinsampleapp.BannerActivity"
