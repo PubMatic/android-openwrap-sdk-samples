@@ -151,11 +151,6 @@ public class VideoAppOpenAdActivity extends AppCompatActivity implements LoggerL
         }
 
         @Override
-        public void onAdExpired(@NonNull POBAppOpenAd ad) {
-            Logger.log(Logger.LogType.DEBUG, TAG, "onAdExpired");
-        }
-
-        @Override
         public void onAppLeaving(@NonNull POBAppOpenAd ad) {
             Logger.log(Logger.LogType.DEBUG, TAG, "onAppLeaving");
         }

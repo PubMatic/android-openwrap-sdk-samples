@@ -114,6 +114,10 @@ class BannerFeedListAdapter(private val bannerFeedItems: ArrayList<BannerFeedIte
             override fun onAdFailed(p0: POBBannerView, p1: POBError) {
                 Log.d(TAG, "Unable to load ad, Error: "+p1.errorMessage)
             }
+
+            override fun onAdExpired(view: POBBannerView) {
+                Log.d(TAG, "Ad Expired")
+            }
         })
     }
 

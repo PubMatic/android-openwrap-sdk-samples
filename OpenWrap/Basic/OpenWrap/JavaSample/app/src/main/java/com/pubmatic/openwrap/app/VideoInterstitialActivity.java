@@ -180,12 +180,6 @@ public class VideoInterstitialActivity extends AppCompatActivity implements Logg
             Logger.log(Logger.LogType.DEBUG, TAG, "onAdClicked");
         }
 
-        // Callback method notifies ad expiration
-        @Override
-        public void onAdExpired(@NonNull POBInterstitial ad){
-            Logger.log(Logger.LogType.DEBUG, TAG, "onAdExpired");
-        }
-
         // Callback method Notifies whenever current app goes in the background due to user click
         @Override
         public void onAppLeaving(@NonNull POBInterstitial ad) {

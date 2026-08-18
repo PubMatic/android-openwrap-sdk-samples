@@ -124,6 +124,10 @@ class DFPMRECDisplayActivity : AppCompatActivity(), LoggerListener {
         override fun onAdClosed(view: POBBannerView) {
             Logger.log(Logger.LogType.DEBUG, TAG, "onAdClosed")
         }
+
+        override fun onAdExpired(view: POBBannerView) {
+            Logger.log(Logger.LogType.DEBUG, TAG, "onAdExpired")
+        }
     }
 
 

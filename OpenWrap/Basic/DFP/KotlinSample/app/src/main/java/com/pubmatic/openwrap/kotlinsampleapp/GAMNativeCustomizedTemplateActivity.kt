@@ -328,5 +328,9 @@ class GAMNativeCustomizedTemplateActivity : AppCompatActivity(), LoggerListener{
         override fun onNativeAdClosed(nativeAd: POBNativeAd) {
             Logger.log(Logger.LogType.DEBUG, TAG, "Ad Closed")
         }
+
+        override fun onNativeAdExpired(nativeAd: POBNativeAd) {
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Expired")
+        }
     }
 }

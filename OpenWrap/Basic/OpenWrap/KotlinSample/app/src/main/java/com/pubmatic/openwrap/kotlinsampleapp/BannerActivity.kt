@@ -120,6 +120,11 @@ class BannerActivity : AppCompatActivity(), LoggerListener {
             Logger.log(Logger.LogType.DEBUG,TAG, "onAdImpression")
         }
 
+        // Callback method Notifies that the banner ad has expired
+        override fun onAdExpired(view: POBBannerView) {
+            Logger.log(Logger.LogType.DEBUG, TAG, "onAdExpired")
+        }
+
 
     }
 

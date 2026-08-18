@@ -240,6 +240,11 @@ public class GAMNativeBannerActivity extends AppCompatActivity implements Logger
             Logger.log(Logger.LogType.DEBUG, TAG, "Ad Impression");
         }
 
+        @Override
+        public void onAdExpired(@NonNull POBBannerView view) {
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Expired");
+        }
+
     }
 
     /**

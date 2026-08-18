@@ -193,9 +193,6 @@ public class DFPVideoInterstitialActivity extends AppCompatActivity implements L
 
         // Callback method notifies ad expiration
         @Override
-        public void onAdExpired(@NonNull POBInterstitial ad){
-            Logger.log(Logger.LogType.DEBUG, TAG, "onAdExpired");
-        }
         @Override
         public void onAdImpression(@NonNull POBInterstitial ad) {
             Logger.log(Logger.LogType.DEBUG, TAG, "onAdImpression");

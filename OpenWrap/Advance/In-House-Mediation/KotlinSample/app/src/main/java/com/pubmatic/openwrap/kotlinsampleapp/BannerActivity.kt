@@ -144,6 +144,10 @@ class BannerActivity : AppCompatActivity(), LoggerListener {
         override fun onAdImpression(view: POBBannerView) {
             Logger.log(Logger.LogType.DEBUG, TAG, "onAdImpression")
         }
+
+        override fun onAdExpired(view: POBBannerView) {
+            Logger.log(Logger.LogType.DEBUG, TAG, "onAdExpired")
+        }
     }
 
     override fun onDestroy() {

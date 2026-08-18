@@ -166,11 +166,6 @@ public class AppOpenAdActivity extends AppCompatActivity implements LoggerListen
         }
 
         @Override
-        public void onAdExpired(@NonNull POBAppOpenAd ad) {
-            Logger.log(Logger.LogType.DEBUG, TAG, "onAdExpired");
-        }
-
-        @Override
         public void onAppLeaving(@NonNull POBAppOpenAd ad) {
             Logger.log(Logger.LogType.DEBUG, TAG, "onAppLeaving");
         }

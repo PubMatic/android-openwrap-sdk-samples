@@ -149,6 +149,10 @@ class GAMNativeBannerAdLoader(val appContext: Context, val adSize: AdSize, val s
                 isAdReceived = false
                 listener?.onAdFailed(pobError)
             }
+
+            override fun onAdExpired(bannerView: POBBannerView) {
+                Log.d(TAG, "Ad Expired")
+            }
         })
 
         // Set listener to get get bid details

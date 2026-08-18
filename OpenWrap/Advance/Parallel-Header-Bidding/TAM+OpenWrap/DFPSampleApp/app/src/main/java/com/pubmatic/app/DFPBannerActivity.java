@@ -347,6 +347,11 @@ public class DFPBannerActivity extends AppCompatActivity implements POBBidEventL
             Log.d(TAG, "Ad Impression");
         }
 
+        @Override
+        public void onAdExpired(@NonNull POBBannerView view) {
+            Log.d(TAG, "Ad Expired");
+        }
+
     }
     //endregion
 }

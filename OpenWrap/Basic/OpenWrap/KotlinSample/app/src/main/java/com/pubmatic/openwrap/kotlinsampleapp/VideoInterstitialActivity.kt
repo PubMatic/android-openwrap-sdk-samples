@@ -160,11 +160,6 @@ class VideoInterstitialActivity : AppCompatActivity(), LoggerListener {
             Logger.log(Logger.LogType.DEBUG, TAG, "onAppLeaving")
         }
 
-        // Callback method notifies ad expiration
-        override fun onAdExpired(ad: POBInterstitial) {
-            Logger.log(Logger.LogType.DEBUG, TAG, "onAdExpired")
-        }
-
         // Callback method Notifies impression recorded on ad view
         override fun onAdImpression(ad: POBInterstitial) {
             Logger.log(Logger.LogType.DEBUG, TAG, "onAdImpression")

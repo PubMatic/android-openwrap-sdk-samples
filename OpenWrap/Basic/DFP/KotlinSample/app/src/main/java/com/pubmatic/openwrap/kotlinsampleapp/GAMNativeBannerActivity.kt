@@ -208,6 +208,10 @@ class GAMNativeBannerActivity : AppCompatActivity(), LoggerListener{
             Logger.log(Logger.LogType.DEBUG, TAG, "onAdClosed")
         }
 
+        override fun onAdExpired(view: POBBannerView) {
+            Logger.log(Logger.LogType.DEBUG, TAG, "onAdExpired")
+        }
+
     }
 
     /**

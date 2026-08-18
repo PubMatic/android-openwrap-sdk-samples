@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">OpenWrap GAM NextGen Sample</string>
+    <string name="title_activity_interstitial">Interstitial Display</string>
+    <string name="title_activity_video_interstitial">Interstitial Video</string>
+    <string name="title_activity_mrec_display">MREC Display</string>
+    <string name="title_activity_mrec_video">MREC Video</string>
+    <string name="title_activity_banner">Banner</string>
+    <string name="title_activity_home">OpenWrap GAM NextGen Sample</string>
+    <string name="title_activity_rewarded">Rewarded Ad</string>
+    <string name="title_activity_native_banner">Native+Banner Ad</string>
+    <string name="load_ad">Load Ad</string>
+    <string name="show_ad">Show Ad</string>
+    <string name="ad_event_hint">Ad events will be shown here:</string>
+</resources>

@@ -1,0 +1,5 @@
+<resources>
+    <dimen name="top_margin">20dp</dimen>
+    <dimen name="pob_dimen_300dp">300dp</dimen>
+    <dimen name="native_container_height">450dp</dimen>
+</resources>

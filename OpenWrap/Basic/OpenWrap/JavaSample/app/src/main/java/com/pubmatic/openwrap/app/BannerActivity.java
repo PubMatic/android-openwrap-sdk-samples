@@ -137,5 +137,10 @@ public class BannerActivity extends AppCompatActivity implements LoggerListener 
             Logger.log(Logger.LogType.DEBUG, TAG, "Ad Impression");
         }
 
+        @Override
+        public void onAdExpired(@NonNull POBBannerView view) {
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Expired");
+        }
+
     }
 }

@@ -165,12 +165,6 @@ class RewardedActivity : AppCompatActivity(), LoggerListener {
             Logger.log(Logger.LogType.DEBUG, TAG, "Rewarded Ad : Ad Clicked")
         }
 
-        // Callback method notifies ad is about to expire
-        override fun onAdExpired(rewardedAd: POBRewardedAd) {
-            // Implement your custom logic
-            Logger.log(Logger.LogType.DEBUG, TAG, "Rewarded Ad : Ad Expired")
-        }
-
         // Callback method notifies on Ad Impression
         override fun onAdImpression(rewardedAd: POBRewardedAd) {
             // Implement your custom logic

@@ -201,6 +201,11 @@ public class NativeStandardTemplateActivity extends AppCompatActivity implements
         public void onNativeAdClosed(@NonNull POBNativeAd nativeAd) {
             Logger.log(Logger.LogType.DEBUG, TAG, "Ad Closed");
         }
+
+        @Override
+        public void onNativeAdExpired(@NonNull POBNativeAd nativeAd) {
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Expired");
+        }
     }
 
     /**

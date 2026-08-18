@@ -143,6 +143,11 @@ public class DFPMRECVideoActivity extends AppCompatActivity implements LoggerLis
         public void onAdImpression(@NonNull POBBannerView view) {
             Logger.log(Logger.LogType.DEBUG, TAG, "Ad Impression");
         }
+
+        @Override
+        public void onAdExpired(@NonNull POBBannerView view) {
+            Logger.log(Logger.LogType.DEBUG, TAG, "Ad Expired");
+        }
     }
 
     // Appends a log message to the log TextView.

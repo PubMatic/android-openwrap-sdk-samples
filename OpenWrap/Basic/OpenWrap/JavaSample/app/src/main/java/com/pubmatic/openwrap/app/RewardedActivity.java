@@ -166,12 +166,6 @@ public class RewardedActivity extends AppCompatActivity implements LoggerListene
             Logger.log(Logger.LogType.DEBUG, TAG, "Rewarded Ad : Ad Clicked");
         }
 
-        // Callback method notifies ad is about to expire
-        @Override
-        public void onAdExpired(@NonNull POBRewardedAd rewardedAd) {
-            Logger.log(Logger.LogType.DEBUG, TAG, "Rewarded Ad : Ad Expired");
-        }
-
         // Callback method notifies on Ad Impression
         @Override
         public void onAdImpression(@NonNull POBRewardedAd rewardedAd) {

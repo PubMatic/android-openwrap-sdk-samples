@@ -223,6 +223,10 @@ class NativeListActivity : AppCompatActivity(), NativeFeedListAdapter.OnNativeAd
             Log.d(TAG, "Native : Ad Closed")
         }
 
+        override fun onNativeAdExpired(nativeAd: POBNativeAd) {
+            Log.d(TAG, "Native : Ad Expired")
+        }
+
     }
 
 
